@@ -10,6 +10,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary/90 data-[state=open]:bg-primary/90",
         primary:
           "bg-primary text-primary-foreground hover:bg-primary/90 data-[state=open]:bg-primary/90",
         mono: "bg-zinc-950 text-white dark:bg-zinc-300 dark:text-black hover:bg-zinc-950/90 dark:hover:bg-zinc-300/90 data-[state=open]:bg-zinc-950/90 dark:data-[state=open]:bg-zinc-300/90",
@@ -40,10 +42,16 @@ const buttonVariants = cva(
         dashed: "",
       },
       size: {
+        default:
+          "h-8.5 rounded-sm px-3 gap-1.5 text-[0.8125rem] leading-(--text-sm--line-height) [&_svg:not([class*=size-])]:size-4",
         lg: "h-10 rounded-sm px-4 text-sm gap-1.5 [&_svg:not([class*=size-])]:size-4",
         md: "h-8.5 rounded-sm px-3 gap-1.5 text-[0.8125rem] leading-(--text-sm--line-height) [&_svg:not([class*=size-])]:size-4",
         sm: "h-7 rounded-sm px-2.5 gap-1.25 text-xs [&_svg:not([class*=size-])]:size-3.5",
         icon: "size-8.5 rounded-sm [&_svg:not([class*=size-])]:size-4 shrink-0",
+        "icon-sm":
+          "size-7 rounded-sm [&_svg:not([class*=size-])]:size-3.5 shrink-0",
+        "icon-xs":
+          "size-6 rounded-sm [&_svg:not([class*=size-])]:size-3 shrink-0",
       },
       autoHeight: {
         true: "",
@@ -99,7 +107,7 @@ const buttonVariants = cva(
           "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
 
-      // Icons opacity for default mode
+      // Icons opacity for input mode
       {
         variant: "outline",
         mode: "input",
@@ -168,7 +176,7 @@ const buttonVariants = cva(
         className: "shadow-xs shadow-black/5",
       },
 
-      // Shadow support
+      // Shadow support (icon mode)
       {
         variant: "primary",
         mode: "icon",
@@ -294,7 +302,7 @@ const buttonVariants = cva(
           "font-medium text-foreground [&_svg:not([role=img]):not([class*=text-])]:opacity-60 underline underline-offset-4 decoration-dashed decoration-1",
       },
 
-      // Ghost
+      // Ghost appearance
       {
         variant: "primary",
         appearance: "ghost",
@@ -313,11 +321,11 @@ const buttonVariants = cva(
         className: "text-muted-foreground",
       },
 
-      // Size
+      // Size + icon mode combinations
       {
         size: "sm",
         mode: "icon",
-        className: "w-7 h-7 p-0 [[&_svg:not([class*=size-])]:size-3.5",
+        className: "w-7 h-7 p-0 [&_svg:not([class*=size-])]:size-3.5",
       },
       {
         size: "md",
@@ -415,7 +423,7 @@ function Button({
 }
 
 interface ButtonArrowProps extends React.SVGProps<SVGSVGElement> {
-  icon?: LucideIcon; // Allows passing any Lucide icon
+  icon?: LucideIcon;
 }
 
 function ButtonArrow({
