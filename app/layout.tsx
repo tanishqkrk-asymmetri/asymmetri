@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Chakra_Petch } from "next/font/google";
 
+import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LS></LS>
         <TooltipProvider>
+          <Navbar />
           {children}
           <Footer></Footer>
         </TooltipProvider>

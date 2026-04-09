@@ -107,6 +107,21 @@
   .hero {
     @apply font-sans;
   }
+  .heroDark {
+    @apply border-border outline-ring/50;
+  }
+  .heroDark {
+    @apply bg-background text-foreground;
+    background-image:
+      linear-gradient(to right, #ffffff10 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff10 1px, transparent 1px);
+    background-size: 200px 300px;
+    background-position: center;
+  }
+
+  .heroDark {
+    @apply font-sans;
+  }
 }
 
 @keyframes fat-cursor-blink {
@@ -125,8 +140,7 @@
   width: 12px;
   height: 22px;
   border-radius: 2px;
-  background: #000000;
   animation: fat-cursor-blink 2000ms steps(1, end) infinite;
 }
-
+/*  */
 /*  */
