@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 
 export function Footer() {
   return (
-    <section className="flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red min-h-screen w-full">
+    <section className="flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red min-h-screen w-full z-99">
       <h2 className="font-chakra-petch font-medium text-2xl lg:text-4xl xl:text-5xl">
         Let’s turn your ideas into <br /> beautiful asymmetry.
       </h2>

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Chakra_Petch } from "next/font/google";
+
+import { Footer } from "@/components/shared/footer";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import LS from "@/components/LS";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,7 +51,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <TooltipProvider>{children}</TooltipProvider>
+        <LS></LS>
+        <TooltipProvider>
+          {children}
+          <Footer></Footer>
+        </TooltipProvider>
       </body>
     </html>
   );
