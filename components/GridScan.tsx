@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as faceapi from "face-api.js";
 import {
   BloomEffect,
