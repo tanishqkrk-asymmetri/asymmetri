@@ -6,6 +6,7 @@ import { Footer } from "@/components/shared/footer";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import LS from "@/components/LS";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LS></LS>
         <TooltipProvider>
-          <Navbar />
           {children}
           <Footer></Footer>
         </TooltipProvider>

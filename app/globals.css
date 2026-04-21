@@ -113,11 +113,12 @@
   .heroDark {
     @apply bg-background text-foreground;
     background-image:
-      linear-gradient(to right, #ffffff10 1px, transparent 1px),
-      linear-gradient(to bottom, #ffffff10 1px, transparent 1px);
+      linear-gradient(to right, #ffffff30 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff30 1px, transparent 1px);
     background-size: 200px 300px;
     background-position: center;
   }
+  /*  */
 
   .heroDark {
     @apply font-sans;
