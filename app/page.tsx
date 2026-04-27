@@ -49,6 +49,11 @@ export default function Home() {
     ["1000px", "0px"],
   );
   const secondSectionScale = useTransform(pageScroll, [0.2, 0.3], [0.7, 1.1]);
+  const secondSectionBG = useTransform(
+    pageScroll,
+    [0.2, 0.3],
+    ["#1D1D1D", "#000000"],
+  );
   const secondSectionText = useTransform(pageScroll, [0.3, 0.32], [0, 1]);
   const secondSectionLines = useTransform(pageScroll, [0.32, 0.33], [0, 1]);
 
@@ -162,6 +167,130 @@ export default function Home() {
   );
 
   const sixthSectionTitleBG = useTransform(pageScroll, [0.84, 0.85], [0, 1]);
+
+  const testimonialLayerOpacity = useTransform(pageScroll, [0.87, 0.9], [0, 1]);
+  const testimonialLayerY0 = useTransform(
+    pageScroll,
+    [0.868, 0.9],
+    ["1040px", "0px"],
+  );
+  const testimonialLayerY1 = useTransform(
+    pageScroll,
+    [0.87, 0.902],
+    ["980px", "0px"],
+  );
+  const testimonialLayerY2 = useTransform(
+    pageScroll,
+    [0.872, 0.904],
+    ["1120px", "0px"],
+  );
+  const testimonialLayerY3 = useTransform(
+    pageScroll,
+    [0.874, 0.906],
+    ["960px", "0px"],
+  );
+  const testimonialLayerY4 = useTransform(
+    pageScroll,
+    [0.876, 0.908],
+    ["1080px", "0px"],
+  );
+  const testimonialLayerY5 = useTransform(
+    pageScroll,
+    [0.878, 0.9],
+    ["920px", "0px"],
+  );
+  const testimonialLayerY6 = useTransform(
+    pageScroll,
+    [0.88, 0.91],
+    ["1160px", "0px"],
+  );
+  const testimonialLayerY7 = useTransform(
+    pageScroll,
+    [0.882, 0.914],
+    ["940px", "0px"],
+  );
+  const testimonialLayerY8 = useTransform(
+    pageScroll,
+    [0.8, 0.9],
+    ["1020px", "0px"],
+  );
+
+  const testimonialSlots = [
+    { left: "16%", top: "24%" },
+    { left: "84%", top: "24%" },
+    { left: "14%", top: "50%" },
+    { left: "86%", top: "50%" },
+    { left: "20%", top: "76%" },
+    { left: "80%", top: "76%" },
+    { left: "50%", top: "16%" },
+    { left: "50%", top: "84%" },
+  ];
+
+  const [testimonials, setTestimonials] = useState([
+    {
+      company: "TechNova Solutions",
+      testimonial:
+        "Working with this team has completely transformed our digital presence. Their attention to detail and commitment to quality is unmatched.",
+      image: "https://randomuser.me/api/portraits/women/45.jpg",
+      layerY: testimonialLayerY0,
+    },
+    {
+      company: "GreenLeaf Marketing",
+      testimonial:
+        "Their innovative strategies helped us grow our customer base faster than we imagined. Highly professional and reliable.",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      layerY: testimonialLayerY1,
+    },
+    {
+      company: "UrbanBuild Co.",
+      testimonial:
+        "From start to finish, the experience was seamless. The results exceeded our expectations in every way.",
+      image: "https://randomuser.me/api/portraits/women/68.jpg",
+      layerY: testimonialLayerY2,
+    },
+    {
+      company: "FinEdge Consulting",
+      testimonial:
+        "A truly outstanding service. Their expertise and dedication made a significant impact on our business growth.",
+      image: "https://randomuser.me/api/portraits/men/75.jpg",
+      layerY: testimonialLayerY3,
+    },
+    {
+      company: "BrightPath Education",
+      testimonial:
+        "We saw immediate improvements after implementing their solutions. The team is knowledgeable and easy to work with.",
+      image: "https://randomuser.me/api/portraits/women/22.jpg",
+      layerY: testimonialLayerY4,
+    },
+    {
+      company: "BlueOrbit Labs",
+      testimonial:
+        "Their sprint-based process kept us aligned and shipping every week. It felt like our internal team got stronger overnight.",
+      image: "https://randomuser.me/api/portraits/men/11.jpg",
+      layerY: testimonialLayerY5,
+    },
+    {
+      company: "Lumen Health",
+      testimonial:
+        "We needed clarity, speed, and polish. They delivered all three with a calm, collaborative workflow from kickoff to launch.",
+      image: "https://randomuser.me/api/portraits/women/9.jpg",
+      layerY: testimonialLayerY6,
+    },
+    {
+      company: "Northline Retail",
+      testimonial:
+        "The redesign helped customers find products faster and boosted conversions right away. The quality of execution was excellent.",
+      image: "https://randomuser.me/api/portraits/men/57.jpg",
+      layerY: testimonialLayerY7,
+    },
+    {
+      company: "Astra Mobility",
+      testimonial:
+        "They translated complex technical requirements into a product experience that feels simple, fast, and dependable.",
+      image: "https://randomuser.me/api/portraits/women/30.jpg",
+      layerY: testimonialLayerY8,
+    },
+  ]);
 
   const footerSectionY = useTransform(
     pageScroll,
@@ -733,8 +862,9 @@ export default function Home() {
           style={{
             y: secondSectionOpacity,
             scale: secondSectionScale,
+            background: secondSectionBG,
           }}
-          className="min-h-screen bg-black z-999 fixed top-0 left-0 w-screen  pointer-events-none "
+          className="min-h-screen bg-black z-999 fixed top-0 left-0 w-screen  pointer-events-none rounded-lg"
         >
           <motion.div
             style={{
@@ -1328,6 +1458,86 @@ export default function Home() {
           }}
         >
           <FatCursors color="#FFFFFF50" scale={1} min={1}></FatCursors>
+
+          {testimonials.map((x, i) => {
+            const slot = testimonialSlots[(i - 1) % testimonialSlots.length];
+            return (
+              <motion.div
+                style={{
+                  y: x.layerY,
+                  opacity: testimonialLayerOpacity,
+                }}
+                animate={{
+                  top: i === 0 ? "50%" : slot.top,
+                  left: i === 0 ? "50%" : slot.left,
+                  scale: i === 0 ? 1 : 0.42,
+                }}
+                transition={{
+                  duration: 1,
+                  ease: "easeInOut",
+                }}
+                key={x.company}
+                onClick={() => {
+                  if (i === 0) return;
+                  const newArray = [
+                    x,
+                    ...testimonials.filter((y) => y.company !== x.company),
+                  ];
+                  setTestimonials(newArray);
+                }}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 font-chakra-petch z-9999999999 ${i === 0 ? "cursor-default" : "cursor-pointer"}`}
+              >
+                <img
+                  src={x.image}
+                  className={`w-64 duration-500 ${i === 0 ? "grayscale-0" : "grayscale"}`}
+                  alt=""
+                />
+                <AnimatePresence>
+                  {i === 0 && (
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      exit={{
+                        opacity: 0,
+                      }}
+                      transition={{
+                        delay: 0.8,
+                      }}
+                      className="absolute left-[calc(100%+0.75rem)] top-0 flex flex-col justify-start items-start gap-6"
+                    >
+                      <div className="w-40 text-white text-sm ">
+                        {x.testimonial}
+                      </div>
+                      <div className="w-40 text-asymmetri-red text-sm z-9999999">
+                        <ScrambledText
+                          className="z-999999 "
+                          radius={100}
+                          style={{
+                            color: "inherit",
+                            fontSize: "inherit",
+                            width: "100%",
+                            fontFamily: "Chakra Petch",
+                            textAlign: "left",
+                            margin: "0",
+                          }}
+                          duration={3}
+                          speed={0.9}
+                          scrambleChars=".:-"
+                        >
+                          {x.company}
+                        </ScrambledText>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+
           <motion.div
             style={{
               opacity: sixthSectionTitleBG,
