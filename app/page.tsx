@@ -45,14 +45,14 @@ export default function Home() {
 
   const secondSectionOpacity = useTransform(
     pageScroll,
-    [0.2, 0.3],
+    [0.1, 0.2],
     ["1000px", "0px"],
   );
   const secondSectionScale = useTransform(pageScroll, [0.2, 0.3], [0.7, 1.1]);
   const secondSectionBG = useTransform(
     pageScroll,
     [0.2, 0.3],
-    ["#1D1D1D", "#000000"],
+    ["#0a0a0a", "#000000"],
   );
   const secondSectionText = useTransform(pageScroll, [0.3, 0.32], [0, 1]);
   const secondSectionLines = useTransform(pageScroll, [0.32, 0.33], [0, 1]);
@@ -76,6 +76,37 @@ export default function Home() {
   const workCard4 = useTransform(pageScroll, [0.48, 0.49], [0, 1]);
   const workCard5 = useTransform(pageScroll, [0.49, 0.5], [0, 1]);
   const workCard6 = useTransform(pageScroll, [0.5, 0.51], [0, 1]);
+
+  const workCard1Pointer = useTransform(
+    pageScroll,
+    [0.45, 0.46],
+    ["none", "all"],
+  );
+  const workCard2Pointer = useTransform(
+    pageScroll,
+    [0.46, 0.47],
+    ["none", "all"],
+  );
+  const workCard3Pointer = useTransform(
+    pageScroll,
+    [0.47, 0.48],
+    ["none", "all"],
+  );
+  const workCard4Pointer = useTransform(
+    pageScroll,
+    [0.48, 0.49],
+    ["none", "all"],
+  );
+  const workCard5Pointer = useTransform(
+    pageScroll,
+    [0.49, 0.5],
+    ["none", "all"],
+  );
+  const workCard6Pointer = useTransform(
+    pageScroll,
+    [0.5, 0.51],
+    ["none", "all"],
+  );
 
   const fourthSectionOpacity = useTransform(
     pageScroll,
@@ -206,7 +237,7 @@ export default function Home() {
   );
   const testimonialLayerY7 = useTransform(
     pageScroll,
-    [0.882, 0.914],
+    [0.882, 0.899],
     ["940px", "0px"],
   );
   const testimonialLayerY8 = useTransform(
@@ -306,6 +337,8 @@ export default function Home() {
     [0.98, 0.99],
     [0, 1],
   );
+
+  const [entry, setEntry] = useState(false);
 
   const [randomColorA, setRandomColorA] = useState("#FFFFFF");
   const [randomColorB, setRandomColorB] = useState("#FFFFFF");
@@ -420,9 +453,10 @@ export default function Home() {
       local = local + 1;
       setLoaderPct(local);
       if (local === 100) {
+        setEntry(true);
         clearInterval(incrementTimer);
       }
-    }, 10);
+    }, 20);
     return () => clearInterval(incrementTimer);
   }, []);
 
@@ -440,12 +474,14 @@ export default function Home() {
       image: "cyan",
       data: true,
       animation: workCard1,
+      pointer: workCard1Pointer,
     },
     {
       name: "Web Experiences",
       image: "pink",
       data: true,
       animation: workCard2,
+      pointer: workCard2Pointer,
     },
     {
       data: false,
@@ -457,6 +493,7 @@ export default function Home() {
       image: "blue",
       data: true,
       animation: workCard3,
+      pointer: workCard3Pointer,
     },
     {
       data: false,
@@ -471,6 +508,7 @@ export default function Home() {
       image: "green",
       data: true,
       animation: workCard4,
+      pointer: workCard4Pointer,
     },
     {
       data: false,
@@ -481,6 +519,7 @@ export default function Home() {
       image: "red",
       data: true,
       animation: workCard5,
+      pointer: workCard5Pointer,
     },
     {
       data: false,
@@ -663,14 +702,6 @@ export default function Home() {
 
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (selectedWorkCategory) {
-      // document.body.style.overflowY = "hidden";
-    } else {
-      // document.body.style.overflowY = "scroll";
-    }
-  }, [selectedWorkCategory]);
-
   return (
     <main>
       <Navbar />
@@ -678,14 +709,7 @@ export default function Home() {
         <motion.div className="relative">
           <motion.div
             style={{
-              scale:
-                blackBoxSizeState === 0
-                  ? 0
-                  : blackBoxSizeState === 1
-                    ? 0.25
-                    : blackBoxSizeState === 2
-                      ? 1.2
-                      : 1,
+              scale: loaderPct === 100 ? 1.2 : 0,
             }}
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-screen bg-black z-9 h-screen duration-1400 ease-in-out overflow-hidden"
           >
@@ -694,7 +718,7 @@ export default function Home() {
                 width: 0,
               }}
               animate={{
-                width: blackBoxSizeState === 2 ? 400 : 0,
+                width: loaderPct === 100 ? 400 : 0,
               }}
               transition={{
                 duration: 0.9,
@@ -707,7 +731,7 @@ export default function Home() {
                 width: 0,
               }}
               animate={{
-                width: blackBoxSizeState === 2 ? 400 : 0,
+                width: loaderPct === 100 ? 400 : 0,
               }}
               transition={{
                 duration: 0.9,
@@ -720,7 +744,7 @@ export default function Home() {
                 opacity: 0,
               }}
               animate={{
-                opacity: blackBoxSizeState === 2 ? 1 : 0,
+                opacity: loaderPct === 100 ? 1 : 0,
               }}
               transition={{
                 duration: 1,
@@ -735,7 +759,7 @@ export default function Home() {
                 opacity: 0,
               }}
               animate={{
-                opacity: blackBoxSizeState === 2 ? 1 : 0,
+                opacity: loaderPct === 100 ? 1 : 0,
               }}
               transition={{
                 duration: 1,
@@ -751,7 +775,7 @@ export default function Home() {
                 opacity: 0,
               }}
               animate={{
-                opacity: blackBoxSizeState === 2 ? 1 : 0,
+                opacity: loaderPct === 100 ? 1 : 0,
               }}
               transition={{
                 duration: 1,
@@ -768,7 +792,7 @@ export default function Home() {
                 opacity: 0,
               }}
               animate={{
-                opacity: blackBoxSizeState === 2 ? 1 : 0,
+                opacity: loaderPct === 100 ? 1 : 0,
               }}
               transition={{
                 duration: 1,
@@ -851,7 +875,7 @@ export default function Home() {
               className="absolute top-1/2 left-1/2 translate-y-10 -translate-x-1/2"
             >
               <span className="text-asymmetri-red text-sm font-mono tabular-nums ">
-                {loaderPct === 100 ? "Scroll down to continue" : loaderPct}
+                {loaderPct === 100 ? "100" : loaderPct}
               </span>
             </div>
           </div>
@@ -888,7 +912,7 @@ export default function Home() {
               spark emotion
             </motion.p>
           </motion.div>
-          <FatCursors color="#cd171770" scale={0.5} min={10}></FatCursors>
+          <FatCursors color="#cd171770" scale={0.3} min={16}></FatCursors>
         </motion.div>
         <div
           id="pixelLoader"
@@ -1203,7 +1227,7 @@ export default function Home() {
                   <motion.div
                     style={{
                       opacity: x.animation,
-                      pointerEvents: thirdSectionClick,
+                      pointerEvents: x.pointer,
                     }}
                     onClick={() => {
                       if (x.name) {
@@ -1426,28 +1450,7 @@ export default function Home() {
                 opacity: fourthSectionFinalOpacity,
               }}
               className="relative w-full h-full  flex justify-center items-center pointer-events-none "
-            >
-              <ShapeBlur
-                variation={2}
-                pixelRatioProp={1}
-                shapeSize={1.3}
-                roundness={1}
-                borderSize={0.5}
-                circleSize={0}
-                circleEdge={1}
-              />
-              {/* <Cubes
-                gridSize={7}
-                maxAngle={60}
-                radius={3}
-                borderStyle="2px dotted #ffffff60"
-                faceColor="#000000"
-                rippleColor="#cd1717"
-                rippleSpeed={2}
-                autoAnimate
-                rippleOnClick
-              /> */}
-            </motion.div>
+            ></motion.div>
           </motion.div>
         </motion.div>
         <motion.div
