@@ -24,3 +24,4 @@ bun run build
 
 bun run typecheck
 bunx lint-staged
+
