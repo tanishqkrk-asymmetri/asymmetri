@@ -40,7 +40,7 @@ export function FatCursors({
   }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-99999 ">
+    <div className="pointer-events-none absolute inset-0 z-[1]">
       {cursors.map((c) => (
         <span
           key={c.id}
