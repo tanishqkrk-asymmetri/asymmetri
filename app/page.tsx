@@ -47,7 +47,9 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const tabletQuery = window.matchMedia("(min-width: 768px) and (max-width: 1279px)");
+    const tabletQuery = window.matchMedia(
+      "(min-width: 768px) and (max-width: 1279px)",
+    );
     const updateTabletState = (event?: MediaQueryListEvent) => {
       setIsTablet(event ? event.matches : tabletQuery.matches);
     };
@@ -97,11 +99,7 @@ export default function Home() {
     [0, 0.2, 0.3],
     ["#0a0a0a", "#0a0a0a", "#000000"],
   );
-  const secondSectionText = useTransform(
-    pageScroll,
-    [0, 0.3, 0.32],
-    [0, 0, 1],
-  );
+  const secondSectionText = useTransform(pageScroll, [0, 0.3, 0.32], [0, 0, 1]);
   const secondSectionLines = useTransform(
     pageScroll,
     [0, 0.32, 0.33],
@@ -261,9 +259,7 @@ export default function Home() {
   const sixthSectionY = useTransform(
     pageScroll,
     [0, 0.8, 0.83],
-    isCompact
-      ? [tabletBelowFoldPx, tabletBelowFoldPx, 0]
-      : [1000, 1000, 0],
+    isCompact ? [tabletBelowFoldPx, tabletBelowFoldPx, 0] : [1000, 1000, 0],
   );
   const sixthSectionScale = useTransform(
     pageScroll,
@@ -454,9 +450,7 @@ export default function Home() {
   const footerSectionY = useTransform(
     pageScroll,
     [0, 0.9, 0.94],
-    isCompact
-      ? [tabletBelowFoldPx, tabletBelowFoldPx, 0]
-      : [1000, 1000, 0],
+    isCompact ? [tabletBelowFoldPx, tabletBelowFoldPx, 0] : [1000, 1000, 0],
   );
   const footerSectionScale = useTransform(
     pageScroll,
@@ -474,7 +468,11 @@ export default function Home() {
 
   const [entry, setEntry] = useState(false);
 
-  const [gridColors, setGridColors] = useState({ a: "#FFFFFF", b: "#FFFFFF", c: "#FFFFFF" });
+  const [gridColors, setGridColors] = useState({
+    a: "#FFFFFF",
+    b: "#FFFFFF",
+    c: "#FFFFFF",
+  });
   const prevBlackBoxRef = useRef(0);
   const prevWhiteBgRef = useRef(false);
 
@@ -1368,14 +1366,13 @@ export default function Home() {
                 x: "-100%",
               }}
               animate={{
-                x:
-                  categoryChanged
-                    ? "0%"
-                    : isMobile
-                      ? "-100%"
-                      : isCompact
-                        ? "-64%"
-                        : "-68%",
+                x: categoryChanged
+                  ? "0%"
+                  : isMobile
+                    ? "-100%"
+                    : isCompact
+                      ? "-64%"
+                      : "-68%",
               }}
               exit={{
                 x: "-100%",
@@ -1392,7 +1389,8 @@ export default function Home() {
         <motion.div
           style={{
             opacity: thirdSectionOpacity,
-            pointerEvents: thirdSectionClick,
+            /** Mobile: full-viewport fixed + pointer-events all captures touch and blocks page scroll */
+            pointerEvents: isMobile ? "none" : thirdSectionClick,
           }}
           className={
             isCompact
@@ -1405,8 +1403,16 @@ export default function Home() {
           {!isMobile && <FatCursors color="#000000" scale={0.5} min={1} />}
 
           {isCompact ? (
-            <>
-              <div className={`relative z-[1000] flex shrink-0 flex-col items-center justify-center text-center ${isMobile ? "max-w-[min(19rem,calc(100vw-3rem))] px-3" : "px-2 sm:max-w-[min(40vw,280px)] lg:max-w-[min(34vw,340px)]"}`}>
+            <div
+              className={
+                isMobile
+                  ? "pointer-events-auto flex min-h-0 w-full max-w-full flex-1 flex-col items-center justify-center gap-4"
+                  : "contents"
+              }
+            >
+              <div
+                className={`relative z-[1000] flex shrink-0 flex-col items-center justify-center text-center ${isMobile ? "max-w-[min(19rem,calc(100vw-3rem))] px-3" : "px-2 sm:max-w-[min(40vw,280px)] lg:max-w-[min(34vw,340px)]"}`}
+              >
                 <ScrambledText
                   className={`font-semibold text-asymmetri-red font-chakra-petch ${isMobile ? "text-3xl" : "text-4xl sm:text-5xl lg:text-6xl xl:text-7xl"}`}
                   radius={100}
@@ -1430,14 +1436,15 @@ export default function Home() {
                   .filter(
                     (
                       c,
-                    ): c is (typeof workCategories)[number] & { name: string } =>
-                      Boolean(c.data && "name" in c && c.name),
+                    ): c is (typeof workCategories)[number] & {
+                      name: string;
+                    } => Boolean(c.data && "name" in c && c.name),
                   )
                   .map((x) => (
                     <motion.div
                       style={{
                         opacity: x.animation,
-                        pointerEvents: x.pointer,
+                        pointerEvents: isMobile ? "auto" : x.pointer,
                       }}
                       onClick={() => {
                         setSelectedWorkCategory(x.name);
@@ -1462,7 +1469,7 @@ export default function Home() {
                     </motion.div>
                   ))}
               </div>
-            </>
+            </div>
           ) : (
             <>
               <div className="absolute top-0 left-0 h-screen w-screen grid grid-cols-4 grid-rows-3 px-26">
@@ -1478,9 +1485,7 @@ export default function Home() {
                           if (x.name) {
                             setSelectedWorkCategory(x.name);
                             setSelectedProject(
-                              projects[
-                                x.name as keyof typeof projects
-                              ][0].name,
+                              projects[x.name as keyof typeof projects][0].name,
                             );
                           }
                         }}
@@ -1534,7 +1539,7 @@ export default function Home() {
           style={{
             y: fourthSectionOpacity,
             background: fourthSectionGradient,
-            pointerEvents: fourthSectionPointer,
+            pointerEvents: isMobile ? "none" : fourthSectionPointer,
           }}
           className={`bg-black w-screen fixed top-0 left-0 z-9999 flex justify-between items-center flex-col ${isCompact ? (isMobile ? "h-[100dvh] max-h-[100dvh] overflow-hidden px-7 sm:px-8" : "h-[100dvh] max-h-[100dvh] overflow-hidden px-8 sm:px-12") : "h-screen"}`}
         >
@@ -1551,7 +1556,7 @@ export default function Home() {
             style={{
               opacity: fifthSectionSecondTitle2,
             }}
-            className={`fixed z-99999 font-chakra-petch font-bold text-black ${isMobile ? "bottom-[calc(env(safe-area-inset-bottom,0)+3rem)] left-1/2 w-[min(17rem,calc(100vw-3rem))] max-w-[min(17rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-xs text-pretty" : isCompact ? "bottom-[calc(env(safe-area-inset-bottom,0)+4rem)] left-1/2 w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-sm text-pretty" : "bottom-36 right-48 max-w-xs text-xl"}`}
+            className={`fixed z-99999 font-chakra-petch font-bold text-black ${isMobile ? "pointer-events-none bottom-[calc(env(safe-area-inset-bottom,0)+3rem)] left-1/2 w-[min(17rem,calc(100vw-3rem))] max-w-[min(17rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-xs text-pretty" : isCompact ? "bottom-[calc(env(safe-area-inset-bottom,0)+4rem)] left-1/2 w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-sm text-pretty" : "bottom-36 right-48 max-w-xs text-xl"}`}
           >
             Stick around — you might find exactly what your project needs.
           </motion.div>
@@ -1559,7 +1564,7 @@ export default function Home() {
             style={{
               opacity: fifthSectionTitle,
             }}
-            className={`fixed z-99999 font-chakra-petch font-bold text-asymmetri-red ${isMobile ? "left-1/2 top-[max(2.75rem,calc(48svh-10rem))] w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-lg" : isCompact ? "left-1/2 top-4 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-2xl" : "left-0 right-0 top-20 px-4 text-center text-5xl"}`}
+            className={`fixed z-99999 font-chakra-petch font-bold text-asymmetri-red ${isMobile ? "pointer-events-none left-1/2 top-[max(2.75rem,calc(48svh-10rem))] w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-lg" : isCompact ? "left-1/2 top-4 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-2xl" : "left-0 right-0 top-20 px-4 text-center text-5xl"}`}
           >
             Hi! I'm Nandagopal, founder of
           </motion.div>
@@ -1580,7 +1585,7 @@ export default function Home() {
             style={{
               opacity: fourthSectionFinalOpacity,
             }}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 bg-linear-360 from-asymmetri-red/30 to-transparent w-[110vw] rounded-[6em] "
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 bg-linear-360 from-asymmetri-red/30 to-transparent w-[110vw] rounded-[6em] max-md:rounded-none"
           ></motion.div>
 
           <motion.div
@@ -1589,7 +1594,7 @@ export default function Home() {
               y: fourthSectionY,
               scale: fourthSectionScale,
             }}
-            className={`z-99999 font-chakra-petch text-center text-white ${isMobile ? "mx-auto mt-[min(16vh,100px)] mb-auto w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] px-3 text-pretty text-lg leading-snug" : isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-6xl"}`}
+            className={`z-99999 font-chakra-petch text-center text-white ${isMobile ? "pointer-events-auto mx-auto mt-[min(16vh,100px)] mb-auto w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] px-3 text-pretty text-lg leading-snug" : isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-6xl"}`}
           >
             The ideas that define
             <motion.span
@@ -1624,7 +1629,7 @@ export default function Home() {
               opacity: fourthSectionData,
               y: fourthSectionDataY,
             }}
-            className={`relative z-999999 w-full border-white ${isMobile ? "mx-auto flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-5 overflow-y-auto overscroll-y-contain px-4 pb-[env(safe-area-inset-bottom,0)] pt-3" : isCompact ? "mx-auto flex min-h-0 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] flex-1 flex-col items-center justify-start gap-8 overflow-y-auto overscroll-y-contain px-3 pb-[env(safe-area-inset-bottom,0)] pt-3" : "flex flex-row items-center justify-between gap-16 p-16 pt-0"}`}
+            className={`relative z-999999 w-full border-white ${isMobile ? "pointer-events-auto mx-auto flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-5 overflow-y-auto overscroll-y-contain px-4 pb-[env(safe-area-inset-bottom,0)] pt-3" : isCompact ? "mx-auto flex min-h-0 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] flex-1 flex-col items-center justify-start gap-8 overflow-y-auto overscroll-y-contain px-3 pb-[env(safe-area-inset-bottom,0)] pt-3" : "flex flex-row items-center justify-between gap-16 p-16 pt-0"}`}
           >
             <motion.div
               style={{
@@ -1717,18 +1722,22 @@ export default function Home() {
           </motion.div>
         </motion.div>
         <motion.div
-          className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 rounded-xl flex min-h-0 flex-col ${isMobile ? "h-[100dvh] max-h-[100dvh] items-center justify-center overflow-x-hidden overflow-y-auto overscroll-y-contain touch-pan-y px-0 pb-28 pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden " + (isCompact ? "h-[100dvh] max-h-[100dvh]" : "h-screen")}`}
+          className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 flex min-h-0 flex-col ${isMobile ? "h-[100dvh] max-h-[100dvh] items-stretch overflow-x-hidden overflow-hidden pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden  " + (isCompact ? "h-[100dvh] max-h-[100dvh]" : "h-screen")}`}
           style={
             isMobile
-              ? { y: sixthSectionY, pointerEvents: sixthSectionPointer }
-              : { y: sixthSectionY, scale: sixthSectionScale, pointerEvents: sixthSectionPointer }
+              ? { y: sixthSectionY, pointerEvents: "none" }
+              : {
+                  y: sixthSectionY,
+                  scale: sixthSectionScale,
+                  pointerEvents: sixthSectionPointer,
+                }
           }
         >
           <motion.div
             style={{
               opacity: sixthSectionTitleBG,
             }}
-            className="heroDark pointer-events-none absolute inset-0 z-0 bg-black"
+            className="heroDark pointer-events-none absolute inset-0 z-0 bg-black max-md:hidden"
           />
 
           {!isMobile && (
@@ -1737,28 +1746,32 @@ export default function Home() {
 
           {isMobile ? (
             <>
-              <motion.div
-                style={{
-                  opacity: testimonialLayerOpacity,
-                }}
-                className="relative z-10 mb-5 max-w-[min(18rem,calc(100vw-3rem))] shrink-0 px-6 text-center font-chakra-petch text-xl leading-snug text-white"
-              >
-                Feedback from the folks who know us best.
-              </motion.div>
+              <div className="pointer-events-auto flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overscroll-y-contain touch-pan-y px-0 pb-28">
+                <motion.div
+                  style={{
+                    opacity: testimonialLayerOpacity,
+                  }}
+                  className="relative z-10 mb-5 max-w-[min(18rem,calc(100vw-3rem))] shrink-0 px-6 text-center font-chakra-petch text-xl leading-snug text-white"
+                >
+                  Feedback from the folks who know us best.
+                </motion.div>
 
-              <motion.div
-                style={{ opacity: testimonialLayerOpacity }}
-                className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2"
-              >
-                <MobileTestimonialsCarousel
-                  items={testimonials.map(({ company, testimonial, image }) => ({
-                    company,
-                    testimonial,
-                    image,
-                  }))}
-                  className="mx-auto w-full max-w-[min(19rem,calc(100vw-3rem))] touch-pan-y"
-                />
-              </motion.div>
+                <motion.div
+                  style={{ opacity: testimonialLayerOpacity }}
+                  className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2"
+                >
+                  <MobileTestimonialsCarousel
+                    items={testimonials.map(
+                      ({ company, testimonial, image }) => ({
+                        company,
+                        testimonial,
+                        image,
+                      }),
+                    )}
+                    className="w-full min-w-0 max-w-full touch-pan-x"
+                  />
+                </motion.div>
+              </div>
 
               <motion.div
                 style={{
@@ -1784,12 +1797,7 @@ export default function Home() {
                     animate={{
                       top: i === 0 ? "50%" : slot.top,
                       left: i === 0 ? "50%" : slot.left,
-                      scale:
-                        i === 0
-                          ? 1
-                          : isCompact
-                            ? 0.5
-                            : 0.42,
+                      scale: i === 0 ? 1 : isCompact ? 0.5 : 0.42,
                     }}
                     transition={{
                       duration: isCompact ? 0.75 : 1,
@@ -1890,55 +1898,65 @@ export default function Home() {
           style={{
             y: footerSectionY,
             scale: footerSectionScale,
-            pointerEvents: footerSectionPointer,
+            pointerEvents: isMobile ? "none" : footerSectionPointer,
           }}
           className={`flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red z-999999999 fixed top-0 left-0 w-screen rounded-lg ${isCompact ? `min-h-0 h-[100dvh] max-h-[100dvh] overflow-hidden pb-[max(env(safe-area-inset-bottom),0.75rem)]${isMobile ? " px-7 pt-[max(env(safe-area-inset-top),0.5rem)]" : " px-4"}` : "min-h-screen h-screen"}`}
         >
-          <motion.h2
-            style={{
-              opacity: footerSectionTitle,
-            }}
-            className={`font-chakra-petch text-white font-medium ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-2 text-xl leading-snug" : isCompact ? "text-3xl px-6 max-w-2xl" : "text-2xl lg:text-4xl xl:text-5xl"}`}
+          <div
+            className={
+              isMobile
+                ? "pointer-events-auto flex w-full flex-col items-center justify-center gap-6 text-center xl:gap-8"
+                : "contents"
+            }
           >
-            Let’s turn your ideas into <br /> beautiful asymmetry.
-          </motion.h2>
+            <motion.h2
+              style={{
+                opacity: footerSectionTitle,
+              }}
+              className={`font-chakra-petch text-white font-medium ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-2 text-xl leading-snug" : isCompact ? "text-3xl px-6 max-w-2xl" : "text-2xl lg:text-4xl xl:text-5xl"}`}
+            >
+              Let’s turn your ideas into <br /> beautiful asymmetry.
+            </motion.h2>
 
-          <div className={`flex ${isCompact ? "flex-col" : "flex-row"} gap-2 xl:gap-4`}>
-            <motion.div
-              style={{
-                opacity: footerSectionButtonA,
-              }}
-              className=""
+            <div
+              className={`flex ${isCompact ? "flex-col" : "flex-row"} gap-2 xl:gap-4`}
             >
-              <Button
-                size="lg"
-                className="font-chakra-petch text-asymmetri-red py-4 font-semibold"
+              <motion.div
+                style={{
+                  opacity: footerSectionButtonA,
+                }}
+                className=""
               >
-                Get in touch
-              </Button>
-            </motion.div>
-            <motion.div
+                <Button
+                  size="lg"
+                  className="font-chakra-petch text-asymmetri-red py-4 font-semibold"
+                >
+                  Get in touch
+                </Button>
+              </motion.div>
+              <motion.div
+                style={{
+                  opacity: footerSectionButtonB,
+                }}
+              >
+                <Button
+                  size="lg"
+                  className="font-chakra-petch bg-transparent font-semibold"
+                  variant={"outline"}
+                >
+                  Join our team
+                </Button>
+              </motion.div>
+            </div>
+            <motion.img
               style={{
-                opacity: footerSectionButtonB,
+                opacity: footerSectionButtonLogo,
               }}
-            >
-              <Button
-                size="lg"
-                className="font-chakra-petch bg-transparent font-semibold"
-                variant={"outline"}
-              >
-                Join our team
-              </Button>
-            </motion.div>
+              src="/logo.png"
+              className={`fixed left-1/2 -translate-x-1/2 ${isMobile ? "w-[min(100%,16rem)] bottom-8" : isCompact ? "w-4xl bottom-10" : "w-6xl bottom-16"}`}
+              alt=""
+            />
           </div>
-          <motion.img
-            style={{
-              opacity: footerSectionButtonLogo,
-            }}
-            src="/logo.png"
-            className={`fixed left-1/2 -translate-x-1/2 ${isMobile ? "w-[min(100%,16rem)] bottom-8" : isCompact ? "w-4xl bottom-10" : "w-6xl bottom-16"}`}
-            alt=""
-          />
         </motion.section>
         <div className="min-h-[800vh]"></div>
       </section>

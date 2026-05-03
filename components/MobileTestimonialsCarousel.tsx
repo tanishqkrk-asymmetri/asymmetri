@@ -7,6 +7,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 export type MobileTestimonialSlide = {
   company: string;
@@ -24,8 +25,9 @@ export function MobileTestimonialsCarousel({
   const plugins = React.useMemo(
     () => [
       Autoplay({
-        delay: 4200,
-        stopOnInteraction: false,
+        delay: 2200,
+        /** Must be true: with false, timer keeps firing during touch and fights Embla (snaps / hidden slides). */
+        stopOnInteraction: true,
         stopOnMouseEnter: false,
         stopOnFocusIn: false,
       }),
@@ -35,21 +37,19 @@ export function MobileTestimonialsCarousel({
 
   return (
     <Carousel
-      className={className}
+      className={cn("w-full touch-pan-x touch-manipulation", className)}
       opts={{
         loop: true,
         align: "center",
         slidesToScroll: 1,
+        duration: 18,
       }}
       plugins={plugins}
     >
-      <CarouselContent className="-ml-3 py-1">
+      <CarouselContent className="touch-pan-x py-1">
         {items.map((x) => (
-          <CarouselItem
-            key={x.company}
-            className="basis-[min(88vw,calc(100vw-3rem))] pl-3 sm:basis-[min(88vw,340px)]"
-          >
-            <div className="flex h-full flex-col rounded-xl border border-white/15 bg-white/[0.04] px-4 py-5">
+          <CarouselItem key={x.company}>
+            <div className="relative flex max-h-[min(40dvh,280px)] touch-pan-y flex-col overflow-y-auto overscroll-y-contain rounded-xl border border-white/15 bg-white/[0.04] px-4 py-5">
               <div className="flex items-start gap-3">
                 <img
                   src={x.image}
