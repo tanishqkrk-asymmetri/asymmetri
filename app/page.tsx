@@ -171,6 +171,11 @@ export default function Home() {
       : [1000, 1000, 0],
   );
 
+  const fourthSectionPointer = useTransform(
+    pageScroll,
+    [0, 0.55],
+    ["none", "all"],
+  );
   const fourthSectionText = useTransform(
     pageScroll,
     [0, 0.6, 0.61, 0.75],
@@ -248,6 +253,11 @@ export default function Home() {
     [0, 1, 0],
   );
 
+  const sixthSectionPointer = useTransform(
+    pageScroll,
+    [0, 0.82],
+    ["none", "all"],
+  );
   const sixthSectionY = useTransform(
     pageScroll,
     [0, 0.8, 0.83],
@@ -436,6 +446,11 @@ export default function Home() {
   ]);
 
   /** Clamp past scroll range: mixing calc() with px in Motion often snaps y to 0 before the footer segment. */
+  const footerSectionPointer = useTransform(
+    pageScroll,
+    [0, 0.92],
+    ["none", "all"],
+  );
   const footerSectionY = useTransform(
     pageScroll,
     [0, 0.9, 0.94],
@@ -459,37 +474,34 @@ export default function Home() {
 
   const [entry, setEntry] = useState(false);
 
-  const [randomColorA, setRandomColorA] = useState("#FFFFFF");
-  const [randomColorB, setRandomColorB] = useState("#FFFFFF");
-  const [randomColorC, setRandomColorC] = useState("#FFFFFF");
+  const [gridColors, setGridColors] = useState({ a: "#FFFFFF", b: "#FFFFFF", c: "#FFFFFF" });
+  const prevBlackBoxRef = useRef(0);
+  const prevWhiteBgRef = useRef(false);
 
   useMotionValueEvent(pageScroll, "change", (latest) => {
-    setRandomColorA(random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF");
-    setRandomColorB(random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF");
-    setRandomColorC(random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF");
+    // Only update grid colors when the grid is actually visible (scroll ~0.33–0.42)
+    if (latest > 0.3 && latest < 0.45) {
+      let nextA = random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF";
+      let nextB = random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF";
+      let nextC = random.choice(["#1D1D1D", "#000000"]) || "#FFFFFF";
 
-    if (latest > 0.39) {
-      setRandomColorA("#FFFFFF");
-    }
-    if (latest > 0.4) {
-      setRandomColorB("#FFFFFF");
-    }
-    if (latest > 0.41) {
-      setRandomColorC("#FFFFFF");
-      setWhiteBg(true);
-    }
-    if (latest < 0.65) {
-      setWhiteBg(false);
+      if (latest > 0.39) nextA = "#FFFFFF";
+      if (latest > 0.4) nextB = "#FFFFFF";
+      if (latest > 0.41) nextC = "#FFFFFF";
+
+      setGridColors({ a: nextA, b: nextB, c: nextC });
     }
 
-    if (latest > 0) {
-      setBlackBoxSizeState(0);
+    const nextWhiteBg = latest > 0.41 && latest >= 0.65;
+    if (nextWhiteBg !== prevWhiteBgRef.current) {
+      prevWhiteBgRef.current = nextWhiteBg;
+      setWhiteBg(nextWhiteBg);
     }
-    if (latest > 0.1) {
-      setBlackBoxSizeState(1);
-    }
-    if (latest > 0.16) {
-      setBlackBoxSizeState(2);
+
+    const nextBox = latest > 0.16 ? 2 : latest > 0.1 ? 1 : 0;
+    if (nextBox !== prevBlackBoxRef.current) {
+      prevBlackBoxRef.current = nextBox;
+      setBlackBoxSizeState(nextBox);
     }
   });
 
@@ -825,7 +837,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <section ref={pageRef} className="">
+      <section ref={pageRef} className="touch-pan-y">
         <motion.div className="relative">
           <motion.div
             style={{
@@ -952,28 +964,30 @@ export default function Home() {
               className="relative z-0 isolate"
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
-              <GridScan
-                scanGlow={0.6}
-                scanDirection="backward"
-                lineStyle="solid"
-                lineJitter={0}
-                enableGyro={!isCompact}
-                scanDuration={2}
-                scanDelay={1}
-                lineThickness={0.1}
-                linesColor="#888888"
-                gridScale={0.1}
-                scanColor="#cd1717"
-                scanOpacity={0.3}
-                enablePost
-                bloomIntensity={0.08}
-                chromaticAberration={0.002}
-                noiseIntensity={0.01}
-              />
+              {!isMobile && (
+                <GridScan
+                  scanGlow={0.6}
+                  scanDirection="backward"
+                  lineStyle="solid"
+                  lineJitter={0}
+                  enableGyro={!isCompact}
+                  scanDuration={2}
+                  scanDelay={1}
+                  lineThickness={0.1}
+                  linesColor="#888888"
+                  gridScale={0.1}
+                  scanColor="#cd1717"
+                  scanOpacity={0.3}
+                  enablePost={!isCompact}
+                  bloomIntensity={0.08}
+                  chromaticAberration={0.002}
+                  noiseIntensity={0.01}
+                />
+              )}
             </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
-            <FatCursors scale={isMobile ? 0.42 : 1} min={isMobile ? 2 : undefined} />
+            {!isMobile && <FatCursors scale={1} />}
             <motion.img
               onMouseEnter={() => {
                 PowerGlitch.glitch("#logo", {
@@ -1061,11 +1075,11 @@ export default function Home() {
               spark emotion
             </motion.span>
           </motion.div>
-          <FatCursors color="#cd171770" scale={isMobile ? 0.22 : 0.3} min={isMobile ? 12 : 16}></FatCursors>
+          {!isMobile && <FatCursors color="#cd171770" scale={0.3} min={16} />}
         </motion.div>
         <div
           id="pixelLoader"
-          className="min-h-screen w-screen  fixed top-0 left-0 z-999 grid grid-cols-5 grid-rows-3"
+          className="min-h-screen w-screen  fixed top-0 left-0 z-999 grid grid-cols-5 grid-rows-3 pointer-events-none"
         >
           {new Array(15).fill("").map((x, i) => (
             <motion.div
@@ -1074,9 +1088,9 @@ export default function Home() {
               style={{
                 opacity: secondSectionGrid,
                 background: random.choice([
-                  randomColorA,
-                  randomColorB,
-                  randomColorC,
+                  gridColors.a,
+                  gridColors.b,
+                  gridColors.c,
                 ]),
               }}
             ></motion.div>
@@ -1378,6 +1392,7 @@ export default function Home() {
         <motion.div
           style={{
             opacity: thirdSectionOpacity,
+            pointerEvents: thirdSectionClick,
           }}
           className={
             isCompact
@@ -1387,7 +1402,7 @@ export default function Home() {
               : "min-h-screen bg-white fixed top-0 left-0 w-screen z-999 flex justify-center items-center"
           }
         >
-          <FatCursors color="#000000" scale={isMobile ? 0.35 : 0.5} min={1}></FatCursors>
+          {!isMobile && <FatCursors color="#000000" scale={0.5} min={1} />}
 
           {isCompact ? (
             <>
@@ -1519,6 +1534,7 @@ export default function Home() {
           style={{
             y: fourthSectionOpacity,
             background: fourthSectionGradient,
+            pointerEvents: fourthSectionPointer,
           }}
           className={`bg-black w-screen fixed top-0 left-0 z-9999 flex justify-between items-center flex-col ${isCompact ? (isMobile ? "h-[100dvh] max-h-[100dvh] overflow-hidden px-7 sm:px-8" : "h-[100dvh] max-h-[100dvh] overflow-hidden px-8 sm:px-12") : "h-screen"}`}
         >
@@ -1704,8 +1720,8 @@ export default function Home() {
           className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 rounded-xl flex min-h-0 flex-col ${isMobile ? "h-[100dvh] max-h-[100dvh] items-center justify-center overflow-x-hidden overflow-y-auto overscroll-y-contain touch-pan-y px-0 pb-28 pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden " + (isCompact ? "h-[100dvh] max-h-[100dvh]" : "h-screen")}`}
           style={
             isMobile
-              ? { y: sixthSectionY }
-              : { y: sixthSectionY, scale: sixthSectionScale }
+              ? { y: sixthSectionY, pointerEvents: sixthSectionPointer }
+              : { y: sixthSectionY, scale: sixthSectionScale, pointerEvents: sixthSectionPointer }
           }
         >
           <motion.div
@@ -1874,6 +1890,7 @@ export default function Home() {
           style={{
             y: footerSectionY,
             scale: footerSectionScale,
+            pointerEvents: footerSectionPointer,
           }}
           className={`flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red z-999999999 fixed top-0 left-0 w-screen rounded-lg ${isCompact ? `min-h-0 h-[100dvh] max-h-[100dvh] overflow-hidden pb-[max(env(safe-area-inset-bottom),0.75rem)]${isMobile ? " px-7 pt-[max(env(safe-area-inset-top),0.5rem)]" : " px-4"}` : "min-h-screen h-screen"}`}
         >
