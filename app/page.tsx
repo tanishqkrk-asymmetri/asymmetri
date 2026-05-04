@@ -1539,7 +1539,7 @@ export default function Home() {
             background: fourthSectionGradient,
             pointerEvents: isMobile ? "none" : fourthSectionPointer,
           }}
-          className={`bg-black w-screen fixed top-0 left-0 z-9999 flex justify-between items-center flex-col ${isCompact ? (isMobile ? "h-[100dvh] max-h-[100dvh] overflow-hidden px-7 sm:px-8" : "h-[100dvh] max-h-[100dvh] overflow-hidden px-8 sm:px-12") : "h-screen"}`}
+          className={`bg-black w-screen fixed top-0 left-0 z-9999 flex min-h-0 justify-between items-center flex-col ${isCompact ? (isMobile ? "h-[100dvh] max-h-[100dvh] min-h-0 overflow-hidden px-7 sm:px-8" : "h-[100dvh] max-h-[100dvh] overflow-hidden px-8 sm:px-12") : "h-screen"}`}
         >
           <motion.div
             style={{
@@ -1583,127 +1583,244 @@ export default function Home() {
             style={{
               opacity: fourthSectionFinalOpacity,
             }}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 bg-linear-360 from-asymmetri-red/30 to-transparent w-[110vw] rounded-[6em] max-md:rounded-none"
-          ></motion.div>
-
-          <motion.div
-            style={{
-              opacity: fourthSectionText,
-              y: fourthSectionY,
-              scale: fourthSectionScale,
-            }}
-            className={`z-99999 font-chakra-petch text-center text-white ${isMobile ? "pointer-events-auto mx-auto mt-[min(16vh,100px)] mb-auto w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] px-3 text-pretty text-lg leading-snug" : isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-6xl"}`}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 bg-linear-360 from-asymmetri-red/30 to-transparent w-screen max-w-full  max-md:rounded-none"
           >
-            The ideas that define
-            <motion.span
-              style={{
-                color: fourthSectionColor,
-              }}
-              className=""
-            >
-              <ScrambledText
-                className="z-999999 text-white"
-                radius={100}
-                style={{
-                  color: "inherit",
-                  fontSize: "1.2em",
-                  width: "fit-content",
-                  fontFamily: "Chakra Petch",
-                  textAlign: "center",
-                  margin: "0",
-                  display: "inline",
-                }}
-                duration={3}
-                speed={0.9}
-                scrambleChars=".:-"
-              >
-                Asymmetri
-              </ScrambledText>
-            </motion.span>{" "}
-            and the mindset behind the work you see.
+            {" "}
           </motion.div>
-          <motion.div
-            style={{
-              opacity: fourthSectionData,
-              y: fourthSectionDataY,
-            }}
-            className={`relative z-999999 w-full border-white ${isMobile ? "pointer-events-auto mx-auto flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-5 overflow-y-auto overscroll-y-contain px-4 pb-[env(safe-area-inset-bottom,0)] pt-3" : isCompact ? "mx-auto flex min-h-0 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] flex-1 flex-col items-center justify-start gap-8 overflow-y-auto overscroll-y-contain px-3 pb-[env(safe-area-inset-bottom,0)] pt-3" : "flex flex-row items-center justify-between gap-16 p-16 pt-0"}`}
-          >
-            <motion.div
-              style={{
-                opacity: fourthSectionFinalOpacity,
-              }}
-              className={`w-full bg-white ${isCompact ? "absolute left-0 right-0 top-0 h-px" : "absolute left-0 top-0 h-px w-screen"}`}
-            ></motion.div>
-            <motion.div
-              style={{
-                opacity: fourthSectionFinalOpacity,
-              }}
-              className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
-            >
-              <div
-                className={`font-chakra-petch text-white pt-3 ${isMobile ? "text-xl" : isCompact ? "text-2xl" : "text-3xl"}`}
+
+          {isMobile ? (
+            <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
+              <motion.div
+                style={{
+                  opacity: fourthSectionText,
+                  y: fourthSectionY,
+                  scale: fourthSectionScale,
+                }}
+                className="z-99999 min-w-0 shrink-0 px-3 font-chakra-petch text-center text-white pointer-events-auto mx-auto mt-[min(12vh,72px)] mb-1 w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] text-pretty text-lg leading-snug"
               >
-                Philosophy
-              </div>
-              <div
-                className={`text-white font-chakra-petch ${isMobile ? "max-w-full text-xs overflow-y-auto max-h-[28vh]" : isCompact ? "max-w-full text-sm overflow-y-auto max-h-[22vh]" : "text-xl max-w-md"}`}
+                The ideas that define
+                <motion.span
+                  style={{
+                    color: fourthSectionColor,
+                  }}
+                  className=""
+                >
+                  <ScrambledText
+                    className="z-999999 text-white"
+                    radius={100}
+                    style={{
+                      color: "inherit",
+                      fontSize: "1.2em",
+                      width: "fit-content",
+                      fontFamily: "Chakra Petch",
+                      textAlign: "center",
+                      margin: "0",
+                      display: "inline",
+                    }}
+                    duration={3}
+                    speed={0.9}
+                    scrambleChars=".:-"
+                  >
+                    Asymmetri
+                  </ScrambledText>
+                </motion.span>{" "}
+                and the mindset behind the work you see.
+              </motion.div>
+              <motion.div
+                style={{
+                  opacity: fourthSectionData,
+                  y: fourthSectionDataY,
+                }}
+                className="relative z-999999 flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-4 overflow-y-auto overflow-x-hidden overscroll-y-contain px-4 pb-[max(6rem,env(safe-area-inset-bottom,0))] pt-2 pointer-events-auto mx-auto border-white"
               >
-                Our commitment goes beyond fleeting trends, we believe in making
-                tailor made products Our commitment goes beyond fleeting trends,
-                we believe in making tailor made products
-              </div>
-            </motion.div>
-            <div
-              className={`flex shrink-0 justify-center ${isMobile ? "w-full max-w-[180px]" : isCompact ? "w-full max-w-[220px]" : "w-1/3"}`}
-            >
-              <div className="relative isolate inline-block max-w-full overflow-hidden bg-black">
-                <motion.img
+                <motion.div
                   style={{
                     opacity: fourthSectionFinalOpacity,
                   }}
-                  src="/flip.png"
-                  alt=""
-                  className={`relative z-10 block h-auto max-w-full object-contain ${isMobile ? "max-h-[22vh]" : isCompact ? "max-h-[26vh]" : ""}`}
-                />
-                <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]">
-                  <motion.img
-                    style={{
-                      scale: nandScale,
-                      filter: nandBlur,
-                    }}
-                    src="/nand2.jpg"
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
+                  className="absolute left-0 right-0 top-0 h-px w-full bg-white"
+                ></motion.div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center"
+                >
+                  <div className="font-chakra-petch text-white pt-3 text-xl">
+                    Philosophy
+                  </div>
+                  <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made products Our commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
+                <div className="flex w-full max-w-[180px] shrink-0 justify-center">
+                  <div className="relative isolate inline-block max-w-full overflow-hidden bg-black">
+                    <motion.img
+                      style={{
+                        opacity: fourthSectionFinalOpacity,
+                      }}
+                      src="/flip.png"
+                      alt=""
+                      className="relative z-10 block h-auto max-h-[min(18dvh,200px)] max-w-full object-contain"
+                    />
+                    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]">
+                      <motion.img
+                        style={{
+                          scale: nandScale,
+                          filter: nandBlur,
+                        }}
+                        src="/nand2.jpg"
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <motion.div
-              style={{
-                opacity: fourthSectionFinalOpacity,
-              }}
-              className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
-            >
-              <div
-                className={`font-chakra-petch text-white pt-3 ${isMobile ? "text-xl" : isCompact ? "text-2xl" : "text-3xl"}`}
-              >
-                Our Mission
-              </div>
-              <div
-                className={`text-white font-chakra-petch ${isMobile ? "max-w-full text-xs overflow-y-auto max-h-[28vh]" : isCompact ? "max-w-full text-sm overflow-y-auto max-h-[26vh]" : "text-xl max-w-3xl"}`}
-              >
-                Our commitment goes beyond fleeting trends, we believe in making
-                tailor made productsOur commitment goes beyond fleeting trends,
-                we believe in making tailor made products Our commitment goes
-                beyond fleeting trends, we believe in making tailor made
-                productsOur commitment goes beyond fleeting trends, we believe
-                in making tailor made products
-              </div>
-            </motion.div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center pb-1"
+                >
+                  <div className="font-chakra-petch text-white pt-3 text-xl">
+                    Our Mission
+                  </div>
+                  <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
 
-            <div></div>
-          </motion.div>
+                <div></div>
+              </motion.div>
+            </div>
+          ) : (
+            <>
+              <motion.div
+                style={{
+                  opacity: fourthSectionText,
+                  y: fourthSectionY,
+                  scale: fourthSectionScale,
+                }}
+                className={`z-99999 min-w-0 font-chakra-petch text-center text-white ${isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-6xl"}`}
+              >
+                The ideas that define
+                <motion.span
+                  style={{
+                    color: fourthSectionColor,
+                  }}
+                  className=""
+                >
+                  <ScrambledText
+                    className="z-999999 text-white"
+                    radius={100}
+                    style={{
+                      color: "inherit",
+                      fontSize: "1.2em",
+                      width: "fit-content",
+                      fontFamily: "Chakra Petch",
+                      textAlign: "center",
+                      margin: "0",
+                      display: "inline",
+                    }}
+                    duration={3}
+                    speed={0.9}
+                    scrambleChars=".:-"
+                  >
+                    Asymmetri
+                  </ScrambledText>
+                </motion.span>{" "}
+                and the mindset behind the work you see.
+              </motion.div>
+              <motion.div
+                style={{
+                  opacity: fourthSectionData,
+                  y: fourthSectionDataY,
+                }}
+                className={`relative z-999999 w-full border-white ${isCompact ? "mx-auto flex min-h-0 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] flex-1 flex-col items-center justify-start gap-8 overflow-y-auto overscroll-y-contain px-3 pb-[env(safe-area-inset-bottom,0)] pt-3" : "flex flex-row items-center justify-between gap-16 p-16 pt-0"}`}
+              >
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`w-full bg-white ${isCompact ? "absolute left-0 right-0 top-0 h-px" : "absolute left-0 top-0 h-px w-screen"}`}
+                ></motion.div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
+                >
+                  <div
+                    className={`font-chakra-petch text-white pt-3 ${isCompact ? "text-2xl" : "text-3xl"}`}
+                  >
+                    Philosophy
+                  </div>
+                  <div
+                    className={`text-white font-chakra-petch ${isCompact ? "max-w-full text-sm overflow-y-auto max-h-[22vh]" : "text-xl max-w-md"}`}
+                  >
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made products Our commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
+                <div
+                  className={`flex shrink-0 justify-center ${isCompact ? "w-full max-w-[220px]" : "w-1/3"}`}
+                >
+                  <div className="relative isolate inline-block max-w-full overflow-hidden bg-black">
+                    <motion.img
+                      style={{
+                        opacity: fourthSectionFinalOpacity,
+                      }}
+                      src="/flip.png"
+                      alt=""
+                      className={`relative z-10 block h-auto max-w-full object-contain ${isCompact ? "max-h-[26vh]" : ""}`}
+                    />
+                    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]">
+                      <motion.img
+                        style={{
+                          scale: nandScale,
+                          filter: nandBlur,
+                        }}
+                        src="/nand2.jpg"
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
+                >
+                  <div
+                    className={`font-chakra-petch text-white pt-3 ${isCompact ? "text-2xl" : "text-3xl"}`}
+                  >
+                    Our Mission
+                  </div>
+                  <div
+                    className={`text-white font-chakra-petch ${isCompact ? "max-w-full text-sm overflow-y-auto max-h-[26vh]" : "text-xl max-w-3xl"}`}
+                  >
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
+
+                <div></div>
+              </motion.div>
+            </>
+          )}
 
           <motion.div
             style={{
