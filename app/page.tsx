@@ -1744,7 +1744,7 @@ export default function Home() {
 
           {isMobile ? (
             <>
-              <div className="pointer-events-auto flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overscroll-y-contain touch-pan-y px-0 pb-28">
+              <div className="pointer-events-auto flex w-full flex-col items-center justify-center px-0 pb-28 pt-2 max-md:min-h-screen">
                 <motion.div
                   style={{
                     opacity: testimonialLayerOpacity,
