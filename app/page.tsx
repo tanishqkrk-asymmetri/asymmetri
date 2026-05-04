@@ -120,7 +120,7 @@ export default function Home() {
   const thirdSectionClick = useTransform(
     pageScroll,
     [0, 0.43],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
 
   const workCard1 = useTransform(pageScroll, [0.45, 0.46], [0, 1]);
@@ -133,32 +133,32 @@ export default function Home() {
   const workCard1Pointer = useTransform(
     pageScroll,
     [0.45, 0.46],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const workCard2Pointer = useTransform(
     pageScroll,
     [0.46, 0.47],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const workCard3Pointer = useTransform(
     pageScroll,
     [0.47, 0.48],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const workCard4Pointer = useTransform(
     pageScroll,
     [0.48, 0.49],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const workCard5Pointer = useTransform(
     pageScroll,
     [0.49, 0.5],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const workCard6Pointer = useTransform(
     pageScroll,
     [0.5, 0.51],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
 
   const fourthSectionOpacity = useTransform(
@@ -172,7 +172,7 @@ export default function Home() {
   const fourthSectionPointer = useTransform(
     pageScroll,
     [0, 0.55],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const fourthSectionText = useTransform(
     pageScroll,
@@ -254,7 +254,7 @@ export default function Home() {
   const sixthSectionPointer = useTransform(
     pageScroll,
     [0, 0.82],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const sixthSectionY = useTransform(
     pageScroll,
@@ -445,7 +445,7 @@ export default function Home() {
   const footerSectionPointer = useTransform(
     pageScroll,
     [0, 0.92],
-    isMobile ? ["fill", "all"] : ["none", "all"],
+    ["none", "all"],
   );
   const footerSectionY = useTransform(
     pageScroll,
@@ -585,7 +585,7 @@ export default function Home() {
         setEntry(true);
         clearInterval(incrementTimer);
       }
-    }, 20);
+    }, 5);
     return () => clearInterval(incrementTimer);
   }, []);
 
@@ -1388,7 +1388,8 @@ export default function Home() {
           style={{
             opacity: thirdSectionOpacity,
             /** Mobile: full-viewport fixed + pointer-events all captures touch and blocks page scroll */
-            pointerEvents: isMobile ? "none" : thirdSectionClick,
+            // pointerEvents: isMobile ? thirdSectionClick : thirdSectionClick,
+            // pointerEvents: isMobile ? thirdSectionClick : thirdSectionClick,
           }}
           className={
             isCompact
@@ -1409,7 +1410,7 @@ export default function Home() {
               }
             >
               <div
-                className={`relative z-[1000] flex shrink-0 flex-col items-center justify-center text-center ${isMobile ? "max-w-[min(19rem,calc(100vw-3rem))] px-3" : "px-2 sm:max-w-[min(40vw,280px)] lg:max-w-[min(34vw,340px)]"}`}
+                className={`relative  flex shrink-0 flex-col items-center justify-center text-center ${isMobile ? "max-w-[min(19rem,calc(100vw-3rem))] px-3" : "px-2 sm:max-w-[min(40vw,280px)] lg:max-w-[min(34vw,340px)]"}`}
               >
                 <ScrambledText
                   className={`font-semibold text-asymmetri-red font-chakra-petch ${isMobile ? "text-3xl" : "text-4xl sm:text-5xl lg:text-6xl xl:text-7xl"}`}
@@ -1442,7 +1443,7 @@ export default function Home() {
                     <motion.div
                       style={{
                         opacity: x.animation,
-                        pointerEvents: isMobile ? "auto" : x.pointer,
+                        pointerEvents: isMobile ? "all" : x.pointer,
                       }}
                       onClick={() => {
                         setSelectedWorkCategory(x.name);
@@ -1451,7 +1452,7 @@ export default function Home() {
                         );
                       }}
                       key={x.name}
-                      className={`relative flex w-full shrink-0 cursor-pointer overflow-hidden border-b border-black/30 bg-white font-chakra-petch duration-300 last:border-b-0 hover:text-white ${isMobile ? "min-h-[4.75rem] text-sm" : "min-h-[5.5rem] text-base sm:min-h-24"}`}
+                      className={`relative flex w-full shrink-0 cursor-pointer overflow-hidden border-b border-black/30 bg-white font-  chakra-petch duration-300 last:border-b-0 hover:text-white ${isMobile ? "min-h-[4.75rem] text-sm" : "min-h-[5.5rem] text-base sm:min-h-24"}`}
                     >
                       <img
                         src={
