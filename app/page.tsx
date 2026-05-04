@@ -120,7 +120,7 @@ export default function Home() {
   const thirdSectionClick = useTransform(
     pageScroll,
     [0, 0.43],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
 
   const workCard1 = useTransform(pageScroll, [0.45, 0.46], [0, 1]);
@@ -133,32 +133,32 @@ export default function Home() {
   const workCard1Pointer = useTransform(
     pageScroll,
     [0.45, 0.46],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const workCard2Pointer = useTransform(
     pageScroll,
     [0.46, 0.47],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const workCard3Pointer = useTransform(
     pageScroll,
     [0.47, 0.48],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const workCard4Pointer = useTransform(
     pageScroll,
     [0.48, 0.49],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const workCard5Pointer = useTransform(
     pageScroll,
     [0.49, 0.5],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const workCard6Pointer = useTransform(
     pageScroll,
     [0.5, 0.51],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
 
   const fourthSectionOpacity = useTransform(
@@ -172,7 +172,7 @@ export default function Home() {
   const fourthSectionPointer = useTransform(
     pageScroll,
     [0, 0.55],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const fourthSectionText = useTransform(
     pageScroll,
@@ -254,7 +254,7 @@ export default function Home() {
   const sixthSectionPointer = useTransform(
     pageScroll,
     [0, 0.82],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const sixthSectionY = useTransform(
     pageScroll,
@@ -445,7 +445,7 @@ export default function Home() {
   const footerSectionPointer = useTransform(
     pageScroll,
     [0, 0.92],
-    ["none", "all"],
+    isMobile ? ["fill", "all"] : ["none", "all"],
   );
   const footerSectionY = useTransform(
     pageScroll,
@@ -962,26 +962,24 @@ export default function Home() {
               className="relative z-0 isolate"
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
-              {!isMobile && (
-                <GridScan
-                  scanGlow={0.6}
-                  scanDirection="backward"
-                  lineStyle="solid"
-                  lineJitter={0}
-                  enableGyro={!isCompact}
-                  scanDuration={2}
-                  scanDelay={1}
-                  lineThickness={0.1}
-                  linesColor="#888888"
-                  gridScale={0.1}
-                  scanColor="#cd1717"
-                  scanOpacity={0.3}
-                  enablePost={!isCompact}
-                  bloomIntensity={0.08}
-                  chromaticAberration={0.002}
-                  noiseIntensity={0.01}
-                />
-              )}
+              <GridScan
+                scanGlow={isMobile ? 0.92 : 0.6}
+                scanDirection="backward"
+                lineStyle="solid"
+                lineJitter={0}
+                enableGyro={!isCompact}
+                scanDuration={isMobile ? 1.85 : 2}
+                scanDelay={1}
+                lineThickness={isMobile ? 0.32 : 0.1}
+                linesColor={isMobile ? "#d4d4d4" : "#888888"}
+                gridScale={isMobile ? 0.11 : 0.1}
+                scanColor="#cd1717"
+                scanOpacity={isMobile ? 0.62 : 0.3}
+                enablePost={!isCompact}
+                bloomIntensity={0.08}
+                chromaticAberration={0.002}
+                noiseIntensity={isMobile ? 0.006 : 0.01}
+              />
             </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
@@ -1430,7 +1428,7 @@ export default function Home() {
               </div>
 
               <div
-                className={`relative z-99 flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-contain border border-black/30 ${isMobile ? "mx-auto max-h-[min(56dvh,480px)] w-full max-w-[min(19rem,calc(100vw-3rem))]" : "max-h-[min(72dvh,720px)] max-w-[min(92vw,420px)] sm:max-w-[440px] lg:max-w-[460px]"}`}
+                className={`relative z-99 flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-contain border border-black/30 ${isMobile ? "mx-auto max-h-fit w-full max-w-[min(19rem,calc(100vw-3rem))]" : "max-h-[min(72dvh,720px)] max-w-[min(92vw,420px)] sm:max-w-[440px] lg:max-w-[460px]"}`}
               >
                 {workCategories
                   .filter(
