@@ -835,7 +835,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <section ref={pageRef} className="touch-pan-y">
+      <section ref={pageRef} className="">
         <motion.div className="relative">
           <motion.div
             style={{
