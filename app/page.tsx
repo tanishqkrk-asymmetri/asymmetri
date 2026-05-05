@@ -983,7 +983,8 @@ export default function Home() {
             </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
-            {!isMobile && <FatCursors scale={1} />}
+            {/* {!isMobile && <FatCursors scale={1} />} */}
+            <FatCursors scale={1} />{" "}
             <motion.img
               onMouseEnter={() => {
                 PowerGlitch.glitch("#logo", {
@@ -1021,7 +1022,6 @@ export default function Home() {
               id="logo"
               className={`absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${isMobile ? "w-[min(100%,17rem)] max-w-[calc(100vw-3rem)]" : isCompact ? "w-96" : "w-120"}`}
             />
-
             <div
               id="loader"
               className="absolute top-1/2 left-1/2 translate-y-10 -translate-x-1/2"
@@ -1429,7 +1429,7 @@ export default function Home() {
               </div>
 
               <div
-                className={`relative z-99 flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-contain border border-black/30 ${isMobile ? "mx-auto max-h-fit w-full max-w-[min(19rem,calc(100vw-3rem))]" : "max-h-[min(72dvh,720px)] max-w-[min(92vw,420px)] sm:max-w-[440px] lg:max-w-[460px]"}`}
+                className={`relative z-99 flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-hidden border border-black/30 ${isMobile ? "mx-auto max-h-fit w-full max-w-[min(19rem,calc(100vw-3rem))]" : "max-h-[min(72dvh,720px)] max-w-[min(92vw,420px)] sm:max-w-[440px] lg:max-w-[460px]"}`}
               >
                 {workCategories
                   .filter(

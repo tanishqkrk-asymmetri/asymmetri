@@ -49,7 +49,7 @@ export function MobileTestimonialsCarousel({
       <CarouselContent className="touch-pan-x py-1">
         {items.map((x) => (
           <CarouselItem key={x.company}>
-            <div className="relative flex max-h-[min(40dvh,280px)] touch-pan-y flex-col overflow-y-auto overscroll-y-contain rounded-xl border border-white/15 bg-white/[0.04] px-4 py-5">
+            <div className="relative flex max-h-[min(40dvh,280px)] touch-pan-y flex-col overflow-y-auto overscroll-y-hidden rounded-xl border border-white/15 bg-white/[0.04] px-4 py-5">
               <div className="flex items-start gap-3">
                 <img
                   src={x.image}
