@@ -1632,7 +1632,7 @@ export default function Home() {
                   opacity: fourthSectionData,
                   y: fourthSectionDataY,
                 }}
-                className="relative z-999999 flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-4 overflow-y-auto overflow-x-hidden overscroll-y-hidden px-4 pb-[max(6rem,env(safe-area-inset-bottom,0))] pt-2 pointer-events-auto mx-auto border-white"
+                className="relative z-999999 flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-4 overflow-y-hidden overflow-x-hidden  px-4 pb-[max(6rem,env(safe-area-inset-bottom,0))] pt-2 pointer-events-auto mx-auto border-white"
               >
                 <motion.div
                   style={{
