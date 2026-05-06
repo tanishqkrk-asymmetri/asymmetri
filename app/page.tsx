@@ -30,13 +30,14 @@ import { Navbar } from "@/components/shared/navbar";
 import TargetCursor from "@/components/TargetCursor";
 import { Button } from "@/components/ui/button";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
+import { Footer } from "@/components/shared/footer";
 
 export default function Home() {
   const pageRef = useRef(null);
 
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    offset: ["start end", "end start"],
+    offset: ["start end", "end end"],
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
@@ -2010,6 +2011,7 @@ export default function Home() {
             </>
           )}
         </motion.div>
+
         <motion.section
           style={{
             y: footerSectionY,
@@ -2074,7 +2076,7 @@ export default function Home() {
             />
           </div>
         </motion.section>
-        <div className="min-h-[800vh]"></div>
+        <div className="min-h-[900vh]"></div>
       </section>
     </main>
   );

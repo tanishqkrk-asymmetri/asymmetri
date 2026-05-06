@@ -54,10 +54,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LS></LS>
-        <TooltipProvider>
-          {children}
-          <Footer></Footer>
-        </TooltipProvider>
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
