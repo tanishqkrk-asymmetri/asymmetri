@@ -31,13 +31,14 @@ import TargetCursor from "@/components/TargetCursor";
 import { Button } from "@/components/ui/button";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
 import { Footer } from "@/components/shared/footer";
+import LS from "@/components/LS";
 
 export default function Home() {
   const pageRef = useRef(null);
-
+  const containerRef = useRef(null);
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    offset: ["start end", "end end"],
+    offset: ["start center", "end end"],
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
@@ -834,7 +835,8 @@ export default function Home() {
   const workGridLastColumnIndexes = [3, 7, 11];
 
   return (
-    <main>
+    <main ref={containerRef}>
+      <LS></LS>
       <Navbar />
       <section ref={pageRef} className="">
         <motion.div className="relative">

@@ -1,16 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { Briefcase, FileText, Building2 } from "lucide-react";
+import { Briefcase, FileText } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <div className="h-screen w-64 bg-white  flex flex-col">
+    <div className="flex h-screen w-64 flex-col bg-card text-card-foreground">
       {/* Logo Section */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="border-b border-border p-6">
         <div className="flex items-center space-x-3">
           <img
-            className="w-48 sm:w-64 md:w-80 lg:w-96 invert-100"
-            src="/logo_long.png"
+            className="w-40 max-w-full object-contain opacity-90 sm:w-44"
+            src="/logo.png"
             alt=""
           />
         </div>
@@ -21,17 +21,17 @@ export default function Sidebar() {
         <div className="space-y-2">
           <Link
             href="/admin/jobs"
-            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors group"
+            className="group flex items-center space-x-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
-            <Briefcase className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
+            <Briefcase className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
             <span className="font-medium">Posted Jobs</span>
           </Link>
 
           <Link
             href="/admin/applications"
-            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors group"
+            className="group flex items-center space-x-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
-            <FileText className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
+            <FileText className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
             <span className="font-medium">Applications</span>
           </Link>
         </div>

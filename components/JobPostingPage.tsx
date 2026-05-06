@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
-import { getJobs, Job } from "@/lib/jobs";
+import { Job } from "@/lib/jobs";
 import Markdown from "react-markdown";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
@@ -115,23 +115,22 @@ export default function JobPostingPageComponent({
   useEffect(() => {
     const already = localStorage.getItem(jobDetails.id);
     if (already) {
-      console.log(already);
-      setIsSubmitted(true);
+      startTransition(() => setIsSubmitted(true));
     }
-  }, []);
+  }, [jobDetails.id]);
 
   if (isSubmitted && jobDetails) {
     return (
-      <div className="container mx-auto max-w-4xl px-4 py-12">
-        <Card className="border-black/20 shadow-none">
-          <CardContent className="pt-12 pb-12 flex flex-col items-center justify-center text-center ">
-            <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
-              <CheckCircle2 className="h-10 w-10 text-green-600" />
+      <div className="container mx-auto max-w-4xl px-4 py-12 text-foreground">
+        <Card className="border-border shadow-none ring-1 ring-foreground/10">
+          <CardContent className="flex flex-col items-center justify-center pt-12 pb-12 text-center">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15">
+              <CheckCircle2 className="h-10 w-10 text-emerald-400" />
             </div>
-            <h2 className="text-3xl font-bold mb-4">Application Submitted!</h2>
-            <p className="text-gray-600 max-w-md mb-6">
-              Thank you for applying to the {jobDetails.title} position. We'll
-              review your application and get back to you soon.
+            <h2 className="mb-4 text-3xl font-bold">Application Submitted!</h2>
+            <p className="mb-6 max-w-md text-muted-foreground">
+              Thank you for applying to the {jobDetails.title} position.
+              We&apos;ll review your application and get back to you soon.
             </p>
             <Button
               variant="outline"
@@ -149,48 +148,52 @@ export default function JobPostingPageComponent({
   return (
     <div>
       {jobDetails ? (
-        <div className="container mx-auto max-w-6xl px-4 py-12">
+        <div className="container mx-auto max-w-6xl px-4 py-12 text-foreground">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">{jobDetails.title}</h1>
-            <div className="flex flex-wrap gap-2 mb-6">
+            <h1 className="mb-2 font-chakra-petch text-3xl font-semibold tracking-wide">
+              {jobDetails.title}
+            </h1>
+            <div className="mb-6 flex flex-wrap gap-2">
               <Badge
                 variant="secondary"
-                className="bg-gray-100 text-gray-800 hover:bg-gray-200"
+                className="border border-border bg-muted text-foreground"
               >
                 {jobDetails.location}
               </Badge>
               <Badge
                 variant="secondary"
-                className="bg-gray-100 text-gray-800 hover:bg-gray-200"
+                className="border border-border bg-muted text-foreground"
               >
                 {jobDetails.type}
               </Badge>
               <Badge
                 variant="secondary"
-                className="bg-gray-100 text-gray-800 hover:bg-gray-200"
+                className="border border-border bg-muted text-foreground"
               >
                 {jobDetails.team}
               </Badge>
-              <Badge className="bg-indigo-100 text-indigo-800 hover:bg-indigo-200">
+              <Badge className="border border-asymmetri-red/40 bg-asymmetri-red/15 text-asymmetri-red">
                 {jobDetails.postedOn}
               </Badge>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 space-y-8">
-              <Card className="border-black/20 shadow-none">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="space-y-8 md:col-span-2">
+              <Card className="border-border shadow-none ring-1 ring-foreground/10">
                 <CardHeader>
                   <CardTitle>About the Role</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-gray-700">{jobDetails.description}</p>
-                  <Markdown>{jobDetails.full_description}</Markdown>
+                  <p className="text-muted-foreground">{jobDetails.description}</p>
+                  <div className="max-w-none space-y-3 text-muted-foreground [&_a]:text-asymmetri-red [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:text-sm [&_h1]:text-foreground [&_h1]:font-semibold [&_h2]:mt-4 [&_h2]:text-foreground [&_h2]:font-semibold [&_h3]:text-foreground [&_h3]:font-medium [&_li]:text-muted-foreground [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:leading-relaxed [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5">
+                    <Markdown>{jobDetails.full_description}</Markdown>
+                  </div>
                 </CardContent>
               </Card>
 
-              <Card className="border-black/20 shadow-none">
-                <CardHeader className="bg-gray-50">
+              <Card className="border-border shadow-none ring-1 ring-foreground/10">
+                <CardHeader className="border-b border-border bg-muted/40">
                   <CardTitle>Apply for this Position</CardTitle>
                   <CardDescription>
                     Complete the form below to submit your application
@@ -248,7 +251,7 @@ export default function JobPostingPageComponent({
                           className="cursor-pointer"
                           required
                         />
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-muted-foreground">
                           PDF, DOC, DOCX
                         </span>
                       </div>
@@ -268,11 +271,11 @@ export default function JobPostingPageComponent({
                       />
                     </div>
 
-                    <CardFooter className="px-0 pt-2 pb-0 flex justify-end">
+                    <CardFooter className="flex justify-end px-0 pt-2 pb-0">
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-indigo-600 hover:bg-indigo-700"
+                        className="bg-asymmetri-red text-white hover:bg-asymmetri-red/90"
                       >
                         {isSubmitting
                           ? `Submitting... ${
@@ -282,7 +285,9 @@ export default function JobPostingPageComponent({
                       </Button>
                     </CardFooter>
                     {uploadError && (
-                      <p className="text-red-500 text-sm mt-2">{uploadError}</p>
+                      <p className="mt-2 text-sm text-destructive">
+                        {uploadError}
+                      </p>
                     )}
                   </form>
                 </CardContent>
@@ -290,40 +295,40 @@ export default function JobPostingPageComponent({
             </div>
 
             <div className="md:col-span-1">
-              <Card className="sticky top-6 border-black/20 shadow-none">
+              <Card className="sticky top-6 border-border shadow-none ring-1 ring-foreground/10">
                 <CardHeader>
                   <CardTitle>Job Details</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <dl className="space-y-4">
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">
+                      <dt className="text-sm font-medium text-muted-foreground">
                         Salary Range
                       </dt>
-                      <dd className="text-emerald-600 font-medium">
+                      <dd className="font-medium text-emerald-400">
                         {jobDetails.payRange}
                       </dd>
                     </div>
                     <Separator className="my-2" />
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">
+                      <dt className="text-sm font-medium text-muted-foreground">
                         Location
                       </dt>
-                      <dd>{jobDetails.location}</dd>
+                      <dd className="text-foreground">{jobDetails.location}</dd>
                     </div>
                     <Separator className="my-2" />
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">
+                      <dt className="text-sm font-medium text-muted-foreground">
                         Employment Type
                       </dt>
-                      <dd>{jobDetails.type}</dd>
+                      <dd className="text-foreground">{jobDetails.type}</dd>
                     </div>
                     <Separator className="my-2" />
                     <div>
-                      <dt className="text-sm font-medium text-gray-500">
+                      <dt className="text-sm font-medium text-muted-foreground">
                         Department
                       </dt>
-                      <dd>{jobDetails.team}</dd>
+                      <dd className="text-foreground">{jobDetails.team}</dd>
                     </div>
                   </dl>
                 </CardContent>

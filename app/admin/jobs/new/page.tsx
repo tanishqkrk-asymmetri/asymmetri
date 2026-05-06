@@ -26,7 +26,7 @@ const JobAddComponent = () => {
   const jobId = params.jobId;
   const router = useRouter();
   // Sample data - in real app this would come from API based on job ID
-  const [job, setJob] = useState<Job | null>({
+  const [job, setJob] = useState<Job | null>(() => ({
     id: crypto.randomUUID(),
     title: "",
     postedOn: "",
@@ -39,7 +39,7 @@ const JobAddComponent = () => {
     payRange: "",
     timestamp: Date.now(),
     type: "Full-time",
-  });
+  }));
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [newRequirement, setNewRequirement] = useState("");
@@ -131,25 +131,25 @@ const JobAddComponent = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center w-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-background flex items-center justify-center w-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-asymmetri-red"></div>
       </div>
     );
   }
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-foreground mb-2">
             Job Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
-            The job you're looking for doesn't exist.
+          <p className="text-muted-foreground mb-4">
+            The job you&apos;re looking for doesn&apos;t exist.
           </p>
           <button
             onClick={() => router.push("/jobs")}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="rounded-lg bg-asymmetri-red px-4 py-2 text-white transition-colors hover:bg-asymmetri-red/90"
           >
             Back to Jobs
           </button>
@@ -159,7 +159,7 @@ const JobAddComponent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 w-full">
+    <div className="min-h-screen w-full bg-background p-6 text-foreground">
       <div className="max-w-full mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -167,13 +167,13 @@ const JobAddComponent = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => router.push("/admin/jobs")}
-                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
-                <ArrowLeft className="w-5 h-5 text-gray-600" />
+                <ArrowLeft className="w-5 h-5 text-muted-foreground" />
               </button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Edit Job</h1>
-                <p className="text-gray-600 mt-1">Job ID: {job.id}</p>
+                <h1 className="text-3xl font-bold text-foreground">Edit Job</h1>
+                <p className="text-muted-foreground mt-1">Job ID: {job.id}</p>
               </div>
             </div>
             <div className="flex space-x-3">
@@ -187,7 +187,7 @@ const JobAddComponent = () => {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+                className="flex items-center space-x-2 rounded-lg bg-asymmetri-red px-4 py-2 text-white transition-colors hover:bg-asymmetri-red/90 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 <span>{saving ? "Saving..." : "Save Changes"}</span>
@@ -197,29 +197,29 @@ const JobAddComponent = () => {
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-card rounded-lg border border-border overflow-hidden">
           <div className="p-6 space-y-6">
             {/* Basic Information */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                 <FileText className="w-5 h-5 mr-2" />
                 Basic Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Job Title *
                   </label>
                   <input
                     type="text"
                     value={job.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                     placeholder="Enter job title"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Posted Date *
                   </label>
                   <input
@@ -228,7 +228,7 @@ const JobAddComponent = () => {
                     onChange={(e) =>
                       handleInputChange("postedOn", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                   />
                 </div>
               </div>
@@ -236,19 +236,19 @@ const JobAddComponent = () => {
 
             {/* Job Details */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                 <Users className="w-5 h-5 mr-2" />
                 Job Details
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Team *
                   </label>
                   <select
                     value={job.team}
                     onChange={(e) => handleInputChange("team", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                   >
                     <option value="Engineering">Engineering</option>
                     <option value="Design">Design</option>
@@ -259,13 +259,13 @@ const JobAddComponent = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Job Type *
                   </label>
                   <select
                     value={job.type}
                     onChange={(e) => handleInputChange("type", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                   >
                     <option value="Full-time">Full-time</option>
                     <option value="Part-time">Part-time</option>
@@ -274,7 +274,7 @@ const JobAddComponent = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Experience Required *
                   </label>
                   <select
@@ -282,7 +282,7 @@ const JobAddComponent = () => {
                     onChange={(e) =>
                       handleInputChange("experienceRequired", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                   >
                     <option value="Entry level">Entry level</option>
                     <option value="1-2 years">1-2 years</option>
@@ -295,16 +295,16 @@ const JobAddComponent = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Location
                   </label>
-                  <div className="flex items-center px-3 py-2 border border-gray-300 rounded-lg bg-gray-50">
-                    <MapPin className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{job.location}</span>
+                  <div className="flex items-center rounded-lg border border-input bg-muted px-3 py-2">
+                    <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">{job.location}</span>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Pay Range *
                   </label>
                   <input
@@ -313,7 +313,7 @@ const JobAddComponent = () => {
                     onChange={(e) =>
                       handleInputChange("payRange", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                     placeholder="e.g., $80,000 - $120,000"
                   />
                 </div>
@@ -322,7 +322,7 @@ const JobAddComponent = () => {
 
             {/* Technical Requirements */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                 <Clock className="w-5 h-5 mr-2" />
                 Technical Requirements
               </h3>
@@ -331,12 +331,12 @@ const JobAddComponent = () => {
                   {job.technicalRequirements.map((requirement, index) => (
                     <div
                       key={index}
-                      className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                      className="flex items-center rounded-full bg-sky-500/15 px-3 py-1 text-sm text-sky-200"
                     >
                       <span>{requirement}</span>
                       <button
                         onClick={() => handleRequirementRemove(index)}
-                        className="ml-2 hover:bg-blue-200 rounded-full p-1"
+                        className="ml-2 rounded-full p-1 hover:bg-sky-500/25"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -390,16 +390,16 @@ const JobAddComponent = () => {
                           setShowSuggestions(true);
                         }
                       }}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="flex-1 rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                       placeholder="Add technical requirement"
                     />
                     {/* Suggestions dropdown */}
                     {showSuggestions && skillSuggestions.length > 0 && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+                      <div className="absolute top-full left-0 right-0 z-10 mt-1 max-h-60 overflow-y-auto rounded-md border border-border bg-popover text-popover-foreground shadow-lg">
                         {skillSuggestions.map((skill, index) => (
                           <div
                             key={index}
-                            className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
+                            className="cursor-pointer px-3 py-2 hover:bg-accent"
                             onClick={() => {
                               //   setNewRequirement(skill);
                               handleRequirementAdd(skill);
@@ -426,12 +426,12 @@ const JobAddComponent = () => {
 
             {/* Descriptions */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-lg font-semibold text-foreground mb-4">
                 Job Descriptions
               </h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Short Description *
                   </label>
                   <textarea
@@ -440,12 +440,12 @@ const JobAddComponent = () => {
                       handleInputChange("description", e.target.value)
                     }
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className="w-full resize-none rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                     placeholder="Brief description of the role"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Full Description *
                   </label>
                   <textarea
@@ -454,7 +454,7 @@ const JobAddComponent = () => {
                       handleInputChange("full_description", e.target.value)
                     }
                     rows={8}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className="w-full resize-none rounded-lg border border-input bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-transparent focus:ring-2 focus:ring-ring"
                     placeholder="Detailed job description, responsibilities, requirements, etc."
                   />
                 </div>
@@ -462,31 +462,31 @@ const JobAddComponent = () => {
             </div>
 
             {/* Metadata */}
-            <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="border-t border-border pt-6">
+              <h3 className="text-lg font-semibold text-foreground mb-4">
                 Metadata
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Job ID
                   </label>
                   <input
                     type="text"
                     value={job.id}
                     disabled
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+                    className="w-full rounded-lg border border-input bg-muted px-3 py-2 text-muted-foreground"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Timestamp
                   </label>
                   <input
                     type="text"
                     value={new Date(job.timestamp).toLocaleString()}
                     disabled
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+                    className="w-full rounded-lg border border-input bg-muted px-3 py-2 text-muted-foreground"
                   />
                 </div>
               </div>
@@ -495,27 +495,27 @@ const JobAddComponent = () => {
         </div>
 
         {/* Save Section */}
-        <div className="mt-6 bg-white rounded-lg border border-gray-200 p-6">
+        <div className="mt-6 bg-card rounded-lg border border-border p-6">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-foreground">
                 Save Changes
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Make sure all required fields are filled out correctly.
               </p>
             </div>
             <div className="flex space-x-3">
               <button
                 onClick={() => router.push("/jobs")}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-colors"
+                className="rounded-lg bg-secondary px-6 py-2 text-secondary-foreground transition-colors hover:bg-secondary/80"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+                className="flex items-center space-x-2 rounded-lg bg-asymmetri-red px-6 py-2 text-white transition-colors hover:bg-asymmetri-red/90 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 <span>{saving ? "Saving..." : "Save Job"}</span>

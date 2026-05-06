@@ -27,7 +27,7 @@ const item: Variants = {
 export function Navbar() {
   const links = [
     { label: "About", href: "/#about" },
-    { label: "Work", href: "/#work" },
+    { label: "Work", href: "/jobs" },
     { label: "Services", href: "/#services" },
     { label: "Careers", href: "/#careers" },
   ] as const;

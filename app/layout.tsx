@@ -53,7 +53,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <LS></LS>
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>

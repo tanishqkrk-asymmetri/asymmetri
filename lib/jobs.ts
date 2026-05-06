@@ -20,7 +20,7 @@ export interface Job {
 export async function getJobs(): Promise<Job[]> {
   const fetched = (await getDoc(doc(db, "jobs", "jobs"))).data();
   const final = fetched?.allJobs;
-  return final as Job[];
+  return Array.isArray(final) ? (final as Job[]) : [];
 }
 
 // await new Promise((resolve) => setTimeout(resolve, 200));
