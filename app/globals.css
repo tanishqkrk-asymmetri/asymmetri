@@ -11,6 +11,10 @@
 }
 /*  */
 
+body::-webkit-scrollbar {
+  display: none !important;
+}
+/*  */
 @theme inline {
   --color-asymmetri-red: #cd1717;
   --color-background: var(--background);
@@ -96,14 +100,16 @@
   .hero {
     @apply border-border outline-ring/50;
   }
+
   .hero {
     @apply bg-background text-foreground;
     background-image:
-      linear-gradient(to right, oklch(0 0 0 / 10%) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0 0 0 / 10%) 1px, transparent 1px);
+      linear-gradient(to right, oklch(0 0 0 / 15%) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0 0 0 / 15%) 1px, transparent 1px);
     background-size: 200px 300px;
     background-position: center;
   }
+  /*  */
   .hero {
     @apply font-sans;
   }
@@ -144,4 +150,10 @@
   animation: fat-cursor-blink 2000ms steps(1, end) infinite;
 }
 /*  */
+/*  */
+
+.block-hide-thingy {
+  display: none !important;
+}
+
 /*  */

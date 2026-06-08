@@ -38,7 +38,7 @@ export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    offset: ["start center", "end end"],
+    offset: ["start start", "end end"],
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
@@ -84,22 +84,23 @@ export default function Home() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const secondSectionOpacity = useTransform(
+  // const secondSectionOpacity = useTransform(
+  //   pageScroll,
+  //   [0, 0.1, 0.2],
+  //   isCompact
+  //     ? [tabletBelowFoldPx + 48, tabletBelowFoldPx + 48, 0]
+  //     : [1000, 1000, 0],
+  // );
+
+  const secondSectionHeight = useTransform(
     pageScroll,
-    [0, 0.1, 0.2],
-    isCompact
-      ? [tabletBelowFoldPx + 48, tabletBelowFoldPx + 48, 0]
-      : [1000, 1000, 0],
+    [0, 0.3],
+    ["0px", "100vh"],
   );
-  const secondSectionScale = useTransform(
+  const secondSectionWidth = useTransform(
     pageScroll,
-    isCompact ? [0, 0.2, 0.3] : [0.2, 0.3],
-    isCompact ? [0.8, 0.8, 1.05] : [0.7, 1.1],
-  );
-  const secondSectionBG = useTransform(
-    pageScroll,
-    [0, 0.2, 0.3],
-    ["#0a0a0a", "#0a0a0a", "#000000"],
+    [0, 0.3],
+    ["80vw", "100vw"],
   );
   const secondSectionText = useTransform(pageScroll, [0, 0.3, 0.32], [0, 0, 1]);
   const secondSectionLines = useTransform(
@@ -110,8 +111,8 @@ export default function Home() {
 
   const secondSectionRed = useTransform(
     pageScroll,
-    [0, 0.34, 0.36],
-    ["#ffffff", "#ffffff", "#ff0000"],
+    [0, 0.22, 0.25],
+    ["#000000", "#000000", "#ff0000"],
   );
   const secondSectionGrid = useTransform(
     pageScroll,
@@ -1039,6 +1040,195 @@ export default function Home() {
 
         <motion.div
           style={{
+            height: secondSectionHeight,
+            // width: secondSectionWidth,
+            overflow: "hidden",
+          }}
+          transition={{
+            ease: "easeInOut",
+          }}
+          className=" bg-zinc-800 z-999 fixed  left-0  min-w-screen w-screen  pointer-events-none top-1/2 translate-y-[-50%]"
+        >
+          <motion.div
+            style={
+              {
+                // wordSpacing: "10px",
+              }
+            }
+            className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-3"}`}
+          >
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.17, 0.18], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              Creative
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.18, 0.19], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              websites
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.19, 0.2], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              are
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.2, 0.21], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              the
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.21, 0.22], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              intersection
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.22, 0.23], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              of
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.23, 0.24], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              creativity
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.24, 0.25], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              and
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.25, 0.26], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              technicality
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.26, 0.27], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              to
+            </span>{" "}
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.27, 0.28], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              form
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.28, 0.29], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              bespoke
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.29, 0.3], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              digital
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.3, 0.31], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              experiences
+            </span>
+            <span className="relative">
+              <motion.div
+                style={{
+                  opacity: useTransform(pageScroll, [0.31, 0.32], [1, 0]),
+                }}
+                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
+              ></motion.div>
+              that
+            </span>
+            {!isMobile && (
+              <>
+                {" "}
+                <br />
+              </>
+            )}{" "}
+            <motion.span
+              style={{
+                color: secondSectionRed,
+              }}
+              className="inline-block font-bold"
+            >
+              <span className="relative">
+                <motion.div
+                  style={{
+                    opacity: useTransform(pageScroll, [0.32, 0.33], [1, 0]),
+                  }}
+                  className="absolute top-0 left-0 w-full h-full bg-red-500 block-hide-thingy"
+                ></motion.div>
+                spark
+              </span>{" "}
+              <span className="relative">
+                <motion.div
+                  style={{
+                    opacity: useTransform(pageScroll, [0.33, 0.34], [1, 0]),
+                  }}
+                  className="absolute top-0 left-0 w-full h-full bg-red-500 block-hide-thingy"
+                ></motion.div>
+                emotion
+              </span>
+            </motion.span>
+          </motion.div>
+          {/* {!isMobile && <FatCursors color="#cd171770" scale={0.3} min={16} />} */}
+        </motion.div>
+
+        {/* <motion.div
+          style={{
             y: secondSectionOpacity,
             scale: secondSectionScale,
             background: secondSectionBG,
@@ -1075,8 +1265,8 @@ export default function Home() {
             </motion.span>
           </motion.div>
           {!isMobile && <FatCursors color="#cd171770" scale={0.3} min={16} />}
-        </motion.div>
-        <div
+        </motion.div> */}
+        {/* <div
           id="pixelLoader"
           className="min-h-screen w-screen  fixed top-0 left-0 z-999 grid grid-cols-5 grid-rows-3 pointer-events-none"
         >
@@ -1094,7 +1284,7 @@ export default function Home() {
               }}
             ></motion.div>
           ))}
-        </div>
+        </div> */}
 
         <AnimatePresence>
           {selectedWorkCategory && (
@@ -1112,7 +1302,7 @@ export default function Home() {
                 duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
                 ease: "circInOut",
               }}
-              className={`bg-zinc-100 fixed top-0 right-0 z-9999999 flex ${isMobile ? "h-[100dvh] max-h-[100dvh] w-full flex-col gap-6 overflow-y-auto overscroll-y-contain px-6 py-6" : isCompact ? "h-[100dvh] max-h-[100dvh] w-[min(100%,520px)] flex-col overflow-y-auto overscroll-y-contain py-8 px-5 gap-8" : "h-screen w-[70vw] justify-center items-center p-16"}`}
+              className={`bg-zinc-300 fixed top-0 right-0 z-9999999 flex ${isMobile ? "h-[100dvh] max-h-[100dvh] w-full flex-col gap-6 overflow-y-auto overscroll-y-contain px-6 py-6" : isCompact ? "h-[100dvh] max-h-[100dvh] w-[min(100%,520px)] flex-col overflow-y-auto overscroll-y-contain py-8 px-5 gap-8" : "h-screen w-[70vw] justify-center items-center p-16"}`}
             >
               <div
                 className={`flex flex-col justify-center items-center ${isCompact ? "w-full shrink-0 space-y-4" : "h-full w-1/2 space-y-6"}`}
