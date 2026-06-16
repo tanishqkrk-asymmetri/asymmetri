@@ -7,14 +7,13 @@
 }
 
 * {
-  /* user-select: none; */
+  user-select: none;
 }
-/*  */
 
 body::-webkit-scrollbar {
   display: none !important;
 }
-/*  */
+
 @theme inline {
   --color-asymmetri-red: #cd1717;
   --color-background: var(--background);
@@ -103,10 +102,11 @@ body::-webkit-scrollbar {
 
   .hero {
     @apply bg-background text-foreground;
+
     background-image:
       linear-gradient(to right, oklch(0 0 0 / 15%) 1px, transparent 1px),
       linear-gradient(to bottom, oklch(0 0 0 / 15%) 1px, transparent 1px);
-    background-size: 200px 300px;
+    background-size: 160px 400px;
     background-position: center;
   }
   /*  */
@@ -121,7 +121,7 @@ body::-webkit-scrollbar {
     background-image:
       linear-gradient(to right, #ffffff30 1px, transparent 1px),
       linear-gradient(to bottom, #ffffff30 1px, transparent 1px);
-    background-size: 200px 300px;
+    background-size: 160px 400px;
     background-position: center;
   }
   /*  */

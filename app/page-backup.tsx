@@ -16,7 +16,7 @@ import {
   GlitchPartialOptions,
 } from "powerglitch";
 
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FatCursors } from "@/components/FatCursors";
 import { GridScan } from "@/components/GridScan";
 import ScrambledText from "@/components/ScrambledText";
@@ -32,7 +32,6 @@ import { Button } from "@/components/ui/button";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
 import { Footer } from "@/components/shared/footer";
 import LS from "@/components/LS";
-import playSoundOnHover from "@/lib/sound";
 
 export default function Home() {
   const pageRef = useRef(null);
@@ -98,22 +97,19 @@ export default function Home() {
     [0, 0.2],
     ["0px", "100vh"],
   );
-
   const secondSectionY = useTransform(
     pageScroll,
-    [0.2, 0.35],
-    ["0%", "-150vh"],
+    [0.25, 0.35],
+    ["0%", "-100%"],
   );
+  // const transitionY = useTransform(pageScroll, [0.3, 0.35], ["100%", "-100%"]);
 
-  const transitionY = useTransform(pageScroll, [0.3, 0.35], ["100%", "-100%"]);
-
-  const thirdSectionY = useTransform(pageScroll, [0.4, 0.6], ["0%", "60%"]);
-  const whatWeDoTitleX = useTransform(pageScroll, [0.4, 0.45], ["0%", "100%"]);
+  const thirdSectionY = useTransform(pageScroll, [0.3, 0.4], ["100%", "-101%"]);
 
   const secondSectionBG = useTransform(
     pageScroll,
     [0.13, 0.2],
-    ["#FFFFFF", "#000000"],
+    ["#FFFFFF", "#0a0a0a"],
   );
   // const lightToDarkY = useTransform(pageScroll, [0.25, 0.5], ["100%", "-100%"]);
   const secondSectionText = useTransform(
@@ -197,7 +193,11 @@ export default function Home() {
     [0, 0.55],
     ["none", "all"],
   );
-  const fourthSectionText = useTransform(pageScroll, [0.42, 0.43], [0, 1]);
+  const fourthSectionText = useTransform(
+    pageScroll,
+    [0, 0.6, 0.61, 0.75],
+    ["0", "0", "1", "0"],
+  );
   const fourthSectionColor = useTransform(
     pageScroll,
     [0, 0.6, 0.61, 0.7],
@@ -215,32 +215,32 @@ export default function Home() {
     ["#000000", "#000000", "#cd1717", "#ffffff"],
   );
 
-  const fourthSectionDataScale = useTransform(
+  const fourthSectionY = useTransform(
     pageScroll,
-    [0.5, 0.56],
-    [1, 0.5],
+    [0, 0.65, 0.7],
+    isCompact ? [1008, 72, 0] : [2410, 200, 30],
+  );
+
+  const fourthSectionScale = useTransform(
+    pageScroll,
+    [0, 0.65, 0.7],
+    isCompact ? [1, 1, 0.82] : [1, 1, 0.5],
+  );
+  const fourthSectionData = useTransform(
+    pageScroll,
+    [0, 0.68, 0.685],
+    [0, 0, 1],
+  );
+  const fourthSectionDataY = useTransform(
+    pageScroll,
+    [0, 0.67, 0.7],
+    isCompact ? [200, 200, 0] : [600, 600, -100],
   );
   const fourthSectionFinalOpacity = useTransform(
     pageScroll,
     [0, 0.73, 0.75],
     [1, 1, 0],
   );
-  const flipAnimationRotateY = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["0deg", "-180deg"],
-  );
-  const flipAnimationOpacity = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["brightness(1)", "brightness(0)"],
-  );
-  const flipAnimationRotateY2 = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["-180deg", "0deg"],
-  );
-  const flipAnimationOpacity2 = useTransform(pageScroll, [0.6, 0.61], [0, 1]);
   const fifthSectionTitle = useTransform(
     pageScroll,
     [0.75, 0.76, 0.79],
@@ -523,10 +523,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    document
-      .querySelectorAll(".sound")
-      .forEach((x) => x.addEventListener("mouseenter", playSoundOnHover));
-
     // var element = document.querySelector("pre");
     // AsciiMorph(element, { x: 50, y: 25 });
 
@@ -576,15 +572,13 @@ export default function Home() {
         clearInterval(incrementTimer);
         document.body.style.overflow = "scroll";
       }
-    }, 5);
+    }, 10);
     return () => clearInterval(incrementTimer);
   }, []);
 
   const workCategories = [
     {
       name: "Branding",
-      description:
-        "Identity systems, visual language, and brand guidelines that define who you are.",
       image: "cyan",
       data: true,
       animation: workCard1,
@@ -592,8 +586,6 @@ export default function Home() {
     },
     {
       name: "Web Experiences",
-      description:
-        "Interactive websites and digital platforms built for impact and performance.",
       image: "pink",
       data: true,
       animation: workCard2,
@@ -602,8 +594,6 @@ export default function Home() {
 
     {
       name: "Mobile apps",
-      description:
-        "Native and cross-platform apps designed for seamless on-the-go experiences.",
       image: "blue",
       data: true,
       animation: workCard3,
@@ -612,8 +602,6 @@ export default function Home() {
 
     {
       name: "Graphics",
-      description:
-        "Print, digital assets, and visual content that communicate with clarity.",
       image: "green",
       data: true,
       animation: workCard4,
@@ -622,8 +610,6 @@ export default function Home() {
 
     {
       name: "UI/UX",
-      description:
-        "User-centered design that balances beauty, usability, and business goals.",
       image: "red",
       data: true,
       animation: workCard5,
@@ -811,12 +797,59 @@ export default function Home() {
 
   const workGridLastColumnIndexes = [3, 7, 11];
 
+  function returnBoxOpacity(i: number): number[] {
+    // const setA = [7, 15, 19, 26, 36, 42, 43, 44, 45, 47, 46, 48];
+    // const setB = [18, 23, 27, 29, 33, 37, 39, 41, 49];
+    // const setC = [4, 8, 16, 17, 21, 30, 32, 35];
+    // const setD = [9, 13, 14, 24, 34, 42, 50];
+    // const setE = [2, 3, 5, 10, 12, 20];
+    // const setF = [0, 1, 25, 28, 31, 38];
+
+    // const setA = [
+    //   7, 15, 19, 26, 36, 43, 44, 46, 48, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+    // ];
+    // const setB = [18, 23, 27, 29, 33, 37, 39, 41, 49];
+    // const setC = [4, 8, 16, 17, 21, 30, 32, 35];
+    // const setD = [9, 13, 14, 24, 34, 42, 50];
+    // const setE = [2, 3, 5, 10, 12, 20, 45, 47];
+    // const setF = [0, 1, 25, 28, 31, 38, 44];
+    const setA = [
+      7, 19, 15, 19, 26, 36, 41, 42, 43, 44, 45, 46, 47, 48, 49, 52, 54, 55, 56,
+      60, 63, 65, 78, 83, 86, 93,
+    ];
+    const setB = [18, 23, 27, 29, 33, 37, 39, 71, 73, 79, 85, 96];
+    const setC = [4, 8, 16, 17, 21, 30, 32, 35, 53, 64, 76, 81, 82, 88, 98];
+    const setD = [
+      9, 13, 14, 24, 34, 50, 57, 62, 67, 68, 70, 75, 80, 92, 94, 95, 97, 99,
+    ];
+    const setE = [2, 3, 5, 10, 12, 20, 51, 58, 59, 61, 66, 69, 84, 87, 90, 100];
+    const setF = [0, 1, 25, 28, 31, 38, 72, 74, 77, 89, 91];
+    let value: number[] = [0, 0];
+
+    if (setA.includes(i)) {
+      value = [0.27, 0.28];
+    } else if (setB.includes(i)) {
+      value = [0.28, 0.29];
+    } else if (setC.includes(i)) {
+      value = [0.29, 0.3];
+    } else if (setD.includes(i)) {
+      value = [0.3, 0.31];
+    } else if (setE.includes(i)) {
+      value = [0.31, 0.32];
+    } else if (setF.includes(i)) {
+      value = [0.32, 0.33];
+    } else {
+    }
+
+    return value;
+  }
+
   return (
     <main ref={containerRef}>
       <LS></LS>
       <Navbar />
       <section ref={pageRef} className="">
-        <motion.div className="relative ">
+        <motion.div className="relative">
           <motion.div
             style={{
               scale:
@@ -938,11 +971,11 @@ export default function Home() {
               className={`absolute left-1/2 -translate-x-1/2 z-[10003] ${isMobile ? "top-[42%] -translate-y-1/2 w-[min(13rem,calc(100vw-3rem))] max-w-[calc(100vw-3rem)]" : `top-1/2 -translate-y-1/2 ${isCompact ? "w-64 max-w-[min(21rem,85vw)]" : "w-84"}`}`}
             />
 
-            {/* <div
-              className="relative z-0 isolate "
+            <div
+              className="relative z-0 isolate"
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
-              <MemoGridBG
+              <GridScan
                 scanGlow={isMobile ? 0.92 : 0.6}
                 scanDirection="backward"
                 lineStyle="solid"
@@ -960,7 +993,7 @@ export default function Home() {
                 chromaticAberration={0.002}
                 noiseIntensity={isMobile ? 0.006 : 0.01}
               />
-            </div> */}
+            </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
             {/* {!isMobile && <FatCursors scale={1} />} */}
@@ -978,30 +1011,29 @@ export default function Home() {
               id="loader"
               className="absolute right-0 bottom-0 duration-300 "
             >
-              <span className="text-black text-[12em]  font-mono tabular-nums  duration-200">
+              <span className="text-black text-[16em]  font-mono tabular-nums  duration-200">
                 {loaderPct === 100 ? "100" : loaderPct}%
               </span>
             </div>
           </div>
-          <div className="min-h-[600vh]"></div>
+          <div className="min-h-[500vh]"></div>
         </motion.div>
 
         <motion.div
           style={{
             height: secondSectionHeight,
-            // y: secondSectionY,
+            y: secondSectionY,
             background: secondSectionBG,
             overflow: "hidden",
           }}
           transition={{
             ease: "backIn",
           }}
-          className=" bg-white z-999 fixed   left-0  min-w-screen w-screen  pointer-events-none top-1/2 translate-y-[-50%] "
+          className=" bg-white z-999 fixed  left-0  min-w-screen w-screen  pointer-events-none top-1/2 translate-y-[-50%] "
         >
           <motion.div
             style={{
               color: secondSectionText,
-              y: secondSectionY,
               // wordSpacing: "10px",
             }}
             className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-3"}`}
@@ -1176,17 +1208,177 @@ export default function Home() {
         </motion.div>
 
         <motion.div
+          style={{
+            y: thirdSectionY,
+          }}
           transition={{
             ease: "easeInOut",
           }}
-          className=" relative min-w-screen w-screen  z-999999 bg-black"
+          className="fixed  left-0  min-w-screen w-screen min-h-[200vh]   top-1/2 translate-y-[-50%] z-999  bg-white  "
         >
-          <MemoizedTransitionGrid mode={"dtl"} pageScroll={pageScroll} />
-
           <motion.div
-            className={`bg-white font-chakra-petch --overflow-y-auto z-999999999999  relative min-h-screen `}
+            transition={{
+              ease: "easeInOut",
+            }}
+            className="min-w-screen w-screen min-h-screen   top-1/2 translate-y-[-50%] z-999 grid grid-cols-25 bg-black"
           >
-            <div>
+            {new Array(100).fill("").map((x, i) => {
+              return (
+                <motion.div
+                  key={i.toString()}
+                  style={{
+                    background: useTransform(pageScroll, returnBoxOpacity(i), [
+                      "#0a0a0a",
+                      "#ffffff",
+                    ]),
+                    scale: 1.01,
+                  }}
+                  className=" w-full h-full"
+                  id={i.toString()}
+                ></motion.div>
+              );
+            })}
+          </motion.div>
+          <motion.div
+            className={`bg-white font-chakra-petch overflow-y-auto ${isMobile ? "h-dvh max-h-dvh w-full min-w-0 space-y-5 px-6 py-5" : isCompact ? "h-dvh max-h-dvh w-[min(44vw,320px)] min-w-65 p-5 space-y-6" : "h-screen w-[30vw] p-6 space-y-16"} z-999999999999  relative`}
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+                // opacity: categoryChanged ? 0 : 1,
+              }}
+              transition={{
+                delay: 1.2,
+              }}
+              className={`text-black  duration-200  flex flex-col-reverse ${isMobile ? "text-3xl min-h-40 gap-3" : isCompact ? "text-4xl min-h-52 gap-4" : "text-6xl min-h-78 gap-6"}`}
+            >
+              <React.Fragment>
+                <ScrambledText
+                  className="z-999 text-black"
+                  radius={100}
+                  style={{
+                    color: "black",
+                    fontSize: "1.5em",
+                    width: "100%",
+                    fontWeight: "600",
+                    fontFamily: "Chakra Petch",
+                    textAlign: "left",
+                    margin: "0",
+                    wordSpacing: isCompact ? "normal" : "500px",
+                  }}
+                  duration={3}
+                  speed={0.9}
+                  scrambleChars=".:-"
+                >
+                  What We Do
+                  {/* {x} */}
+                </ScrambledText>
+              </React.Fragment>
+            </motion.div>
+
+            <div
+              className={`flex flex-col justify-start items-start text-black ${isCompact ? "text-base space-y-2" : "text-xl space-y-3"}`}
+            >
+              {workCategories
+                .filter((x) => x.data)
+                .map((x, i) => (
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{
+                      opacity: 1,
+                    }}
+                    transition={{
+                      delay: 1.2 + 0.1 * (i + 1),
+                    }}
+                    onClick={() => {
+                      setCategoryChanged(true);
+                      setTimeout(() => {
+                        setCategoryChanged(false);
+                        if (x.name) {
+                          setSelectedWorkCategory(x.name);
+                          setSelectedProject(
+                            projects[x.name as keyof typeof projects][0].name,
+                          );
+                        }
+                      }, 1500);
+                      // }, 1500);
+                    }}
+                    className={`hover:underline p-1 cursor-pointer duration-200  ${selectedWorkCategory === x.name ? "tex-black" : "text-black/40"}`}
+                    key={x.name}
+                  >
+                    {x.name}
+                  </motion.div>
+                ))}
+            </div>
+          </motion.div>{" "}
+          <AnimatePresence>
+            {selectedWorkCategory && (
+              <motion.div
+                initial={{
+                  x: "-100%",
+                }}
+                animate={{
+                  x: categoryChanged
+                    ? "0%"
+                    : isMobile
+                      ? "-100%"
+                      : isCompact
+                        ? "-80%"
+                        : "-80%",
+                }}
+                exit={{
+                  x: "-100%",
+                }}
+                transition={{
+                  duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
+                  ease: "circInOut",
+                }}
+                className="bg-asymmetri-red w-screen h-screen fixed top-0 left-0 z-99999999"
+              ></motion.div>
+            )}
+          </AnimatePresence>
+          <motion.div
+            initial={{
+              x: "100%",
+            }}
+            animate={{
+              x: "0%",
+            }}
+            exit={{
+              x: "100%",
+            }}
+            transition={{
+              duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
+              ease: "circInOut",
+            }}
+            className={`bg-white fixed top-0 right-0 z-9999999 flex ${isMobile ? "h-dvh max-h-dvh w-full flex-col gap-6 overflow-y-auto overscroll-y-contain px-6 py-6" : isCompact ? "h-dvh max-h-dvh w-[min(100%,520px)] flex-col overflow-y-auto overscroll-y-contain py-8 px-5 gap-8" : "h-screen w-[70vw] justify-center items-center p-16"}`}
+          >
+            <div
+              className={`flex flex-col justify-center items-center ${isCompact ? "w-full shrink-0 space-y-4" : "h-full w-1/2 space-y-6"}`}
+            >
+              <motion.img
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 1.4,
+                }}
+                className={`object-cover ${isCompact ? "max-h-72" : "max-h-96"}`}
+                src={
+                  projects[
+                    selectedWorkCategory as keyof typeof projects
+                  ].filter((x) => x.name === selectedProject)[0].coverImage
+                }
+                alt=""
+              />
               <motion.div
                 initial={{
                   opacity: 0,
@@ -1197,528 +1389,629 @@ export default function Home() {
                 transition={{
                   delay: 1.2,
                 }}
-                className={`text-black  duration-200 py-36 px-8    ${isMobile ? "text-3xl min-h-40 gap-3" : isCompact ? "text-4xl --min-h-52 gap-4" : "text-6xl --min-h-78 gap-6"} relative `}
+                className={`font-chakra-petch ${isCompact ? "text-2xl" : "text-3xl"}`}
+              >
+                {selectedProject}
+              </motion.div>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 1.3,
+                }}
+                className="font-chakra-petch text-base text-center max-w-xs"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem,
+                natus sit dolor eos perspiciatis quasi earum.
+              </motion.div>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 1.5,
+                }}
+                className={`rounded-full cursor-pointer border-2 border-black text-black hover:bg-black hover:text-white duration-300 ${isCompact ? "p-5" : "p-8"}`}
+              >
+                <ChevronUp className="rotate-36"></ChevronUp>
+              </motion.div>
+            </div>
+            <div
+              className={`flex flex-col justify-start items-start ${isCompact ? "w-full flex-1 min-h-0 pb-10" : "h-full w-1/2 pl-16 justify-center"}`}
+            >
+              {projects[selectedWorkCategory as keyof typeof projects].map(
+                (x, i) => (
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{
+                      opacity: 1,
+                    }}
+                    transition={{
+                      delay: 1.4 + (0.1 * i + 1),
+                    }}
+                    className={`flex justify-between w-full font-chakra-petch items-center duration-200 cursor-pointer ease-in-out ${isCompact ? "gap-4 hover:-translate-x-3" : "gap-8 hover:-translate-x-9"}`}
+                    onClick={() => {
+                      setSelectedProject(x.name);
+                    }}
+                    key={i}
+                  >
+                    <div
+                      className={`border-l  h-full p-2 pl-3 flex flex-col justify-center duration-300 items-center ${selectedProject === x.name ? "border-black" : "border-black/20"}`}
+                    >
+                      <div
+                        className={`font-semibold duration-200 ${isCompact ? "min-w-28" : "min-w-36"} ${selectedProject === x.name ? "text-base" : "text-sm"}`}
+                      >
+                        {x.name}
+                      </div>
+                      <div className="text-black/50 text-left w-full">
+                        {x.year}
+                      </div>
+                    </div>
+                    <div className="py-3">
+                      <img
+                        src={x.coverImage}
+                        className={`rounded-md duration-200 ${isCompact ? "w-24 h-20" : "w-32 h-24"} ${selectedProject === x.name ? "grayscale-0" : "grayscale-100"}`}
+                      ></img>
+                    </div>
+                  </motion.div>
+                ),
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          style={{
+            y: fourthSectionOpacity,
+            background: fourthSectionGradient,
+            pointerEvents: isMobile ? "none" : fourthSectionPointer,
+          }}
+          className={`bg-black w-screen fixed top-0 left-0 z-9999 flex min-h-0 justify-between items-center flex-col ${isCompact ? (isMobile ? "h-dvh max-h-dvh min-h-0 overflow-hidden px-7 sm:px-8" : "h-dvh max-h-dvh overflow-hidden px-8 sm:px-12") : "h-screen"}`}
+        >
+          <motion.div
+            style={{
+              opacity: fifthSectionSecondTitle,
+            }}
+            className={`fixed z-9999999 font-chakra-petch font-bold text-black text-pretty ${isMobile ? "pointer-events-none left-1/2 top-[max(4rem,calc(48svh-5rem))] w-[min(18.25rem,calc(100vw-3rem))] max-w-[min(18.25rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-lg leading-snug" : isCompact ? "pointer-events-none left-1/2 top-[4.5rem] w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-3xl leading-tight" : "pointer-events-none left-8 top-36 max-w-6xl text-7xl"}`}
+          >
+            This is the space where we test, tweak, break things, and make them
+            better.
+          </motion.div>
+          <motion.div
+            style={{
+              opacity: fifthSectionSecondTitle2,
+            }}
+            className={`fixed z-99999 font-chakra-petch font-bold text-black ${isMobile ? "pointer-events-none bottom-[calc(env(safe-area-inset-bottom,0)+3rem)] left-1/2 w-[min(17rem,calc(100vw-3rem))] max-w-[min(17rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-xs text-pretty" : isCompact ? "bottom-[calc(env(safe-area-inset-bottom,0)+4rem)] left-1/2 w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-sm text-pretty" : "bottom-36 right-48 max-w-xs text-xl"}`}
+          >
+            Stick around — you might find exactly what your project needs.
+          </motion.div>
+          <motion.div
+            style={{
+              opacity: fifthSectionTitle,
+            }}
+            className={`fixed z-99999 font-chakra-petch font-bold text-asymmetri-red ${isMobile ? "pointer-events-none left-1/2 top-[max(2.75rem,calc(48svh-10rem))] w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center text-lg" : isCompact ? "left-1/2 top-4 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center text-2xl" : "left-0 right-0 top-20 px-4 text-center text-5xl"}`}
+          >
+            Hi! I'm Nandagopal, founder of
+          </motion.div>
+          <motion.div
+            style={{
+              opacity: fifthSectionLogo,
+            }}
+            className={`fixed z-9999999 font-chakra-petch font-bold pointer-events-none text-asymmetri-red ${isMobile ? "left-1/2 top-[max(5.5rem,calc(48svh-7rem))] w-[min(17rem,calc(100vw-3rem))] max-w-[min(17rem,calc(100vw-3rem))] -translate-x-1/2 px-3 text-center" : isCompact ? "left-1/2 top-[4.25rem] w-[min(18rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 px-3 text-center" : "left-1/2 top-36 -translate-x-1/2"}`}
+          >
+            <img
+              src="/logo.png"
+              className={`invert-100 mx-auto ${isMobile ? "w-[min(140px,38vw)]" : isCompact ? "w-[min(220px,42vw)]" : "w-5xl"}`}
+              alt=""
+            />
+          </motion.div>
+
+          <motion.div
+            style={{
+              opacity: fourthSectionFinalOpacity,
+            }}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 bg-linear-360 from-asymmetri-red/30 to-transparent w-screen max-w-full  max-md:rounded-none"
+          >
+            {" "}
+          </motion.div>
+
+          {isMobile ? (
+            <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
+              <motion.div
+                style={{
+                  opacity: fourthSectionText,
+                  y: fourthSectionY,
+                  scale: fourthSectionScale,
+                }}
+                className="z-99999 min-w-0 shrink-0 px-3 font-chakra-petch text-center text-white pointer-events-auto mx-auto mt-[min(12vh,72px)] mb-1 w-[min(18rem,calc(100vw-3rem))] max-w-[min(18rem,calc(100vw-3rem))] text-pretty text-lg leading-snug"
+              >
+                The ideas that define
+                <motion.span
+                  style={{
+                    color: fourthSectionColor,
+                  }}
+                  className=""
+                >
+                  <ScrambledText
+                    className="z-999999 text-white"
+                    radius={100}
+                    style={{
+                      color: "inherit",
+                      fontSize: "1.2em",
+                      width: "fit-content",
+                      fontFamily: "Chakra Petch",
+                      textAlign: "center",
+                      margin: "0",
+                      display: "inline",
+                    }}
+                    duration={3}
+                    speed={0.9}
+                    scrambleChars=".:-"
+                  >
+                    Asymmetri
+                  </ScrambledText>
+                </motion.span>{" "}
+                and the mindset behind the work you see.
+              </motion.div>
+              <motion.div
+                style={{
+                  opacity: fourthSectionData,
+                  y: fourthSectionDataY,
+                }}
+                className="relative z-999999 flex min-h-0 w-full max-w-[min(19rem,calc(100vw-3rem))] flex-1 flex-col items-center justify-start gap-4 overflow-y-hidden overflow-x-hidden  px-4 pb-[max(6rem,env(safe-area-inset-bottom,0))] pt-2 pointer-events-auto mx-auto border-white"
               >
                 <motion.div
                   style={{
-                    y: useTransform(pageScroll, [0.3, 0.6], ["0%", "100%"]),
+                    opacity: fourthSectionFinalOpacity,
                   }}
-                  className="absolute -top-36  right-0 text-[16em] text-asymmetri-red/20 pointer-events-none"
+                  className="absolute left-0 right-0 top-0 h-px w-full bg-white"
+                ></motion.div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center"
                 >
-                  ?
-                </motion.div>
-                <motion.div className="w-fit">
-                  <ScrambledText
-                    className="z-999 text-black"
-                    radius={100}
-                    style={{
-                      color: "black",
-                      fontSize: "2em",
-                      width: "100%",
-                      fontWeight: "600",
-                      fontFamily: "Chakra Petch",
-                      textAlign: "left",
-                      margin: "0",
-                      // wordSpacing: isCompact ? "normal" : "",
-                    }}
-                    duration={3}
-                    speed={0.01}
-                    scrambleChars="=:-"
-                  >
-                    What We Do
-                  </ScrambledText>
-                  <div className="text-xl max-w-3xl pl-3 pt-3">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Dignissimos dolores impedit cum est autem sint minus
-                    commodi? Voluptate ad facilis quod. Perspiciatis adipisci
-                    iure, nesciunt delectus atque ea iusto tempore?
+                  <div className="font-chakra-petch text-white pt-3 text-xl">
+                    Philosophy
+                  </div>
+                  <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made products Our commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
                   </div>
                 </motion.div>
+                <div className="flex w-full max-w-[180px] shrink-0 justify-center">
+                  <div className="relative isolate inline-block max-w-full overflow-hidden bg-black">
+                    <motion.img
+                      style={{
+                        opacity: fourthSectionFinalOpacity,
+                      }}
+                      src="/flip.png"
+                      alt=""
+                      className="relative z-10 block h-auto max-h-[min(18dvh,200px)] max-w-full object-contain"
+                    />
+                    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]">
+                      <motion.img
+                        style={{
+                          scale: nandScale,
+                          filter: nandBlur,
+                        }}
+                        src="/nand2.jpg"
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center pb-1"
+                >
+                  <div className="font-chakra-petch text-white pt-3 text-xl">
+                    Our Mission
+                  </div>
+                  <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
+
+                <div></div>
               </motion.div>
             </div>
-
-            <div className="grid grid-cols-8 --border-t-2 --border-black/20 pt-16">
-              <div className="col-span-3 space-y-6 z-999999999 bg-white pl-8">
-                <div className="text-black/60">
-                  [Click on the below categories to know more]
-                </div>
-                <div
-                  className={`flex flex-col justify-start items-start text-black ${isCompact ? "text-base space-y-2" : "text-xl space-y-6"}`}
+          ) : (
+            <>
+              <motion.div
+                style={{
+                  opacity: fourthSectionText,
+                  y: fourthSectionY,
+                  scale: fourthSectionScale,
+                }}
+                className={`z-99999 min-w-0 font-chakra-petch text-center text-white ${isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-6xl"}`}
+              >
+                The ideas that define
+                <motion.span
+                  style={{
+                    color: fourthSectionColor,
+                  }}
+                  className=""
                 >
-                  {workCategories
-                    .filter((x) => x.data)
-                    .map((x, i) => {
-                      const isSelected = selectedWorkCategory === x.name;
+                  <ScrambledText
+                    className="z-999999 text-white"
+                    radius={100}
+                    style={{
+                      color: "inherit",
+                      fontSize: "1.2em",
+                      width: "fit-content",
+                      fontFamily: "Chakra Petch",
+                      textAlign: "center",
+                      margin: "0",
+                      display: "inline",
+                    }}
+                    duration={3}
+                    speed={0.9}
+                    scrambleChars=".:-"
+                  >
+                    Asymmetri
+                  </ScrambledText>
+                </motion.span>{" "}
+                and the mindset behind the work you see.
+              </motion.div>
+              <motion.div
+                style={{
+                  opacity: fourthSectionData,
+                  y: fourthSectionDataY,
+                }}
+                className={`relative z-999999 w-full border-white ${isCompact ? "mx-auto flex min-h-0 w-[min(34rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] flex-1 flex-col items-center justify-start gap-8 overflow-y-auto overscroll-y-contain px-3 pb-[env(safe-area-inset-bottom,0)] pt-3" : "flex flex-row items-center justify-between gap-16 p-16 pt-0"}`}
+              >
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`w-full bg-white ${isCompact ? "absolute left-0 right-0 top-0 h-px" : "absolute left-0 top-0 h-px w-screen"}`}
+                ></motion.div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
+                >
+                  <div
+                    className={`font-chakra-petch text-white pt-3 ${isCompact ? "text-2xl" : "text-3xl"}`}
+                  >
+                    Philosophy
+                  </div>
+                  <div
+                    className={`text-white font-chakra-petch ${isCompact ? "max-w-full text-sm overflow-y-auto max-h-[22vh]" : "text-xl max-w-md"}`}
+                  >
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made products Our commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
+                <div
+                  className={`flex shrink-0 justify-center ${isCompact ? "w-full max-w-[220px]" : "w-1/3"}`}
+                >
+                  <div className="relative isolate inline-block max-w-full overflow-hidden bg-black">
+                    <motion.img
+                      style={{
+                        opacity: fourthSectionFinalOpacity,
+                      }}
+                      src="/flip.png"
+                      alt=""
+                      className={`relative z-10 block h-auto max-w-full object-contain ${isCompact ? "max-h-[26vh]" : ""}`}
+                    />
+                    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]">
+                      <motion.img
+                        style={{
+                          scale: nandScale,
+                          filter: nandBlur,
+                        }}
+                        src="/nand2.jpg"
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <motion.div
+                  style={{
+                    opacity: fourthSectionFinalOpacity,
+                  }}
+                  className={`flex flex-col gap-6 ${isCompact ? "mx-auto w-full max-w-sm items-center text-center" : "h-full min-h-36 w-1/3 items-start justify-start pr-6"}`}
+                >
+                  <div
+                    className={`font-chakra-petch text-white pt-3 ${isCompact ? "text-2xl" : "text-3xl"}`}
+                  >
+                    Our Mission
+                  </div>
+                  <div
+                    className={`text-white font-chakra-petch ${isCompact ? "max-w-full text-sm overflow-y-auto max-h-[26vh]" : "text-xl max-w-3xl"}`}
+                  >
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                    Our commitment goes beyond fleeting trends, we believe in
+                    making tailor made productsOur commitment goes beyond
+                    fleeting trends, we believe in making tailor made products
+                  </div>
+                </motion.div>
 
-                      return (
+                <div></div>
+              </motion.div>
+            </>
+          )}
+
+          <motion.div
+            style={{
+              y: fourthSectionBG,
+            }}
+            className={`flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${isMobile ? "h-72 w-[min(100%,22rem)] max-w-[94vw]" : isCompact ? "h-96 w-2xl max-w-[min(42rem,92vw)]" : "h-128 w-3xl"}`}
+          >
+            <motion.div
+              style={{
+                opacity: fourthSectionFinalOpacity,
+              }}
+              className="relative w-full h-full  flex justify-center items-center pointer-events-none "
+            ></motion.div>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 flex min-h-0 flex-col ${isMobile ? "h-dvh max-h-dvh items-stretch overflow-x-hidden overflow-hidden pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden  " + (isCompact ? "h-dvh max-h-dvh" : "h-screen")}`}
+          style={
+            isMobile
+              ? { y: sixthSectionY, pointerEvents: "none" }
+              : {
+                  y: sixthSectionY,
+                  scale: sixthSectionScale,
+                  pointerEvents: sixthSectionPointer,
+                }
+          }
+        >
+          <motion.div
+            style={{
+              opacity: sixthSectionTitleBG,
+            }}
+            className="heroDark pointer-events-none absolute inset-0 z-0 bg-black max-md:hidden"
+          />
+
+          {!isMobile && (
+            <FatCursors color="#FFFFFF50" scale={1} min={1}></FatCursors>
+          )}
+
+          {isMobile ? (
+            <>
+              <div className="pointer-events-auto flex w-full flex-col items-center justify-center px-0 pb-28 pt-2 max-md:min-h-screen">
+                <motion.div
+                  style={{
+                    opacity: testimonialLayerOpacity,
+                  }}
+                  className="relative z-10 mb-5 max-w-[min(18rem,calc(100vw-3rem))] shrink-0 px-6 text-center font-chakra-petch text-xl leading-snug text-white"
+                >
+                  Feedback from the folks who know us best.
+                </motion.div>
+
+                <motion.div
+                  style={{ opacity: testimonialLayerOpacity }}
+                  className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2"
+                >
+                  <MobileTestimonialsCarousel
+                    items={testimonials.map(
+                      ({ company, testimonial, image }) => ({
+                        company,
+                        testimonial,
+                        image,
+                      }),
+                    )}
+                    className="w-full min-w-0 max-w-full touch-pan-x"
+                  />
+                </motion.div>
+              </div>
+
+              <motion.div
+                style={{
+                  opacity: testimonialLayerOpacity,
+                }}
+                className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(18rem,calc(100vw-3rem))] max-w-[calc(100vw-3rem)] -translate-x-1/2 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 text-center font-chakra-petch text-[11px] leading-snug text-white/50"
+              >
+                Collaborative agency for bold ideas, beautiful code and digital
+                experiences
+              </motion.div>
+            </>
+          ) : (
+            <>
+              {testimonials.map((x, i) => {
+                const slot =
+                  testimonialSlots[(i - 1) % testimonialSlots.length];
+                return (
+                  <motion.div
+                    style={{
+                      y: x.layerY,
+                      opacity: testimonialLayerOpacity,
+                    }}
+                    animate={{
+                      top: i === 0 ? "50%" : slot.top,
+                      left: i === 0 ? "50%" : slot.left,
+                      scale: i === 0 ? 1 : isCompact ? 0.5 : 0.42,
+                    }}
+                    transition={{
+                      duration: isCompact ? 0.75 : 1,
+                      ease: "easeInOut",
+                    }}
+                    key={x.company}
+                    onClick={() => {
+                      if (i === 0) return;
+                      const newArray = [
+                        x,
+                        ...testimonials.filter((y) => y.company !== x.company),
+                      ];
+                      setTestimonials(newArray);
+                    }}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 font-chakra-petch z-[10] ${i === 0 ? "cursor-default" : "cursor-pointer"}`}
+                  >
+                    <img
+                      src={x.image}
+                      className={`duration-500 ${isCompact ? "w-48" : "w-64"} ${i === 0 ? "grayscale-0" : "grayscale"}`}
+                      alt=""
+                    />
+                    <AnimatePresence>
+                      {i === 0 && (
                         <motion.div
                           initial={{
                             opacity: 0,
                           }}
                           animate={{
                             opacity: 1,
-                            // x: isSelected ? (isCompact ? 10 : 14) : 0,
                           }}
-                          transition={
-                            {
-                              // delay: 1.2 + 0.1 * (i + 1),
-                              // x: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
-                            }
+                          exit={{
+                            opacity: 0,
+                          }}
+                          transition={{
+                            delay: 0.8,
+                          }}
+                          className={
+                            isCompact
+                              ? "absolute top-[calc(100%+0.5rem)] left-1/2 z-[11] flex -translate-x-1/2 flex-col items-center gap-3 text-center"
+                              : "absolute top-0 left-[calc(100%+0.75rem)] z-[11] flex flex-col gap-6 text-left"
                           }
-                          layout
-                          onClick={
-                            isSelected
-                              ? undefined
-                              : () => {
-                                  setCategoryChanged(true);
-                                  setTimeout(() => {
-                                    setCategoryChanged(false);
-                                    if (x.name) {
-                                      setSelectedWorkCategory(x.name);
-                                      setSelectedProject(
-                                        projects[
-                                          x.name as keyof typeof projects
-                                        ][0].name,
-                                      );
-                                    }
-                                  }, 1500);
-                                }
-                          }
-                          className={` w-full overflow-hidden font-chakra-petch duration-200 ${
-                            isSelected
-                              ? "cursor-default border  bg-asymmetri-red text-white  mb-2"
-                              : "sound cursor-pointer border-b border-black/20 text-black/45 hover:text-black hover:translate-x-6 hover:border-black"
-                          }`}
-                          key={x.name}
                         >
                           <div
-                            className={`flex items-start gap-3 ${isSelected ? "px-4 pt-4 pb-2" : "px-1 py-2"}`}
+                            className={`text-white ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
                           >
-                            {isSelected && (
-                              <span className="mt-1.5 shrink-0 text-[10px] font-mono tabular-nums tracking-[0.2em] text-white/90">
-                                {String(i + 1).padStart(2, "0")}
-                              </span>
-                            )}
-                            <span
-                              className={`leading-tight ${isSelected ? "text-2xl font-semibold" : "text-2xl"}`}
+                            {x.testimonial}
+                          </div>
+                          <div
+                            className={`text-asymmetri-red z-[12] ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
+                          >
+                            <ScrambledText
+                              className="z-[12]"
+                              radius={100}
+                              style={{
+                                color: "inherit",
+                                fontSize: "inherit",
+                                width: "100%",
+                                fontFamily: "Chakra Petch",
+                                textAlign: isCompact ? "center" : "left",
+                                margin: "0",
+                              }}
+                              duration={3}
+                              speed={0.9}
+                              scrambleChars=".:-"
                             >
-                              {x.name}
-                            </span>
+                              {x.company}
+                            </ScrambledText>
                           </div>
-                          <motion.div
-                            initial={false}
-                            animate={{
-                              height: isSelected ? "auto" : 0,
-                              opacity: isSelected ? 1 : 0,
-                            }}
-                            transition={{
-                              duration: 0.35,
-                              ease: [0.4, 0, 0.2, 1],
-                            }}
-                            className="overflow-hidden"
-                          >
-                            <div className="border-t border-white/15 px-4 pb-4 pt-3">
-                              <motion.p
-                                initial={false}
-                                animate={{
-                                  y: isSelected ? 0 : 6,
-                                  opacity: isSelected ? 1 : 0,
-                                }}
-                                transition={{
-                                  duration: 0.3,
-                                  delay: isSelected ? 0.08 : 0,
-                                  ease: [0.4, 0, 0.2, 1],
-                                }}
-                                className={`max-w-sm font-normal leading-relaxed text-white/75 ${isCompact ? "text-sm" : "text-base"}`}
-                              >
-                                {x.description}
-                              </motion.p>
-                            </div>
-                          </motion.div>
                         </motion.div>
-                      );
-                    })}
-                </div>
-              </div>
-              <div className="col-span-5">
-                <motion.div
-                  initial={{
-                    x: "100%",
-                  }}
-                  animate={{
-                    x: "0%",
-                  }}
-                  exit={{
-                    x: "100%",
-                  }}
-                  transition={{
-                    duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
-                    ease: "circInOut",
-                  }}
-                  className={`bg-white   z-9999999 flex ${isMobile ? "--h-dvh --max-h-dvh w-full flex-col gap-6 --overflow-y-auto --overscroll-y-contain px-6 py-6" : isCompact ? "--h-dvh --max-h-dvh  flex-col --overflow-y-auto --overscroll-y-contain py-8 px-5 gap-8" : "min-h-screen  justify-start items-start p-16"}`}
-                >
-                  <div
-                    className={`flex flex-col justify-start items-start ${isCompact ? "w-full shrink-0 space-y-4" : "h-full w-1/2 space-y-6"}`}
-                  >
-                    <motion.img
-                      initial={{
-                        opacity: 0,
-                      }}
-                      animate={{
-                        opacity: 1,
-                      }}
-                      transition={{
-                        delay: 1.4,
-                      }}
-                      className={`object-cover ${isCompact ? "max-h-72" : "max-h-96"}`}
-                      src={
-                        projects[
-                          selectedWorkCategory as keyof typeof projects
-                        ].filter((x) => x.name === selectedProject)[0]
-                          .coverImage
-                      }
-                      alt=""
-                    />
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                      }}
-                      animate={{
-                        opacity: 1,
-                      }}
-                      transition={{
-                        delay: 1.2,
-                      }}
-                      className={`font-chakra-petch ${isCompact ? "text-2xl" : "text-3xl"}`}
-                    >
-                      {selectedProject}
-                    </motion.div>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                      }}
-                      animate={{
-                        opacity: 1,
-                      }}
-                      transition={{
-                        delay: 1.3,
-                      }}
-                      className="font-chakra-petch text-base text-left max-w-xs"
-                    >
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quidem, natus sit dolor eos perspiciatis quasi earum.
-                    </motion.div>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                      }}
-                      animate={{
-                        opacity: 1,
-                      }}
-                      transition={{
-                        delay: 1.5,
-                      }}
-                      className={`sound rounded-full cursor-pointer border-2 border-black text-black hover:bg-black hover:text-white duration-300 ${isCompact ? "p-5" : "p-8"}`}
-                    >
-                      <ChevronUp className="rotate-36"></ChevronUp>
-                    </motion.div>
-                  </div>
-                  <div
-                    className={`flex flex-col justify-start items-start ${isCompact ? "w-full flex-1 min-h-0 pb-10" : "h-full w-1/2 pl-16 justify-center"}`}
-                  >
-                    {projects[
-                      selectedWorkCategory as keyof typeof projects
-                    ].map((x, i) => (
-                      <motion.div
-                        initial={{
-                          opacity: 0,
-                        }}
-                        animate={{
-                          opacity: 1,
-                        }}
-                        transition={{
-                          delay: 1.4 + (0.1 * i + 1),
-                        }}
-                        className={`flex justify-between w-full font-chakra-petch items-center duration-200 cursor-pointer ease-in-out ${isCompact ? "gap-4 hover:-translate-x-3" : "gap-8 hover:-translate-x-9"}`}
-                        onClick={() => {
-                          setSelectedProject(x.name);
-                        }}
-                        key={i}
-                      >
-                        <div
-                          className={`border-l sound  h-full p-2 pl-3 flex flex-col justify-center duration-300 items-center ${selectedProject === x.name ? "border-black" : "border-black/20"}`}
-                        >
-                          <div
-                            className={`font-semibold duration-200 ${isCompact ? "min-w-28" : "min-w-36"} ${selectedProject === x.name ? "text-base" : "text-sm"}`}
-                          >
-                            {x.name}
-                          </div>
-                          <div className="text-black/50 text-left w-full">
-                            {x.year}
-                          </div>
-                        </div>
-                        <div className="py-3">
-                          <img
-                            src={x.coverImage}
-                            className={`rounded-md duration-200 ${isCompact ? "w-24 h-20" : "w-32 h-24"} ${selectedProject === x.name ? "grayscale-0" : "grayscale-100"}`}
-                          ></img>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-            <AnimatePresence>
-              {selectedWorkCategory && (
-                <motion.div
-                  initial={{
-                    x: "-100%",
-                  }}
-                  animate={{
-                    x: categoryChanged
-                      ? "0%"
-                      : isMobile
-                        ? "-100%"
-                        : isCompact
-                          ? "-100%"
-                          : "-100%",
-                  }}
-                  exit={{
-                    x: "-100%",
-                  }}
-                  transition={{
-                    duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
-                    ease: "circInOut",
-                  }}
-                  className="bg-asymmetri-red w-screen h-screen  z-9999999999999 fixed top-0 left-0"
-                ></motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
 
-          <div className="bg-black z-9999999999 relative">
-            <motion.div
-              style={{
-                scale: fourthSectionDataScale,
-              }}
-              className={` z-99999 relative w-screen min-w-0 font-chakra-petch text-center text-white ${isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-5xl"} min-h-screen flex justify-center items-center flex-col sticky top-0`}
-            >
-              The ideas that define
-              <motion.span
+              <motion.div
                 style={{
-                  color: fourthSectionColor,
+                  opacity: sixthSectionTitle,
+                }}
+                className={`pointer-events-none z-[20] max-w-sm px-6 text-center font-chakra-petch text-white ${isCompact ? "relative text-3xl leading-snug" : "relative text-7xl"}`}
+              >
+                Feedback from the folks who know us best.
+              </motion.div>
+
+              <motion.div
+                style={{
+                  opacity: sixthSectionTitle2,
+                }}
+                className={`pointer-events-none z-[20] px-4 text-center font-chakra-petch text-white/50 ${isCompact ? "absolute bottom-10 left-1/2 max-w-none -translate-x-1/2 text-[11px]" : "absolute bottom-20 left-1/2 max-w-none -translate-x-1/2 text-xs"}`}
+              >
+                Collaborative agency for bold ideas, beautiful code and digital
+                experiences
+              </motion.div>
+            </>
+          )}
+        </motion.div>
+
+        <motion.section
+          style={{
+            y: footerSectionY,
+            scale: footerSectionScale,
+            pointerEvents: isMobile ? "none" : footerSectionPointer,
+          }}
+          className={`flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red z-999999999 fixed top-0 left-0 w-screen rounded-lg ${isCompact ? `min-h-0 h-dvh max-h-dvh overflow-hidden pb-[max(env(safe-area-inset-bottom),0.75rem)]${isMobile ? " px-7 pt-[max(env(safe-area-inset-top),0.5rem)]" : " px-4"}` : "min-h-screen h-screen"}`}
+        >
+          <div
+            className={
+              isMobile
+                ? "pointer-events-auto flex w-full flex-col items-center justify-center gap-6 text-center xl:gap-8"
+                : "contents"
+            }
+          >
+            <motion.h2
+              style={{
+                opacity: footerSectionTitle,
+              }}
+              className={`font-chakra-petch text-white font-medium ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-2 text-xl leading-snug" : isCompact ? "text-3xl px-6 max-w-2xl" : "text-2xl lg:text-4xl xl:text-5xl"}`}
+            >
+              Let’s turn your ideas into <br /> beautiful asymmetry.
+            </motion.h2>
+
+            <div
+              className={`flex ${isCompact ? "flex-col" : "flex-row"} gap-2 xl:gap-4`}
+            >
+              <motion.div
+                style={{
+                  opacity: footerSectionButtonA,
                 }}
                 className=""
               >
-                <ScrambledText
-                  className="z-999999 text-asymmetri-red"
-                  radius={100}
-                  style={{
-                    color: "red",
-                    fontSize: "1.2em",
-                    width: "fit-content",
-                    fontFamily: "Chakra Petch",
-                    textAlign: "center",
-                    margin: "0",
-                    display: "inline",
-                  }}
-                  duration={3}
-                  speed={0.9}
-                  scrambleChars=".:-"
+                <Button
+                  size="lg"
+                  className="font-chakra-petch text-asymmetri-red py-4 font-semibold"
                 >
-                  Asymmetri
-                </ScrambledText>
-              </motion.span>{" "}
-              and the mindset behind the work you see.
-            </motion.div>
-            {/* <MemoizedTransitionGrid mode={"dtr"} pageScroll={pageScroll} /> */}
-            <div className="min-h-screen flex justify-center items-center   z-999999999 sticky top-0">
-              <motion.img
-                src="/flip.png"
-                alt=""
-                className={`relative z-10 block h-auto max-w-full object-contain w-96 `}
-              />
-              <motion.div className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center pb-1 absolute">
-                <div className="font-chakra-petch text-white pt-3 text-xl">
-                  Our Mission
-                </div>
-                <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
-                  Our commitment goes beyond fleeting trends, we believe in
-                  making tailor made productsOur commitment goes beyond fleeting
-                  trends, we believe in making tailor made products Our
-                  commitment goes beyond fleeting trends, we believe in making
-                  tailor made productsOur commitment goes beyond fleeting
-                  trends, we believe in making tailor made products
-                </div>
+                  Get in touch
+                </Button>
               </motion.div>
-              <motion.img
+              <motion.div
                 style={{
-                  // rotateY: flipAnimationRotateY2,
-                  opacity: flipAnimationOpacity2,
+                  opacity: footerSectionButtonB,
                 }}
-                src="/nand2.jpg"
-                alt=""
-                className=" w-96 z-999999 object-cover absolute "
-              />
+              >
+                <Button
+                  size="lg"
+                  className="font-chakra-petch bg-transparent font-semibold"
+                  variant={"outline"}
+                >
+                  Join our team
+                </Button>
+              </motion.div>
             </div>
-
-            <div className="min-h-screen"></div>
+            <motion.img
+              style={{
+                opacity: footerSectionButtonLogo,
+              }}
+              src="/logo.png"
+              className={`fixed left-1/2 -translate-x-1/2 ${isMobile ? "w-[min(100%,16rem)] bottom-8" : isCompact ? "w-4xl bottom-10" : "w-6xl bottom-16"}`}
+              alt=""
+            />
           </div>
-        </motion.div>
-
+        </motion.section>
         <div className="min-h-[900vh]"></div>
       </section>
     </main>
-  );
-}
-
-const MemoizedTransitionGrid = memo(TransitionGrid);
-
-function TransitionGrid({
-  mode,
-  pageScroll,
-  height = "150vh",
-}: {
-  mode: "ltd" | "dtl" | "dtr";
-  pageScroll: any;
-  height?: string;
-}) {
-  function returnBoxOpacity(i: number): number[] {
-    const setA = [6, 5, 43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14, 1];
-    const setB = [
-      7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82, 42, 81, 90, 91,
-      92,
-    ];
-    const setC = [
-      25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
-    ];
-    const setD = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
-    const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
-    const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
-    const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
-
-    let value: number[] = [0, 0];
-
-    if (setA.includes(i)) {
-      value = [0.26, 0.28];
-    } else if (setB.includes(i)) {
-      value = [0.27, 0.28];
-    } else if (setC.includes(i)) {
-      value = [0.31, 0.32];
-    } else if (setD.includes(i)) {
-      value = [0.29, 0.3];
-    } else if (setE.includes(i)) {
-      value = [0.21, 0.22];
-    } else if (setF.includes(i)) {
-      value = [0.28, 0.29];
-    } else if (setG.includes(i)) {
-      value = [0.3, 0.32];
-    }
-    return value;
-  }
-  function returnBoxOpacity2(i: number): number[] {
-    const setA = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
-    const setB = [
-      1, 2, 3, 4, 5, 7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82,
-      42, 81, 90, 91, 92,
-    ];
-    const setC = [
-      25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
-    ];
-    const setD = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
-    const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
-    const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
-    const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
-
-    let value: number[] = [0, 0];
-
-    if (setA.includes(i)) {
-      value = [0.44, 0.45];
-    } else if (setB.includes(i)) {
-      value = [0.4, 0.42];
-    } else if (setC.includes(i)) {
-      value = [0.42, 0.43];
-    } else if (setD.includes(i)) {
-      value = [0.4, 0.41];
-    } else if (setE.includes(i)) {
-      value = [0.44, 0.46];
-    } else if (setF.includes(i)) {
-      value = [0.42, 0.43];
-    } else if (setG.includes(i)) {
-      value = [0.45, 0.47];
-    }
-    return value;
-  }
-  function returnBoxOpacity3(i: number): number[] {
-    const setA = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
-    const setB = [
-      1, 2, 3, 4, 5, 7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82,
-      42, 81, 90, 91, 92,
-    ];
-    const setC = [
-      25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
-    ];
-    const setD = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
-    const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
-    const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
-    const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
-
-    let value: number[] = [0, 0];
-
-    if (setA.includes(i)) {
-      value = [0.5, 0.51];
-    } else if (setB.includes(i)) {
-      value = [0.52, 0.53];
-    } else if (setC.includes(i)) {
-      value = [0.49, 0.54];
-    } else if (setD.includes(i)) {
-      value = [0.55, 0.56];
-    } else if (setE.includes(i)) {
-      value = [0.53, 0.56];
-    } else if (setF.includes(i)) {
-      value = [0.56, 0.58];
-    } else if (setG.includes(i)) {
-      value = [0.52, 0.55];
-    }
-    return value;
-  }
-  return (
-    <motion.div
-      transition={{
-        ease: "easeInOut",
-      }}
-      style={{
-        minHeight: height,
-      }}
-      className="min-w-screen w-screen    --top-1/2 --translate-y-[-50%] z-999 grid grid-cols-10  bg-black "
-    >
-      {new Array(100).fill("").map((x, i) => {
-        return (
-          <motion.div
-            key={i.toString()}
-            style={{
-              background: useTransform(
-                pageScroll,
-                mode === "dtl"
-                  ? returnBoxOpacity(i)
-                  : mode === "ltd"
-                    ? returnBoxOpacity2(i)
-                    : returnBoxOpacity3(i),
-                mode === "dtl"
-                  ? ["#000000", "#ffffff"]
-                  : mode === "ltd"
-                    ? ["#ffffff", "#000000"]
-                    : ["#000000", "#ff0000"],
-              ),
-              scale: 1.02,
-            }}
-            className=" w-full h-full"
-            id={i.toString()}
-          ></motion.div>
-        );
-      })}
-    </motion.div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import ScrambledText from "@/components/ScrambledText";
 import Link from "next/link";
 import { motion, Variant, Variants } from "motion/react";
 
@@ -33,12 +34,12 @@ export function Navbar() {
   ] as const;
 
   return (
-    <header className="fixed top-0 w-full bg-transparent z-99999999">
+    <header className="fixed top-0 w-full bg-black z-999999999999999 mix-blend-difference">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="mx-auto flex h-16 w-full  items-center px-6 sm:px-10"
+        className="mx-auto flex h-14 w-full  items-center px-6 sm:px-10"
       >
         <motion.div variants={item} className="flex flex-1 items-center">
           <Link
@@ -50,14 +51,25 @@ export function Navbar() {
           </Link>
         </motion.div>
 
-        <nav className="hidden flex-none items-center gap-30 md:flex">
+        <nav className="hidden flex-none items-center  md:flex ">
           {links.map((l) => (
             <motion.div key={l.href} variants={item}>
               <Link
                 href={l.href}
                 className="font-chakra-petch text-[12px] tracking-wide text-white/60 hover:text-white/90 transition-colors"
               >
-                {l.label}
+                <ScrambledText
+                  className="sound"
+                  style={{
+                    fontSize: "1.2em",
+                    width: "fit-content",
+                    fontFamily: "Chakra Petch",
+                    minWidth: "4em",
+                  }}
+                  scrambleChars=":-="
+                >
+                  {l.label}
+                </ScrambledText>
               </Link>
             </motion.div>
           ))}
