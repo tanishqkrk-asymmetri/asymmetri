@@ -2010,8 +2010,8 @@ export default function Home() {
             />
           </div>
         </motion.section>
-        <div className="min-h-[900vh]"></div>
       </section>
+      <div className="min-h-[900vh]"></div>
     </main>
   );
 }

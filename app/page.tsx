@@ -39,7 +39,7 @@ export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    offset: ["start start", "end end"],
+    // offset: ["start start", "end end"],
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
@@ -98,10 +98,15 @@ export default function Home() {
     [0, 0.2],
     ["0px", "100vh"],
   );
+  const founderSectionWidth = useTransform(
+    pageScroll,
+    [0, 0.2],
+    ["0px", "100vh"],
+  );
 
   const secondSectionY = useTransform(
     pageScroll,
-    [0.2, 0.35],
+    [0.2, 0.32],
     ["0%", "-150vh"],
   );
 
@@ -217,7 +222,7 @@ export default function Home() {
 
   const fourthSectionDataScale = useTransform(
     pageScroll,
-    [0.5, 0.56],
+    [0.49, 0.5],
     [1, 0.5],
   );
   const fourthSectionFinalOpacity = useTransform(
@@ -240,7 +245,12 @@ export default function Home() {
     [0.56, 0.57],
     ["-180deg", "0deg"],
   );
-  const flipAnimationOpacity2 = useTransform(pageScroll, [0.6, 0.61], [0, 1]);
+  const flipAnimationOpacity2 = useTransform(pageScroll, [0.58, 0.6], [0, 1]);
+  const flipContentX = useTransform(pageScroll, [0.52, 0.54], ["0", "100%"]);
+  const flipContentXDesc = useTransform(pageScroll, [0.55, 0.56], ["0", "1"]);
+  const flipContentX2Desc = useTransform(pageScroll, [0.55, 0.56], ["0", "1"]);
+  const flipContentX2 = useTransform(pageScroll, [0.52, 0.54], ["0", "-100%"]);
+  const flipContentOpacity = useTransform(pageScroll, [0.52, 0.53], [0, 1]);
   const fifthSectionTitle = useTransform(
     pageScroll,
     [0.75, 0.76, 0.79],
@@ -272,13 +282,13 @@ export default function Home() {
 
   const sixthSectionPointer = useTransform(
     pageScroll,
-    [0, 0.82],
+    [0, 0.7],
     ["none", "all"],
   );
   const sixthSectionY = useTransform(
     pageScroll,
-    [0, 0.8, 0.83],
-    isCompact ? [tabletBelowFoldPx, tabletBelowFoldPx, 0] : [1000, 1000, 0],
+    [0.65, 0.7],
+    ["-100vh", "0vh"],
   );
   const sixthSectionScale = useTransform(
     pageScroll,
@@ -288,85 +298,81 @@ export default function Home() {
 
   const sixthSectionTitle = useTransform(
     pageScroll,
-    [0, 0.84, 0.85, 0.87],
-    [0, 0, 1, 0],
+    [0.73, 0.75, 0.82],
+    [0, 1, 0],
   );
   const sixthSectionTitle2 = useTransform(
     pageScroll,
-    [0, 0.85, 0.86, 0.87],
-    [0, 0, 1, 0],
+    [0.77, 0.78, 0.82],
+    [0, 1, 0],
   );
 
-  const sixthSectionTitleBG = useTransform(
-    pageScroll,
-    [0, 0.84, 0.85],
-    [0, 0, 1],
-  );
+  const sixthSectionTitleBG = useTransform(pageScroll, [0.71, 0.73], [0, 1]);
 
   const testimonialLayerOpacity = useTransform(
     pageScroll,
-    [0, 0.87, 0.9],
-    [0, 0, 1],
+    [0.76, 0.77],
+    [0, 1],
   );
   const testimonialLayerY0 = useTransform(
     pageScroll,
-    [0, 0.868, 0.9],
+    [0, 0.8, 0.86],
     isCompact
       ? [tabletBelowFoldPx + 112, tabletBelowFoldPx + 112, 0]
       : [1040, 1040, 0],
   );
   const testimonialLayerY1 = useTransform(
     pageScroll,
-    [0, 0.87, 0.902],
+    [0, 0.802, 0.862],
     isCompact
       ? [tabletBelowFoldPx + 88, tabletBelowFoldPx + 88, 0]
       : [980, 980, 0],
   );
   const testimonialLayerY2 = useTransform(
     pageScroll,
-    [0, 0.872, 0.904],
+    [0, 0.804, 0.864],
     isCompact
       ? [tabletBelowFoldPx + 132, tabletBelowFoldPx + 132, 0]
       : [1120, 1120, 0],
   );
   const testimonialLayerY3 = useTransform(
     pageScroll,
-    [0, 0.874, 0.906],
+    [0, 0.806, 0.866],
     isCompact
       ? [tabletBelowFoldPx + 72, tabletBelowFoldPx + 72, 0]
       : [960, 960, 0],
   );
   const testimonialLayerY4 = useTransform(
     pageScroll,
-    [0, 0.876, 0.908],
+    [0, 0.808, 0.868],
     isCompact
       ? [tabletBelowFoldPx + 124, tabletBelowFoldPx + 124, 0]
       : [1080, 1080, 0],
   );
   const testimonialLayerY5 = useTransform(
     pageScroll,
-    [0, 0.878, 0.9],
+    [0, 0.81, 0.86],
     isCompact
       ? [tabletBelowFoldPx + 56, tabletBelowFoldPx + 56, 0]
       : [920, 920, 0],
   );
   const testimonialLayerY6 = useTransform(
     pageScroll,
-    [0, 0.88, 0.91],
+    [0, 0.812, 0.87],
     isCompact
       ? [tabletBelowFoldPx + 148, tabletBelowFoldPx + 148, 0]
       : [1160, 1160, 0],
   );
   const testimonialLayerY7 = useTransform(
     pageScroll,
-    [0, 0.882, 0.899],
+    [0, 0.814, 0.859],
     isCompact
       ? [tabletBelowFoldPx + 68, tabletBelowFoldPx + 68, 0]
       : [940, 940, 0],
   );
   const testimonialLayerY8 = useTransform(
     pageScroll,
-    [0, 0.8, 0.9],
+    [0, 0.8, 0.86],
     isCompact
       ? [tabletBelowFoldPx + 96, tabletBelowFoldPx + 96, 0]
       : [1020, 1020, 0],
@@ -576,24 +582,24 @@ export default function Home() {
         clearInterval(incrementTimer);
         document.body.style.overflow = "scroll";
       }
-    }, 5);
+    }, 1);
     return () => clearInterval(incrementTimer);
   }, []);
 
   const workCategories = [
     {
-      name: "Branding",
+      name: "Mobile App Development",
       description:
-        "Identity systems, visual language, and brand guidelines that define who you are.",
+        "Dummy content for now. This category can be filled with detailed service copy later.",
       image: "cyan",
       data: true,
       animation: workCard1,
       pointer: workCard1Pointer,
     },
     {
-      name: "Web Experiences",
+      name: "WebApp & SaaS Development",
       description:
-        "Interactive websites and digital platforms built for impact and performance.",
+        "Dummy content for now. This category can be filled with detailed service copy later.",
       image: "pink",
       data: true,
       animation: workCard2,
@@ -601,9 +607,9 @@ export default function Home() {
     },
 
     {
-      name: "Mobile apps",
+      name: "Custom Website Development",
       description:
-        "Native and cross-platform apps designed for seamless on-the-go experiences.",
+        "Dummy content for now. This category can be filled with detailed service copy later.",
       image: "blue",
       data: true,
       animation: workCard3,
@@ -611,9 +617,9 @@ export default function Home() {
     },
 
     {
-      name: "Graphics",
+      name: "AI & Agentic Systems",
       description:
-        "Print, digital assets, and visual content that communicate with clarity.",
+        "Dummy content for now. This category can be filled with detailed service copy later.",
       image: "green",
       data: true,
       animation: workCard4,
@@ -621,13 +627,31 @@ export default function Home() {
     },
 
     {
-      name: "UI/UX",
+      name: "UI/UX & Product Design",
       description:
-        "User-centered design that balances beauty, usability, and business goals.",
+        "Dummy content for now. This category can be filled with detailed service copy later.",
       image: "red",
       data: true,
       animation: workCard5,
       pointer: workCard5Pointer,
+    },
+    {
+      name: "Emerging Tech (AR/VR, Simulation, Blockchain)",
+      description:
+        "Dummy content for now. This category can be filled with detailed service copy later.",
+      image: "orange",
+      data: true,
+      animation: workCard6,
+      pointer: workCard6Pointer,
+    },
+    {
+      name: "Digital Marketing & SEO",
+      description:
+        "Dummy content for now. This category can be filled with detailed service copy later.",
+      image: "purple",
+      data: true,
+      animation: workCard6,
+      pointer: workCard6Pointer,
     },
   ];
 
@@ -635,171 +659,52 @@ export default function Home() {
     workCategories[0].name,
   );
 
+  const dummyProjects = [
+    {
+      name: "Parallax Museum",
+      images: [],
+      coverImage: "https://picsum.photos/800/500",
+      year: "2022",
+      description: "",
+    },
+    {
+      name: "Driftwood Portfolio",
+      images: [],
+      coverImage: "https://picsum.photos/750/480",
+      year: "2023",
+      description: "",
+    },
+    {
+      name: "Luminary Landing Page",
+      images: [],
+      coverImage: "https://picsum.photos/820/460",
+      year: "2021",
+      description: "",
+    },
+    {
+      name: "Crestline Interactive",
+      images: [],
+      coverImage: "https://picsum.photos/780/520",
+      year: "2024",
+      description: "",
+    },
+    {
+      name: "Opaline Storefront",
+      images: [],
+      coverImage: "https://picsum.photos/760/440",
+      year: "2020",
+      description: "",
+    },
+  ];
+
   const projects = {
-    Branding: [
-      {
-        name: "Ember & Co. Identity",
-        images: [],
-        coverImage: "https://picsum.photos/400/500",
-        year: "2021",
-        description: "",
-      },
-      {
-        name: "Volta Brand System",
-        images: [],
-        coverImage: "https://picsum.photos/380/460",
-        year: "2023",
-        description: "",
-      },
-      {
-        name: "Northfield Rebrand",
-        images: [],
-        coverImage: "https://picsum.photos/420/520",
-        year: "2020",
-        description: "",
-      },
-      {
-        name: "Sable Studio Mark",
-        images: [],
-        coverImage: "https://picsum.photos/360/480",
-        year: "2024",
-        description: "",
-      },
-    ],
-    "Web Experiences": [
-      {
-        name: "Parallax Museum",
-        images: [],
-        coverImage: "https://picsum.photos/800/500",
-        year: "2022",
-        description: "",
-      },
-      {
-        name: "Driftwood Portfolio",
-        images: [],
-        coverImage: "https://picsum.photos/750/480",
-        year: "2023",
-        description: "",
-      },
-      {
-        name: "Luminary Landing Page",
-        images: [],
-        coverImage: "https://picsum.photos/820/460",
-        year: "2021",
-        description: "",
-      },
-      {
-        name: "Crestline Interactive",
-        images: [],
-        coverImage: "https://picsum.photos/780/520",
-        year: "2024",
-        description: "",
-      },
-      {
-        name: "Opaline Storefront",
-        images: [],
-        coverImage: "https://picsum.photos/760/440",
-        year: "2020",
-        description: "",
-      },
-    ],
-    "Mobile apps": [
-      {
-        name: "Waypoint Travel",
-        images: [],
-        coverImage: "https://picsum.photos/320/580",
-        year: "2023",
-        description: "",
-      },
-      {
-        name: "Folia Plant Tracker",
-        images: [],
-        coverImage: "https://picsum.photos/300/560",
-        year: "2021",
-        description: "",
-      },
-      {
-        name: "Pulse Fitness",
-        images: [],
-        coverImage: "https://picsum.photos/340/600",
-        year: "2022",
-        description: "",
-      },
-      {
-        name: "Haven Sleep App",
-        images: [],
-        coverImage: "https://picsum.photos/310/570",
-        year: "2024",
-        description: "",
-      },
-      {
-        name: "Cartō Maps",
-        images: [],
-        coverImage: "https://picsum.photos/330/590",
-        year: "2020",
-        description: "",
-      },
-    ],
-    Graphics: [
-      {
-        name: "Solstice Poster Series",
-        images: [],
-        coverImage: "https://picsum.photos/500/700",
-        year: "2022",
-        description: "",
-      },
-      {
-        name: "Inkwell Editorial",
-        images: [],
-        coverImage: "https://picsum.photos/480/680",
-        year: "2023",
-        description: "",
-      },
-      {
-        name: "Geometric Fauna",
-        images: [],
-        coverImage: "https://picsum.photos/520/720",
-        year: "2021",
-        description: "",
-      },
-    ],
-    "UI/UX": [
-      {
-        name: "Meridian Dashboard",
-        images: [],
-        coverImage: "https://picsum.photos/900/560",
-        year: "2024",
-        description: "",
-      },
-      {
-        name: "Finch Onboarding Flow",
-        images: [],
-        coverImage: "https://picsum.photos/860/540",
-        year: "2022",
-        description: "",
-      },
-      {
-        name: "Strata Design System",
-        images: [],
-        coverImage: "https://picsum.photos/880/520",
-        year: "2023",
-        description: "",
-      },
-      {
-        name: "Orion Admin Panel",
-        images: [],
-        coverImage: "https://picsum.photos/920/580",
-        year: "2021",
-        description: "",
-      },
-      {
-        name: "Bloom Health App",
-        images: [],
-        coverImage: "https://picsum.photos/840/500",
-        year: "2020",
-        description: "",
-      },
-    ],
+    "Mobile App Development": dummyProjects,
+    "WebApp & SaaS Development": dummyProjects,
+    "Custom Website Development": dummyProjects,
+    "AI & Agentic Systems": dummyProjects,
+    "UI/UX & Product Design": dummyProjects,
+    "Emerging Tech (AR/VR, Simulation, Blockchain)": dummyProjects,
+    "Digital Marketing & SEO": dummyProjects,
   };
 
   const [categoryChanged, setCategoryChanged] = useState(false);
@@ -989,7 +894,6 @@ export default function Home() {
         <motion.div
           style={{
             height: secondSectionHeight,
-            // y: secondSectionY,
             background: secondSectionBG,
             overflow: "hidden",
           }}
@@ -1004,174 +908,124 @@ export default function Home() {
               y: secondSectionY,
               // wordSpacing: "10px",
             }}
-            className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-3"}`}
+            className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-16"}`}
           >
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.17, 0.18], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              Creative
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.18, 0.19], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              websites
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.19, 0.2], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              are
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.2, 0.21], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              the
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.21, 0.22], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              intersection
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.22, 0.23], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              of
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.23, 0.24], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              creativity
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.24, 0.25], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              and
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.25, 0.26], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              technicality
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.26, 0.27], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              to
-            </span>{" "}
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.27, 0.28], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              form
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.28, 0.29], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              bespoke
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.29, 0.3], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              digital
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.3, 0.31], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              experiences
-            </span>
-            <span className="relative">
-              <motion.div
-                style={{
-                  opacity: useTransform(pageScroll, [0.31, 0.32], [1, 0]),
-                }}
-                className="absolute top-0 left-0 w-full h-full bg-zinc-300 block-hide-thingy"
-              ></motion.div>
-              that
-            </span>
-            {!isMobile && (
-              <>
-                {" "}
-                <br />
-              </>
-            )}{" "}
-            <motion.span
-              style={{
-                color: secondSectionRed,
-              }}
-              className="inline-block font-semibold"
+            <motion.div
+              style={
+                {
+                  // opacity: useTransform(pageScroll, [0.08, 0.09], [0, 1]),
+                }
+              }
             >
-              <span className="relative">
-                <motion.div
-                  style={{
-                    opacity: useTransform(pageScroll, [0.32, 0.33], [1, 0]),
-                  }}
-                  className="absolute top-0 left-0 w-full h-full bg-red-500 block-hide-thingy"
-                ></motion.div>
-                spark
-              </span>{" "}
-              <span className="relative">
-                <motion.div
-                  style={{
-                    opacity: useTransform(pageScroll, [0.33, 0.34], [1, 0]),
-                  }}
-                  className="absolute top-0 left-0 w-full h-full bg-red-500 block-hide-thingy"
-                ></motion.div>
-                emotion
+              <span className="text-asymmetri-red">
+                <FE
+                  text="Symmetri"
+                  range={[0.07, 0.075]}
+                  pageScroll={pageScroll}
+                ></FE>
+                <FE
+                  text="is"
+                  range={[0.075, 0.08]}
+                  pageScroll={pageScroll}
+                ></FE>
+                <FE
+                  text="overrated"
+                  range={[0.08, 0.085]}
+                  pageScroll={pageScroll}
+                ></FE>
+                .
               </span>
-            </motion.span>
+              <br />
+              <FE text="A" range={[0.085, 0.09]} pageScroll={pageScroll}></FE>
+              <FE
+                text="collaborative"
+                range={[0.09, 0.11]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="agency"
+                range={[0.11, 0.115]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE text="for" range={[0.115, 0.12]} pageScroll={pageScroll}></FE>
+              <FE
+                text="bold"
+                range={[0.12, 0.125]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="ideas,"
+                range={[0.125, 0.13]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="beautiful"
+                range={[0.13, 0.135]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="code,"
+                range={[0.135, 0.14]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE text="and" range={[0.14, 0.145]} pageScroll={pageScroll}></FE>
+              <FE
+                text="digital"
+                range={[0.145, 0.15]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="experiences"
+                range={[0.15, 0.155]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="that"
+                range={[0.155, 0.16]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="don't"
+                range={[0.16, 0.165]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="blend"
+                range={[0.165, 0.17]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE text="in." range={[0.17, 0.175]} pageScroll={pageScroll}></FE>
+            </motion.div>
+            {/* <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.12, 0.15], [0, 1]),
+              }}
+              className="text-lg max-w-3xl"
+            >
+              From websites and apps to operating systems and SaaS platforms, we
+              take ideas from concept to deployment - designing, engineering,
+              and scaling software that’s fast, functional, and built to last.
+            </motion.div> */}
+            {/* <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.145, 0.19], [0, 1]),
+              }}
+              className={` hidden w-full border border-current/15 bg-current/5 text-left backdrop-blur-sm ${isMobile ? "mt-6 rounded-2xl p-5" : isCompact ? "mt-8 rounded-[1.75rem] p-6" : "mt-10 rounded-[2rem] p-8"}`}
+            >
+              <div
+                className={`uppercase tracking-[0.28em] text-asymmetri-red ${isMobile ? "mb-3 text-[0.65rem]" : "mb-4 text-xs"}`}
+              >
+                Who we are
+              </div>
+              <div
+                className={`${isMobile ? "text-sm leading-6" : isCompact ? "text-base leading-7" : "text-lg leading-8 font-normal"} max-w-3xl text-balance`}
+              >
+                We’re a fully remote team of talented designers, engineers, and
+                product thinkers who solve hard problems with clean, thoughtful
+                solutions. We believe in cutting through complexity through our
+                quick and innovative solutions.
+              </div>
+            </motion.div> */}
           </motion.div>
         </motion.div>
 
@@ -1228,10 +1082,10 @@ export default function Home() {
                     What We Do
                   </ScrambledText>
                   <div className="text-xl max-w-3xl pl-3 pt-3">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Dignissimos dolores impedit cum est autem sint minus
-                    commodi? Voluptate ad facilis quod. Perspiciatis adipisci
-                    iure, nesciunt delectus atque ea iusto tempore?
+                    We build end-to-end software - and we do it well. Whether
+                    you’re an early-stage startup or an established company
+                    looking to scale, we help you go from idea → prototype →
+                    full product → real users
                   </div>
                 </motion.div>
               </motion.div>
@@ -1498,10 +1352,11 @@ export default function Home() {
           </motion.div>
           <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
 
-          <div className="bg-black z-9999999999 relative">
+          <div className="bg-[#0a0a0a] z-9999999999 relative">
             <motion.div
               style={{
                 scale: fourthSectionDataScale,
+                opacity: useTransform(pageScroll, [0.52, 0.53], [1, 0]),
               }}
               className={` z-99999 relative w-screen min-w-0 font-chakra-petch text-center text-white ${isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-5xl"} min-h-screen flex justify-center items-center flex-col sticky top-0`}
             >
@@ -1534,39 +1389,291 @@ export default function Home() {
               and the mindset behind the work you see.
             </motion.div>
             {/* <MemoizedTransitionGrid mode={"dtr"} pageScroll={pageScroll} /> */}
-            <div className="min-h-screen flex justify-center items-center   z-999999999 sticky top-0">
-              <motion.img
-                src="/flip.png"
-                alt=""
-                className={`relative z-10 block h-auto max-w-full object-contain w-96 `}
-              />
-              <motion.div className="mx-auto flex w-full max-w-sm flex-col gap-4 items-center text-center pb-1 absolute">
-                <div className="font-chakra-petch text-white pt-3 text-xl">
-                  Our Mission
-                </div>
-                <div className="max-w-full min-w-0 font-chakra-petch text-xs leading-relaxed break-words text-white">
-                  Our commitment goes beyond fleeting trends, we believe in
-                  making tailor made productsOur commitment goes beyond fleeting
-                  trends, we believe in making tailor made products Our
-                  commitment goes beyond fleeting trends, we believe in making
-                  tailor made productsOur commitment goes beyond fleeting
-                  trends, we believe in making tailor made products
-                </div>
+            <motion.div className="min-h-screen flex justify-center items-center   z-999999999 sticky top-0 ">
+              <motion.div className="relative">
+                <motion.img
+                  src="/flip.png"
+                  alt=""
+                  className={`relative z-10 block h-auto max-w-full object-contain w-96 `}
+                />
+                <motion.div
+                  style={{
+                    x: flipContentX,
+                    opacity: flipContentOpacity,
+                  }}
+                  className="pointer-events-none absolute z-0 mx-auto flex w-full max-w-sm flex-col items-center gap-4 pb-1 border-t border-white text-left pl-3 top-[1px]"
+                >
+                  <div className="font-chakra-petch text-white pt-3 text-5xl text-left w-full">
+                    Vision
+                  </div>
+                  <motion.div
+                    style={{
+                      opacity: flipContentXDesc,
+                    }}
+                    className="max-w-full min-w-0 font-chakra-petch text-base leading-relaxed break-words text-white"
+                  >
+                    To be a team that consistently delivers technology that’s
+                    seamless, intentional, and future-ready.
+                  </motion.div>
+                </motion.div>
+                <motion.div
+                  style={{
+                    x: flipContentX2,
+                    opacity: flipContentOpacity,
+                  }}
+                  className="pointer-events-none absolute z-0 mx-auto flex w-full max-w-sm flex-col items-center gap-4 pb-1 border-t border-white text-right pr-3 top-px   "
+                >
+                  <div className="font-chakra-petch text-white pt-3 text-5xl text-right w-full">
+                    Philosophy
+                  </div>
+                  <motion.div
+                    style={{
+                      opacity: flipContentX2Desc,
+                    }}
+                    className="max-w-full min-w-0 font-chakra-petch text-base leading-relaxed break-words text-white"
+                  >
+                    Build fast. Build smart. Build products that are recklessly
+                    good.
+                  </motion.div>
+                </motion.div>
               </motion.div>
-              <motion.img
+            </motion.div>
+            <div className="min-h-[120vh]"></div>{" "}
+            <div className="min-h-screen flex justify-center items-center   z-999999999 pointer-events-none">
+              <motion.div
                 style={{
-                  // rotateY: flipAnimationRotateY2,
-                  opacity: flipAnimationOpacity2,
+                  width: founderSectionWidth,
+                  background: secondSectionBG,
+                  overflow: "hidden",
                 }}
-                src="/nand2.jpg"
-                alt=""
-                className=" w-96 z-999999 object-cover absolute "
-              />
-            </div>
+                transition={{
+                  ease: "backIn",
+                }}
+                className=" bg-white z-999 fixed   left-0  min-w-screen w-screen  pointer-events-none top-1/2 translate-y-[-50%] "
+              ></motion.div>
 
-            <div className="min-h-screen"></div>
+              <motion.div className="relative flex flex-col justify-center items-center gap-36">
+                <motion.div
+                  style={{
+                    opacity: useTransform(pageScroll, [0.56, 0.565], [0, 1]),
+                  }}
+                  className="w-screen h-screen  fixed top-0 left-0 z-99999999999 "
+                >
+                  <MemoizedTransitionGrid
+                    pageScroll={pageScroll}
+                    mode="dtr"
+                  ></MemoizedTransitionGrid>
+                </motion.div>
+                <motion.img
+                  style={{
+                    y: useTransform(pageScroll, [0.6, 0.7], ["0%", "100vh"]),
+                  }}
+                  src="/nand3.jpg"
+                  alt=""
+                  className={`relative  block h-auto max-w-full object-contain w-128 z-9999999999999`}
+                />
+                <motion.div
+                  className={`relative  block h-auto max-w-full object-contain  z-99999999999999 text-white text-6xl font-bold font-chakra-petch`}
+                >
+                  Hi I'm Nandagopal, founder of
+                </motion.div>
+                <motion.img
+                  style={{
+                    y: useTransform(pageScroll, [0.6, 0.65], ["60vh", "0vh"]),
+                    // scale: useTransform(pageScroll, [0.66, 0.67], [1, 6]),
+                  }}
+                  src="/logo.png"
+                  alt=""
+                  className={`fixed top-1/2  left-1/2 -translate-y-1/2 -translate-x-1/2  h-auto max-w-full object-contain  z-9999999999999  w-[64em] hello`}
+                />
+                {/* <motion.div
+                  className={`relative  block h-auto max object-contain  z-99999999999999 text-white text-base text-center font-bold font-chakra-petch max-w-128`}
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+                  magnam corporis possimus facere doloribus minus atque nobis
+                  optio perferendis esse animi aliquid soluta, facilis vero
+                  fugiat aut obcaecati veniam nulla beatae, pariatur quidem
+                  suscipit? Maxime eligendi molestiae totam ipsum dolore!
+                </motion.div> */}
+              </motion.div>
+            </div>
           </div>
         </motion.div>
+        <motion.div
+          className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 flex min-h-0 flex-col ${isMobile ? "h-dvh max-h-dvh items-stretch overflow-x-hidden overflow-hidden pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden  " + (isCompact ? "h-dvh max-h-dvh" : "h-screen")}`}
+          style={
+            isMobile
+              ? { y: sixthSectionY, pointerEvents: "none" }
+              : {
+                  y: sixthSectionY,
+                  // scale: sixthSectionScale,
+                  pointerEvents: sixthSectionPointer,
+                }
+          }
+        >
+          <motion.div
+            style={{
+              opacity: sixthSectionTitleBG,
+            }}
+            className="heroDark pointer-events-none absolute inset-0 z-0 bg-black max-md:hidden"
+          />
+
+          {!isMobile && (
+            <FatCursors color="#FFFFFF50" scale={1} min={1}></FatCursors>
+          )}
+
+          {isMobile ? (
+            <>
+              <div className="pointer-events-auto flex w-full flex-col items-center justify-center px-0 pb-28 pt-2 max-md:min-h-screen">
+                <motion.div
+                  style={{
+                    opacity: testimonialLayerOpacity,
+                  }}
+                  className="relative z-10 mb-5 max-w-[min(18rem,calc(100vw-3rem))] shrink-0 px-6 text-center font-chakra-petch text-xl leading-snug text-white"
+                >
+                  Feedback from the folks who know us best.
+                </motion.div>
+
+                <motion.div
+                  style={{ opacity: testimonialLayerOpacity }}
+                  className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2"
+                >
+                  <MobileTestimonialsCarousel
+                    items={testimonials.map(
+                      ({ company, testimonial, image }) => ({
+                        company,
+                        testimonial,
+                        image,
+                      }),
+                    )}
+                    className="w-full min-w-0 max-w-full touch-pan-x"
+                  />
+                </motion.div>
+              </div>
+
+              <motion.div
+                style={{
+                  opacity: testimonialLayerOpacity,
+                }}
+                className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(18rem,calc(100vw-3rem))] max-w-[calc(100vw-3rem)] -translate-x-1/2 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 text-center font-chakra-petch text-[11px] leading-snug text-white/50"
+              >
+                Collaborative agency for bold ideas, beautiful code and digital
+                experiences
+              </motion.div>
+            </>
+          ) : (
+            <>
+              {testimonials.map((x, i) => {
+                const slot =
+                  testimonialSlots[(i - 1) % testimonialSlots.length];
+                return (
+                  <motion.div
+                    style={{
+                      y: x.layerY,
+                      // opacity: testimonialLayerOpacity,
+                    }}
+                    animate={{
+                      top: i === 0 ? "50%" : slot.top,
+                      left: i === 0 ? "50%" : slot.left,
+                      scale: i === 0 ? 1 : isCompact ? 0.5 : 0.42,
+                    }}
+                    transition={{
+                      duration: isCompact ? 0.75 : 1,
+                      ease: "easeInOut",
+                    }}
+                    key={x.company}
+                    onClick={() => {
+                      if (i === 0) return;
+                      const newArray = [
+                        x,
+                        ...testimonials.filter((y) => y.company !== x.company),
+                      ];
+                      setTestimonials(newArray);
+                    }}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 font-chakra-petch z-[10] ${i === 0 ? "cursor-default" : "cursor-pointer"}`}
+                  >
+                    <img
+                      src={x.image}
+                      className={`duration-500 ${isCompact ? "w-48" : "w-64"} ${i === 0 ? "grayscale-0" : "grayscale"}`}
+                      alt=""
+                    />
+                    <AnimatePresence>
+                      {i === 0 && (
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                          }}
+                          animate={{
+                            opacity: 1,
+                          }}
+                          exit={{
+                            opacity: 0,
+                          }}
+                          transition={{
+                            delay: 0.8,
+                          }}
+                          className={
+                            isCompact
+                              ? "absolute top-[calc(100%+0.5rem)] left-1/2 z-[11] flex -translate-x-1/2 flex-col items-center gap-3 text-center"
+                              : "absolute top-0 left-[calc(100%+0.75rem)] z-[11] flex flex-col gap-6 text-left"
+                          }
+                        >
+                          <div
+                            className={`text-white ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
+                          >
+                            {x.testimonial}
+                          </div>
+                          <div
+                            className={`text-asymmetri-red z-[12] ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
+                          >
+                            <ScrambledText
+                              className="z-[12]"
+                              radius={100}
+                              style={{
+                                color: "inherit",
+                                fontSize: "inherit",
+                                width: "100%",
+                                fontFamily: "Chakra Petch",
+                                textAlign: isCompact ? "center" : "left",
+                                margin: "0",
+                              }}
+                              duration={3}
+                              speed={0.9}
+                              scrambleChars=".:-"
+                            >
+                              {x.company}
+                            </ScrambledText>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+
+              <motion.div
+                style={{
+                  opacity: sixthSectionTitle,
+                }}
+                className={`pointer-events-none z-[20] max-w-lg px-6 text-center font-chakra-petch text-white ${isCompact ? "relative text-3xl leading-snug" : "relative text-7xl"}`}
+              >
+                Feedback from the folks who know us best.
+              </motion.div>
+
+              <motion.div
+                style={{
+                  opacity: sixthSectionTitle2,
+                }}
+                className={`pointer-events-none z-[20] px-4 text-center font-chakra-petch text-white/50 ${isCompact ? "absolute bottom-10 left-1/2 max-w-none -translate-x-1/2 text-[11px]" : "absolute bottom-20 left-1/2 max-w-none -translate-x-1/2 text-xs"}`}
+              >
+                Collaborative agency for bold ideas, beautiful code and digital
+                experiences
+              </motion.div>
+            </>
+          )}
+        </motion.div>
+
+        <motion.div></motion.div>
 
         <div className="min-h-[900vh]"></div>
       </section>
@@ -1585,11 +1692,26 @@ function TransitionGrid({
   pageScroll: any;
   height?: string;
 }) {
+  function jitteredRange(
+    i: number,
+    baseStart: number,
+    startSpread = 0.006,
+    minDuration = 0.004,
+    maxDuration = 0.007,
+  ): number[] {
+    const startNoise = Math.abs(Math.sin(i * 12.9898 + 78.233)) % 1;
+    const durationNoise = Math.abs(Math.sin(i * 39.3467 + 11.135)) % 1;
+    const start = baseStart + (startNoise - 0.5) * startSpread;
+    const duration = minDuration + durationNoise * (maxDuration - minDuration);
+
+    return [Number(start.toFixed(3)), Number((start + duration).toFixed(3))];
+  }
+
   function returnBoxOpacity(i: number): number[] {
     const setA = [6, 5, 43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14, 1];
     const setB = [
       7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82, 42, 81, 90, 91,
-      92,
+      92, 17,
     ];
     const setC = [
       25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
@@ -1602,24 +1724,24 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = [0.26, 0.28];
+      value = jitteredRange(i, 0.24, 0.008, 0.01, 0.02);
     } else if (setB.includes(i)) {
-      value = [0.27, 0.28];
+      value = jitteredRange(i, 0.25, 0.006, 0.008, 0.014);
     } else if (setC.includes(i)) {
-      value = [0.31, 0.32];
+      value = jitteredRange(i, 0.29, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
-      value = [0.29, 0.3];
+      value = jitteredRange(i, 0.27, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
-      value = [0.21, 0.22];
+      value = jitteredRange(i, 0.19, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = [0.28, 0.29];
+      value = jitteredRange(i, 0.26, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
-      value = [0.3, 0.32];
+      value = jitteredRange(i, 0.27, 0.008, 0.012, 0.02);
     }
     return value;
   }
   function returnBoxOpacity2(i: number): number[] {
-    const setA = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
+    const setA = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
     const setB = [
       1, 2, 3, 4, 5, 7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82,
       42, 81, 90, 91, 92,
@@ -1627,60 +1749,60 @@ function TransitionGrid({
     const setC = [
       25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
     ];
-    const setD = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
+    const setD = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
     const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
     const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
     const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
 
     let value: number[] = [0, 0];
 
-    if (setA.includes(i)) {
-      value = [0.44, 0.45];
-    } else if (setB.includes(i)) {
-      value = [0.4, 0.42];
+    if (setB.includes(i)) {
+      value = jitteredRange(i, 0.38, 0.006, 0.007, 0.012);
+    } else if (setA.includes(i)) {
+      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
-      value = [0.42, 0.43];
-    } else if (setD.includes(i)) {
-      value = [0.4, 0.41];
-    } else if (setE.includes(i)) {
-      value = [0.44, 0.46];
+      value = jitteredRange(i, 0.41, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = [0.42, 0.43];
+      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
+    } else if (setE.includes(i)) {
+      value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
+    } else if (setD.includes(i)) {
+      value = jitteredRange(i, 0.44, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
-      value = [0.45, 0.47];
+      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
     }
     return value;
   }
   function returnBoxOpacity3(i: number): number[] {
     const setA = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
     const setB = [
-      1, 2, 3, 4, 5, 7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82,
-      42, 81, 90, 91, 92,
+      1, 2, 3, 5, 6, 7, 11, 19, 23, 27, 39, 40, 42, 48, 67, 70, 71, 74, 81, 82,
+      90, 91, 92, 97, 98,
     ];
     const setC = [
-      25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
+      10, 18, 25, 31, 33, 47, 51, 62, 75, 83, 86, 93, 94, 95, 96, 99,
     ];
-    const setD = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
-    const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
+    const setD = [9, 12, 20, 21, 22, 30, 32, 36, 41, 63, 64, 68, 79, 84];
+    const setE = [15, 17, 26, 34, 54, 56, 72, 78];
     const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
-    const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
+    const setG = [29, 44, 49, 55, 58, 59, 66, 76, 87, 88];
 
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = [0.5, 0.51];
+      value = jitteredRange(i, 0.57);
     } else if (setB.includes(i)) {
-      value = [0.52, 0.53];
+      value = jitteredRange(i, 0.58);
     } else if (setC.includes(i)) {
-      value = [0.49, 0.54];
+      value = jitteredRange(i, 0.572);
     } else if (setD.includes(i)) {
-      value = [0.55, 0.56];
+      value = jitteredRange(i, 0.584);
     } else if (setE.includes(i)) {
-      value = [0.53, 0.56];
+      value = jitteredRange(i, 0.586);
     } else if (setF.includes(i)) {
-      value = [0.56, 0.58];
+      value = jitteredRange(i, 0.576);
     } else if (setG.includes(i)) {
-      value = [0.52, 0.55];
+      value = jitteredRange(i, 0.58);
     }
     return value;
   }
@@ -1692,7 +1814,7 @@ function TransitionGrid({
       style={{
         minHeight: height,
       }}
-      className="min-w-screen w-screen    --top-1/2 --translate-y-[-50%] z-999 grid grid-cols-10  bg-black "
+      className="min-w-screen w-screen    --top-1/2 --translate-y-[-50%] z-999 grid grid-cols-10  "
     >
       {new Array(100).fill("").map((x, i) => {
         return (
@@ -1709,8 +1831,8 @@ function TransitionGrid({
                 mode === "dtl"
                   ? ["#000000", "#ffffff"]
                   : mode === "ltd"
-                    ? ["#ffffff", "#000000"]
-                    : ["#000000", "#ff0000"],
+                    ? ["#ffffff", "#0a0a0a"]
+                    : ["#00000000", "#ff0000"],
               ),
               scale: 1.02,
             }}
@@ -1720,5 +1842,27 @@ function TransitionGrid({
         );
       })}
     </motion.div>
+  );
+}
+
+function FE({
+  text,
+  range,
+  pageScroll,
+}: {
+  text: string;
+  range: number[];
+  pageScroll: any;
+}) {
+  return (
+    <>
+      <motion.span
+        style={{
+          opacity: useTransform(pageScroll, range, [0, 1]),
+        }}
+      >
+        {text}
+      </motion.span>{" "}
+    </>
   );
 }

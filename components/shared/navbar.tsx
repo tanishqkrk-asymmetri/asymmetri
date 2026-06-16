@@ -81,7 +81,7 @@ export function Navbar() {
         >
           <Link
             href="/#contact"
-            className="font-chakra-petch text-[12px] tracking-wide text-white/60 hover:text-white/90 transition-colors"
+            className="font-chakra-petch  tracking-wide text-white hover:text-white/90 transition-colors"
           >
             Get in touch
           </Link>
