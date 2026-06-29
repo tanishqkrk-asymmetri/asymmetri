@@ -2015,3 +2015,240 @@ export default function Home() {
     </main>
   );
 }
+
+// Old work
+
+{
+  /* <div className="grid grid-cols-8 --border-t-2 --border-black/20 pt-16">
+              <div className="col-span-3 space-y-6 z-999999999 bg-white pl-8">
+                <div className="text-black/60">
+                  [Click on the below categories to know more]
+                </div>
+                <div
+                  className={`flex flex-col justify-start items-start text-black ${isCompact ? "text-base space-y-2" : "text-xl space-y-6"}`}
+                >
+                  {workCategories
+                    .filter((x) => x.data)
+                    .map((x, i) => {
+                      const isSelected = selectedWorkCategory === x.name;
+
+                      return (
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                          }}
+                          animate={{
+                            opacity: 1,
+                            // x: isSelected ? (isCompact ? 10 : 14) : 0,
+                          }}
+                          transition={
+                            {
+                              // delay: 1.2 + 0.1 * (i + 1),
+                              // x: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
+                            }
+                          }
+                          layout
+                          onClick={
+                            isSelected
+                              ? undefined
+                              : () => {
+                                  setCategoryChanged(true);
+                                  setTimeout(() => {
+                                    setCategoryChanged(false);
+                                    if (x.name) {
+                                      setSelectedWorkCategory(x.name);
+                                      setSelectedProject(
+                                        projects[
+                                          x.name as keyof typeof projects
+                                        ][0].name,
+                                      );
+                                    }
+                                  }, 1500);
+                                }
+                          }
+                          className={` w-full overflow-hidden font-chakra-petch duration-200 ${
+                            isSelected
+                              ? "cursor-default border  bg-asymmetri-red text-white  mb-2"
+                              : "sound cursor-pointer border-b border-black/20 text-black/45 hover:text-black hover:translate-x-6 hover:border-black"
+                          }`}
+                          key={x.name}
+                        >
+                          <div
+                            className={`flex items-start gap-3 ${isSelected ? "px-4 pt-4 pb-2" : "px-1 py-2"}`}
+                          >
+                            {isSelected && (
+                              <span className="mt-1.5 shrink-0 text-[10px] font-mono tabular-nums tracking-[0.2em] text-white/90">
+                                {String(i + 1).padStart(2, "0")}
+                              </span>
+                            )}
+                            <span
+                              className={`leading-tight ${isSelected ? "text-2xl font-semibold" : "text-2xl"}`}
+                            >
+                              {x.name}
+                            </span>
+                          </div>
+                          <motion.div
+                            initial={false}
+                            animate={{
+                              height: isSelected ? "auto" : 0,
+                              opacity: isSelected ? 1 : 0,
+                            }}
+                            transition={{
+                              duration: 0.35,
+                              ease: [0.4, 0, 0.2, 1],
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <div className="border-t border-white/15 px-4 pb-4 pt-3">
+                              <motion.p
+                                initial={false}
+                                animate={{
+                                  y: isSelected ? 0 : 6,
+                                  opacity: isSelected ? 1 : 0,
+                                }}
+                                transition={{
+                                  duration: 0.3,
+                                  delay: isSelected ? 0.08 : 0,
+                                  ease: [0.4, 0, 0.2, 1],
+                                }}
+                                className={`max-w-sm font-normal leading-relaxed text-white/75 ${isCompact ? "text-sm" : "text-base"}`}
+                              >
+                                {x.description}
+                              </motion.p>
+                            </div>
+                          </motion.div>
+                        </motion.div>
+                      );
+                    })}
+                </div>
+              </div>
+              <div className="col-span-5">
+                <motion.div
+                  initial={{
+                    x: "100%",
+                  }}
+                  animate={{
+                    x: "0%",
+                  }}
+                  exit={{
+                    x: "100%",
+                  }}
+                  transition={{
+                    duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
+                    ease: "circInOut",
+                  }}
+                  className={`bg-white   z-9999999 flex ${isMobile ? "--h-dvh --max-h-dvh w-full flex-col gap-6 --overflow-y-auto --overscroll-y-contain px-6 py-6" : isCompact ? "--h-dvh --max-h-dvh  flex-col --overflow-y-auto --overscroll-y-contain py-8 px-5 gap-8" : "min-h-screen  justify-start items-start p-16"}`}
+                >
+                  <div
+                    className={`flex flex-col justify-start items-start ${isCompact ? "w-full shrink-0 space-y-4" : "h-full w-1/2 space-y-6"}`}
+                  >
+                    <motion.img
+                      initial={{
+                        opacity: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      transition={{
+                        delay: 1.4,
+                      }}
+                      className={`object-cover ${isCompact ? "max-h-72" : "max-h-96"}`}
+                      src={
+                        projects[
+                          selectedWorkCategory as keyof typeof projects
+                        ].filter((x) => x.name === selectedProject)[0]
+                          .coverImage
+                      }
+                      alt=""
+                    />
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      transition={{
+                        delay: 1.2,
+                      }}
+                      className={`font-chakra-petch ${isCompact ? "text-2xl" : "text-3xl"}`}
+                    >
+                      {selectedProject}
+                    </motion.div>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      transition={{
+                        delay: 1.3,
+                      }}
+                      className="font-chakra-petch text-base text-left max-w-xs"
+                    >
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quidem, natus sit dolor eos perspiciatis quasi earum.
+                    </motion.div>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      transition={{
+                        delay: 1.5,
+                      }}
+                      className={`sound rounded-full cursor-pointer border-2 border-black text-black hover:bg-black hover:text-white duration-300 ${isCompact ? "p-5" : "p-8"}`}
+                    >
+                      <ChevronUp className="rotate-36"></ChevronUp>
+                    </motion.div>
+                  </div>
+                  <div
+                    className={`flex flex-col justify-start items-start ${isCompact ? "w-full flex-1 min-h-0 pb-10" : "h-full w-1/2 pl-16 justify-center"}`}
+                  >
+                    {projects[
+                      selectedWorkCategory as keyof typeof projects
+                    ].map((x, i) => (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                        }}
+                        animate={{
+                          opacity: 1,
+                        }}
+                        transition={{
+                          delay: 1.4 + (0.1 * i + 1),
+                        }}
+                        className={`flex justify-between w-full font-chakra-petch items-center duration-200 cursor-pointer ease-in-out ${isCompact ? "gap-4 hover:-translate-x-3" : "gap-8 hover:-translate-x-9"}`}
+                        onClick={() => {
+                          setSelectedProject(x.name);
+                        }}
+                        key={i}
+                      >
+                        <div
+                          className={`border-l sound  h-full p-2 pl-3 flex flex-col justify-center duration-300 items-center ${selectedProject === x.name ? "border-black" : "border-black/20"}`}
+                        >
+                          <div
+                            className={`font-semibold duration-200 ${isCompact ? "min-w-28" : "min-w-36"} ${selectedProject === x.name ? "text-base" : "text-sm"}`}
+                          >
+                            {x.name}
+                          </div>
+                          <div className="text-black/50 text-left w-full">
+                            {x.year}
+                          </div>
+                        </div>
+                        <div className="py-3">
+                          <img
+                            src={x.coverImage}
+                            className={`rounded-md duration-200 ${isCompact ? "w-24 h-20" : "w-32 h-24"} ${selectedProject === x.name ? "grayscale-0" : "grayscale-100"}`}
+                          ></img>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div> */
+}
