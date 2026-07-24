@@ -2,7 +2,7 @@
 
 import ScrambledText from "@/components/ScrambledText";
 import Link from "next/link";
-import { motion, Variant, Variants } from "motion/react";
+import { motion, useTransform, Variant, Variants } from "motion/react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -25,7 +25,7 @@ const item: Variants = {
   },
 };
 
-export function Navbar() {
+export function Navbar({ pageScroll }: { pageScroll: any }) {
   const links = [
     { label: "About", href: "/#about" },
     { label: "Work", href: "/jobs" },
@@ -33,8 +33,35 @@ export function Navbar() {
     { label: "Careers", href: "/#careers" },
   ] as const;
 
+  const bg = useTransform(
+    pageScroll,
+    [0, 0.25, 0.26],
+    ["#000", "#000", "#fff"],
+  );
+  const text = useTransform(
+    pageScroll,
+    [0, 0.25, 0.26],
+    ["#fff", "#fff", "#000"],
+  );
+
   return (
-    <header className="fixed top-0 w-full bg-black z-999999999999999 mix-blend-difference">
+    <motion.header
+      // initial={{
+      //   opacity: 0,
+      // }}
+      // animate={{
+      //   opacity: 1,
+      // }}
+      // transition={{
+      //   delay: 2,
+      //   duration: 0.01,
+      // }}
+      style={{
+        background: bg,
+        color: text,
+      }}
+      className="fixed top-0 w-full  z-999999999999999  border-b border-black/20"
+    >
       <motion.div
         variants={container}
         initial="hidden"
@@ -44,7 +71,7 @@ export function Navbar() {
         <motion.div variants={item} className="flex flex-1 items-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors"
+            className="inline-flex items-center gap-2  transition-colors"
             aria-label="Asymmetri"
           >
             <img className="w-6" src="/logo_mini.png" alt="" />
@@ -56,7 +83,7 @@ export function Navbar() {
             <motion.div key={l.href} variants={item}>
               <Link
                 href={l.href}
-                className="font-chakra-petch text-[12px] tracking-wide text-white/60 hover:text-white/90 transition-colors"
+                className="font-chakra-petch text-[12px] tracking-wide hover:opacity-50 transition-colors"
               >
                 <ScrambledText
                   className="sound"
@@ -65,6 +92,7 @@ export function Navbar() {
                     width: "fit-content",
                     fontFamily: "Chakra Petch",
                     minWidth: "4em",
+                    color: "inherit",
                   }}
                   scrambleChars=":-="
                 >
@@ -87,6 +115,6 @@ export function Navbar() {
           </Link>
         </motion.div>
       </motion.div>
-    </header>
+    </motion.header>
   );
 }

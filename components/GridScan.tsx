@@ -8,7 +8,7 @@ import {
   EffectPass,
   RenderPass,
 } from "postprocessing";
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 type GridScanProps = {
@@ -311,7 +311,7 @@ void main(){
 }
 `;
 
-export const GridScan: React.FC<GridScanProps> = ({
+const GridScan: React.FC<GridScanProps> = ({
   enableWebcam = false,
   showPreview = false,
   modelsPath = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights",
@@ -1000,3 +1000,5 @@ function centroid(points: { x: number; y: number }[]) {
 function dist2(a: { x: number; y: number }, b: { x: number; y: number }) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
+
+export const MemoGridBG = memo(GridScan);

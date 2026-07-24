@@ -1,7 +1,5 @@
 "use client";
 
-// import { AsciiMorph } from "@/lib/asciiMorph";
-
 import random from "random";
 import {
   AnimatePresence,
@@ -10,28 +8,12 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import {
-  PowerGlitch,
-  LayerDefinition,
-  GlitchPartialOptions,
-} from "powerglitch";
 
 import React, { memo, useEffect, useRef, useState } from "react";
 import { FatCursors } from "@/components/FatCursors";
-import { GridScan } from "@/components/GridScan";
 import ScrambledText from "@/components/ScrambledText";
-import { HyperText } from "@/components/ui/hyper-text";
-import { ArrowBigRight, ChevronUp, X } from "lucide-react";
-import { Pointer } from "@/components/ui/pointer";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
-import Cubes from "@/components/Cubes";
-import ShapeBlur from "@/components/ShapeBlur";
 import { Navbar } from "@/components/shared/navbar";
-import TargetCursor from "@/components/TargetCursor";
-import { Button } from "@/components/ui/button";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
-import { Footer } from "@/components/shared/footer";
-import LS from "@/components/LS";
 import { ServicesAccordion } from "@/components/ServicesAccordion";
 import playSoundOnHover from "@/lib/sound";
 
@@ -40,7 +22,6 @@ export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    // offset: ["start start", "end end"],
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
@@ -577,13 +558,11 @@ export default function Home() {
     const incrementTimer = setInterval(() => {
       local = local + 1;
       setLoaderPct(local);
-      document.body.style.overflow = "hidden";
       if (local === 100) {
         setEntry(true);
         clearInterval(incrementTimer);
-        document.body.style.overflow = "scroll";
       }
-    }, 1);
+    }, 1000);
     return () => clearInterval(incrementTimer);
   }, []);
 
@@ -719,8 +698,8 @@ export default function Home() {
 
   return (
     <main ref={containerRef}>
-      <LS></LS>
-      <Navbar />
+      {/* <LS></LS> */}
+      <Navbar pageScroll={pageScroll} />
       <section ref={pageRef} className="">
         <motion.div className="relative ">
           <motion.div
@@ -877,7 +856,10 @@ export default function Home() {
               id="logo"
               className={`absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${isMobile ? "w-[min(100%,17rem)] max-w-[calc(100vw-3rem)]" : isCompact ? "w-96" : "w-120"}`}
             />
-            <div
+            <div className="text-asymmetri-red absolute top-[60%] left-1/2  -translate-x-1/2 font-bold font-chakra-petch text-xl">
+              {loaderPct === 100 ? "100" : loaderPct}%
+            </div>
+            {/* <div
               style={{
                 transform: `translateY(-${loaderPct + "%"})`,
               }}
@@ -887,7 +869,7 @@ export default function Home() {
               <span className="text-black text-[12em]  font-mono tabular-nums  duration-200">
                 {loaderPct === 100 ? "100" : loaderPct}%
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="min-h-[600vh]"></div>
         </motion.div>
@@ -911,121 +893,80 @@ export default function Home() {
             }}
             className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-16"}`}
           >
-            <motion.div
-              style={
-                {
-                  // opacity: useTransform(pageScroll, [0.08, 0.09], [0, 1]),
-                }
-              }
-            >
-              <span className="text-asymmetri-red">
-                <FE
-                  text="Symmetry"
-                  range={[0.07, 0.075]}
-                  pageScroll={pageScroll}
-                ></FE>
-                <FE
-                  text="is"
-                  range={[0.075, 0.08]}
-                  pageScroll={pageScroll}
-                ></FE>
-                <FE
-                  text="overrated."
-                  range={[0.08, 0.085]}
-                  pageScroll={pageScroll}
-                ></FE>
-              </span>
-              <br />
-              <FE text="A" range={[0.085, 0.09]} pageScroll={pageScroll}></FE>
+            <motion.div>
+              <FE text="Not" range={[0.07, 0.075]} pageScroll={pageScroll}></FE>
               <FE
-                text="collaborative"
+                text="just"
+                range={[0.075, 0.08]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="another"
+                range={[0.08, 0.085]}
+                pageScroll={pageScroll}
+              ></FE>
+
+              <FE
+                text="software"
+                range={[0.085, 0.09]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="company"
                 range={[0.09, 0.11]}
                 pageScroll={pageScroll}
               ></FE>
+
+              {/* A place where curious people build things they're proud of */}
+              <FE text="A" range={[0.11, 0.115]} pageScroll={pageScroll}></FE>
               <FE
-                text="agency"
-                range={[0.11, 0.115]}
+                text="place"
+                range={[0.115, 0.12]}
                 pageScroll={pageScroll}
               ></FE>
-              <FE text="for" range={[0.115, 0.12]} pageScroll={pageScroll}></FE>
               <FE
-                text="bold"
+                text="where"
                 range={[0.12, 0.125]}
                 pageScroll={pageScroll}
               ></FE>
               <FE
-                text="ideas,"
+                text="curious"
                 range={[0.125, 0.13]}
                 pageScroll={pageScroll}
               ></FE>
               <FE
-                text="beautiful"
+                text="people"
                 range={[0.13, 0.135]}
                 pageScroll={pageScroll}
               ></FE>
               <FE
-                text="code,"
+                text="build"
                 range={[0.135, 0.14]}
                 pageScroll={pageScroll}
               ></FE>
-              <FE text="and" range={[0.14, 0.145]} pageScroll={pageScroll}></FE>
-              <FE
-                text="digital"
-                range={[0.145, 0.15]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="experiences"
-                range={[0.15, 0.155]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="that"
-                range={[0.155, 0.16]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="don't"
-                range={[0.16, 0.165]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="blend"
-                range={[0.165, 0.17]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE text="in." range={[0.17, 0.175]} pageScroll={pageScroll}></FE>
+              <div className="text-asymmetri-red">
+                <FE
+                  text="things"
+                  range={[0.14, 0.145]}
+                  pageScroll={pageScroll}
+                ></FE>
+                <FE
+                  text="they're"
+                  range={[0.145, 0.15]}
+                  pageScroll={pageScroll}
+                ></FE>
+                <FE
+                  text="proud"
+                  range={[0.15, 0.155]}
+                  pageScroll={pageScroll}
+                ></FE>
+                <FE
+                  text="of."
+                  range={[0.155, 0.16]}
+                  pageScroll={pageScroll}
+                ></FE>
+              </div>
             </motion.div>
-            {/* <motion.div
-              style={{
-                opacity: useTransform(pageScroll, [0.12, 0.15], [0, 1]),
-              }}
-              className="text-lg max-w-3xl"
-            >
-              From websites and apps to operating systems and SaaS platforms, we
-              take ideas from concept to deployment - designing, engineering,
-              and scaling software that’s fast, functional, and built to last.
-            </motion.div> */}
-            {/* <motion.div
-              style={{
-                opacity: useTransform(pageScroll, [0.145, 0.19], [0, 1]),
-              }}
-              className={` hidden w-full border border-current/15 bg-current/5 text-left backdrop-blur-sm ${isMobile ? "mt-6 rounded-2xl p-5" : isCompact ? "mt-8 rounded-[1.75rem] p-6" : "mt-10 rounded-[2rem] p-8"}`}
-            >
-              <div
-                className={`uppercase tracking-[0.28em] text-asymmetri-red ${isMobile ? "mb-3 text-[0.65rem]" : "mb-4 text-xs"}`}
-              >
-                Who we are
-              </div>
-              <div
-                className={`${isMobile ? "text-sm leading-6" : isCompact ? "text-base leading-7" : "text-lg leading-8 font-normal"} max-w-3xl text-balance`}
-              >
-                We’re a fully remote team of talented designers, engineers, and
-                product thinkers who solve hard problems with clean, thoughtful
-                solutions. We believe in cutting through complexity through our
-                quick and innovative solutions.
-              </div>
-            </motion.div> */}
           </motion.div>
         </motion.div>
 
@@ -1053,16 +994,16 @@ export default function Home() {
                 }}
                 className={`text-black  duration-200 py-36     ${isMobile ? "text-3xl min-h-40 gap-3" : isCompact ? "text-4xl --min-h-52 gap-4" : "text-6xl --min-h-78 gap-6"} relative border-x border-black/20`}
               >
-                <div className="w-full h-px bg-black/20 absolute top-0 left-0"></div>
+                {/* <div className="w-full h-px bg-black/20 absolute top-0 left-0"></div> */}
                 <div className="w-full h-px bg-black/20 absolute bottom-0 left-0"></div>
-                <motion.div
+                {/* <motion.div
                   style={{
                     y: useTransform(pageScroll, [0.3, 0.6], ["0%", "100%"]),
                   }}
                   className="absolute -top-36  right-0 text-[16em] text-asymmetri-red/20 pointer-events-none"
                 >
                   ?
-                </motion.div>
+                </motion.div> */}
                 <motion.div className="w-full   space-y-6 px-8">
                   <div className="text-asymmetri-red font-semibold text-right">
                     <span>Bring us the challenge.</span> <br />{" "}
