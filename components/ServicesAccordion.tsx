@@ -106,7 +106,7 @@ function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
         return (
           <motion.div
             initial={{
-              filter: "blur(12px)",
+              filter: "blur(6px)",
               y: 20,
               opacity: 0,
             }}
@@ -118,7 +118,7 @@ function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
             transition={{
               type: "tween",
               duration: 0.6,
-              ease: "easeInOut",
+              // ease: "easeInOut",
               delay: i * 0.05,
             }}
             viewport={{

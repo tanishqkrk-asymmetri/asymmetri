@@ -1,0 +1,36 @@
+import { useEffect, useState } from "react";
+
+export default function usePauseScroll() {
+  const [loaderPct, setLoaderPct] = useState(0);
+
+  useEffect(() => {
+    // ! TURN BACK ON
+    document.body.classList.add("stop-scrolling");
+    let local = 0;
+    const incrementTimer = setInterval(() => {
+      local = local + 1;
+      setLoaderPct(local);
+      if (local === 100) {
+        clearInterval(incrementTimer);
+      }
+    }, 0.001);
+    return () => clearInterval(incrementTimer);
+  }, []);
+
+  useEffect(() => {
+    if (loaderPct === 100) {
+      (async function () {
+        try {
+          const L = (await import("locomotive-scroll")).default;
+          new L();
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+      console.log(loaderPct);
+      document.body.classList.remove("stop-scrolling");
+    }
+  }, [loaderPct]);
+
+  return { loaderPct };
+}

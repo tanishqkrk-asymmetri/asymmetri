@@ -19,11 +19,12 @@ import { ServicesAccordion } from "@/components/ServicesAccordion";
 import playSoundOnHover from "@/lib/sound";
 import { art, art2, art3, art4, art5, art6 } from "@/lib/art";
 import { returnTestimonials } from "@/lib/Testimonials";
-import { MemoGridBG } from "@/components/GridScan";
-import BlurFadeText from "@/components/BlurFadeText";
 import { T } from "@/components/Text";
+import usePauseScroll from "@/hooks/usePauseScroll";
 
 export default function Home() {
+  const { loaderPct } = usePauseScroll();
+
   const pageRef = useRef(null);
   const containerRef = useRef(null);
   const { scrollYProgress: pageScroll } = useScroll({
@@ -32,7 +33,6 @@ export default function Home() {
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
   // ! TURN BACK TO 0
-  const [loaderPct, setLoaderPct] = useState(100);
 
   const [whiteBG, setWhiteBg] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
@@ -214,42 +214,6 @@ export default function Home() {
       setBlackBoxSizeState(nextBox);
     }
   });
-
-  useEffect(() => {
-    document
-      .querySelectorAll(".sound")
-      .forEach((x) => x.addEventListener("mouseenter", playSoundOnHover));
-
-    console.log(chalk.redBright("Property of", art));
-    // ! TURN BACK ON
-    // document.body.classList.add("stop-scrolling");
-
-    // let local = 0;
-
-    // const incrementTimer = setInterval(() => {
-    //   local = local + 1;
-    //   setLoaderPct(local);
-    //   if (local === 100) {
-    //     clearInterval(incrementTimer);
-    //   }
-    // }, 0.001);
-    // return () => clearInterval(incrementTimer);
-  }, []);
-
-  useEffect(() => {
-    if (loaderPct === 100) {
-      (async function () {
-        try {
-          const L = (await import("locomotive-scroll")).default;
-          new L();
-        } catch (err) {
-          console.error(err);
-        }
-      })();
-      console.log(loaderPct);
-      // document.body.classList.remove("stop-scrolling");
-    }
-  }, [loaderPct]);
 
   return (
     <main ref={containerRef}>
@@ -557,13 +521,13 @@ export default function Home() {
                   >
                     <T>Bring us the challenge.</T>
                     <span className="pr-16 inline-block">
-                      <T className="max-h-fit" delay={0.1}>
+                      <T className="max-h-fit" delay={0.2}>
                         ambitious product, tangle
                       </T>
                     </span>{" "}
                     <br />
                     <span className="pr-16 inline-block">
-                      <T delay={0.2}>roadmap, tight deadline.</T>
+                      <T delay={0.4}>roadmap, tight deadline.</T>
                     </span>
                   </motion.div>
                   <motion.div
@@ -585,7 +549,7 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   style={{
-                    y: useTransform(pageScroll, [0.32, 0.39], [500, -500]),
+                    y: useTransform(pageScroll, [0.29, 0.39], [500, -500]),
                   }}
                   className=" mt-16   mx-auto w-full "
                 >

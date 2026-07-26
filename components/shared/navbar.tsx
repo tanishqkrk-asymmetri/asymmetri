@@ -28,12 +28,13 @@ const item: Variants = {
 export function Navbar({ pageScroll }: { pageScroll: any }) {
   const links = [
     { label: "About", href: "/#about" },
-    { label: "Work", href: "/jobs" },
+    { label: "Work", href: "" },
     { label: "Services", href: "/#services" },
-    { label: "Careers", href: "/#careers" },
+    { label: "Careers", href: "/jobs" },
+    // { label: "Get in Touch", href: "/#contact" },
   ] as const;
 
-  const sectionsIndi = [0, 0.3, 0.31, 0.35, 0.35];
+  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44];
 
   const bg = useTransform(pageScroll, sectionsIndi, [
     "#000000",
@@ -45,7 +46,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
   const text = useTransform(pageScroll, sectionsIndi, [
     "#ffffff",
     "#ffffff",
-    "#ffffff",
+    "#000000",
     "#000000",
     "#ffffff",
   ]);
@@ -85,26 +86,27 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
           </Link>
         </motion.div>
 
-        <nav className="hidden flex-none items-center  md:flex ">
+        <nav className="hidden flex-none items-center  md:flex justify-center   text gap-36">
           {links.map((l) => (
-            <motion.div key={l.href} variants={item}>
+            <motion.div key={l.href} className="sound">
               <Link
                 href={l.href}
-                className="font-chakra-petch text-[12px] tracking-wide hover:opacity-50 transition-colors"
+                className="font-chakra-petch text-[16px] tracking-wide hover:opacity-50 transition-colors "
               >
-                <ScrambledText
+                {l.label}
+                {/* <ScrambledText
                   className="sound"
                   style={{
-                    fontSize: "1.2em",
+                    fontSize: "16px",
                     width: "fit-content",
                     fontFamily: "Chakra Petch",
-                    minWidth: "4em",
+                    minWidth: "3em",
                     color: "inherit",
                   }}
                   scrambleChars=":-="
                 >
                   {l.label}
-                </ScrambledText>
+                </ScrambledText> */}
               </Link>
             </motion.div>
           ))}
@@ -116,7 +118,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         >
           <Link
             href="/#contact"
-            className="font-chakra-petch  tracking-wide text-white hover:text-white/90 transition-colors"
+            className="font-chakra-petch  tracking-wide text-white hover:text-white/90 transition-colors bg-asymmetri-red p-3 py-2 "
           >
             Get in touch
           </Link>

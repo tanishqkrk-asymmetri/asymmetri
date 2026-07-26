@@ -4,10 +4,12 @@ import { memo } from "react";
 function Text({
   children,
   delay,
+  duration,
   className,
 }: {
   children: Readonly<React.ReactElement> | string;
   delay?: number;
+  duration?: number;
   className?: string;
   el?: string;
 }) {
@@ -25,13 +27,15 @@ function Text({
       }}
       transition={{
         type: "tween",
-        duration: 0.3,
+        duration: duration && 1.3,
         ease: "easeInOut",
         delay,
       }}
-      viewport={{
-        once: false,
-      }}
+      viewport={
+        {
+          // once: true,
+        }
+      }
       className={className}
     >
       {children}

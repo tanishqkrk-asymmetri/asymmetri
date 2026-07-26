@@ -7,6 +7,10 @@ import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import LS from "@/components/LS";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import chalk from "chalk";
+import { art } from "@/lib/art";
+import playSoundOnHover from "@/lib/sound";
+import { Init } from "@/components/init";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +56,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} dark h-full antialiased`}
     >
+      <Init></Init>
       <body className="min-h-full flex flex-col">
         <TooltipProvider>{children}</TooltipProvider>
       </body>
