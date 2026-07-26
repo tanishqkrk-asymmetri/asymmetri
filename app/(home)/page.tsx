@@ -415,7 +415,7 @@ export default function Home() {
               {loaderPct === 100 ? "100" : loaderPct}%
             </div>
           </div>
-          <div className="min-h-[650vh]"></div>
+          <div className="min-h-[600vh]"></div>
         </motion.div>
 
         <motion.div
@@ -551,7 +551,7 @@ export default function Home() {
                 <motion.div className="w-full   space-y-6 px-8">
                   <motion.div
                     style={{
-                      y: useTransform(pageScroll, [0.23, 0.3], [500, -100]),
+                      y: useTransform(pageScroll, [0.24, 0.3], [500, -100]),
                     }}
                     className="text-asymmetri-red font-semibold text-right uppercase"
                   >
@@ -568,15 +568,15 @@ export default function Home() {
                   </motion.div>
                   <motion.div
                     style={{
-                      y: useTransform(pageScroll, [0.23, 0.36], [500, -100]),
+                      y: useTransform(pageScroll, [0.23, 0.36], [300, -100]),
                     }}
                     className="text-xl max-w-82 space-y-6"
                   >
-                    <T delay={0.5} className="">
+                    <T delay={0} className="">
                       We cut through your chaos. Build fast, build smart, and
                       ship products that are recklessly good.
                     </T>
-                    <T delay={0.7}>
+                    <T delay={0.1}>
                       <button className="text-xl bg-white border rounded-sm  p-2 duration-150 hover:bg-asymmetri-red hover:text-white cursor-pointer">
                         Discuss Project
                       </button>
@@ -1068,15 +1068,15 @@ function TransitionGrid({
     if (setA.includes(i)) {
       value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
-      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.45, 0.006, 0.007, 0.012);
     } else if (setB.includes(i)) {
-      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
-    } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
-    } else if (setE.includes(i)) {
       value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
+    } else if (setF.includes(i)) {
+      value = jitteredRange(i, 0.41, 0.006, 0.007, 0.012);
+    } else if (setE.includes(i)) {
+      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
-      value = jitteredRange(i, 0.44, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.45, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
       value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
     }
@@ -1168,7 +1168,7 @@ function FE({
       <motion.span
         style={{
           opacity: useTransform(pageScroll, range, [0, 1]),
-          filter: useTransform(pageScroll, range, ["blur(10px)", "blur(0)"]),
+          filter: useTransform(pageScroll, range, ["blur(20px)", "blur(0)"]),
         }}
       >
         {text}

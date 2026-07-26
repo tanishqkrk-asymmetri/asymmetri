@@ -33,16 +33,22 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     { label: "Careers", href: "/#careers" },
   ] as const;
 
-  const bg = useTransform(
-    pageScroll,
-    [0, 0.1, 0.3, 0.31],
-    ["#00000000", "#000000ff", "#000000ff", "#ffffffff"],
-  );
-  const text = useTransform(
-    pageScroll,
-    [0, 0.3, 0.31],
-    ["#fff", "#fff", "#000"],
-  );
+  const sectionsIndi = [0, 0.3, 0.31, 0.35, 0.35];
+
+  const bg = useTransform(pageScroll, sectionsIndi, [
+    "#000000",
+    "#000000",
+    "#ffffff",
+    "#ffffff",
+    "#0a0a0a",
+  ]);
+  const text = useTransform(pageScroll, sectionsIndi, [
+    "#ffffff",
+    "#ffffff",
+    "#ffffff",
+    "#000000",
+    "#ffffff",
+  ]);
 
   return (
     <motion.header
