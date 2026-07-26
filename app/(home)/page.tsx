@@ -640,7 +640,7 @@ export default function Home() {
             <motion.div className="w-full   space-y-6 px-8 text-6xl font-chakra-petch">
               <motion.div
                 style={{
-                  y: useTransform(pageScroll, [0.47, 0.53], [300, -300]),
+                  y: useTransform(pageScroll, [0.47, 0.53], [100, -300]),
                 }}
                 className=" text-asymmetri-red font-semibold text-left uppercase px-36"
               >
@@ -661,7 +661,7 @@ export default function Home() {
               </motion.div>
               <motion.div
                 style={{
-                  y: useTransform(pageScroll, [0.48, 0.5], [300, 0]),
+                  y: useTransform(pageScroll, [0.48, 0.5], [300, -100]),
                 }}
                 className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36 "
               >
@@ -678,7 +678,9 @@ export default function Home() {
             </motion.div>
             <TransitionGrid pageScroll={pageScroll} mode="dtr" />
 
-            <div className="min-h-screen bg-asymmetri-red"></div>
+            <div className="min-h-screen bg-asymmetri-red">
+              <ProjectCard />
+            </div>
           </div>
         </motion.div>
 
@@ -853,7 +855,7 @@ function TransitionGrid({
   );
 }
 
-function FE({
+function FEC({
   text,
   range,
   pageScroll,
@@ -866,8 +868,8 @@ function FE({
     <>
       <motion.span
         style={{
-          opacity: useTransform(pageScroll, range, [0, 1]),
-          filter: useTransform(pageScroll, range, ["blur(20px)", "blur(0)"]),
+          opacity: useTransform(pageScroll, range, [0.2, 1]),
+          filter: useTransform(pageScroll, range, ["blur(10px)", "blur(0)"]),
         }}
       >
         {text}
@@ -875,3 +877,11 @@ function FE({
     </>
   );
 }
+
+const FE = memo(FEC);
+
+function ProjectCardComponent() {
+  return <></>;
+}
+
+const ProjectCard = memo(ProjectCardComponent);
