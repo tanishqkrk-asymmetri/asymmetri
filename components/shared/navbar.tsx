@@ -34,7 +34,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     // { label: "Get in Touch", href: "/#contact" },
   ] as const;
 
-  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44, 0.54, 0.55];
+  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44, 0.56, 0.57];
 
   const bg = useTransform(pageScroll, sectionsIndi, [
     "#000000",
@@ -54,6 +54,15 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff",
     "#ffffff",
   ]);
+  const border = useTransform(pageScroll, sectionsIndi, [
+    "#ffffff30",
+    "#ffffff30",
+    "#00000030",
+    "#00000030",
+    "#ffffff30",
+    "#ffffff30",
+    "#ffffff90",
+  ]);
 
   return (
     <motion.header
@@ -71,8 +80,9 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         // background: "transparent",
         background: bg,
         color: text,
+        borderColor: border,
       }}
-      className="fixed top-0 w-full  z-999999999999999  border-b border-black/20"
+      className="fixed top-0 w-full  z-999999999999999  border-b "
     >
       <motion.div
         variants={container}

@@ -72,7 +72,7 @@ importers:
         specifier: ^5.0.0-beta.21
         version: 5.0.1(react@19.2.4)
       lucide-react:
-        specifier: ^1.7.0
+        specifier: ^1.26.0
         version: 1.26.0(react@19.2.4)
       mathjs:
         specifier: ^15.2.0
@@ -113,6 +113,9 @@ importers:
       react-resizable-panels:
         specifier: ^4.7.6
         version: 4.12.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      reactjs-flip-card:
+        specifier: ^2.0.3
+        version: 2.0.3(react@19.2.4)
       recharts:
         specifier: 3.8.0
         version: 3.8.0(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react-is@16.13.1)(react@19.2.4)(redux@5.0.1)
@@ -4096,6 +4099,11 @@ packages:
   react@19.2.4:
     resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
     engines: {node: '>=0.10.0'}
+
+  reactjs-flip-card@2.0.3:
+    resolution: {integrity: sha512-kVdt7O1EnfKhVTEZaeLigN/KnX/XPtOYmheBHw7c0kdNUg/p+ltmztmmSXVv55vRttZKP9KqzyFn/ILlg9DbEw==}
+    peerDependencies:
+      react: '>=16.8'
 
   recast@0.23.12:
     resolution: {integrity: sha512-dEWRjcINDu/F4l2dYx57ugBtD7HV9KXESyxhzw/MqWLeglJrsjJKqACPyUPg+6AF8mIgm+Zi0dZ3ACoIg+QtpA==}
@@ -9132,6 +9140,10 @@ snapshots:
       '@types/react': 19.2.17
 
   react@19.2.4: {}
+
+  reactjs-flip-card@2.0.3(react@19.2.4):
+    dependencies:
+      react: 19.2.4
 
   recast@0.23.12:
     dependencies:

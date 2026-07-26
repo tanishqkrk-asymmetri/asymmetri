@@ -1,5 +1,6 @@
 "use client";
 
+import ReactFlipCard from "reactjs-flip-card";
 import random from "random";
 import chalk from "chalk";
 import {
@@ -21,6 +22,7 @@ import { art, art2, art3, art4, art5, art6 } from "@/lib/art";
 import { returnTestimonials } from "@/lib/Testimonials";
 import { T } from "@/components/Text";
 import usePauseScroll from "@/hooks/usePauseScroll";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 
 export default function Home() {
   const { loaderPct } = usePauseScroll();
@@ -214,6 +216,37 @@ export default function Home() {
       setBlackBoxSizeState(nextBox);
     }
   });
+
+  const projects = [
+    {
+      name: "Prescribe Life",
+      type: "Web App",
+      thumbnail: "/flip.png",
+      desc: "",
+      link: "/",
+    },
+    {
+      name: "Reform AI",
+      type: "Web App",
+      thumbnail: "/flip.png",
+      desc: "",
+      link: "/",
+    },
+    {
+      name: "Quicli",
+      type: "Web App",
+      thumbnail: "/flip.png",
+      desc: "",
+      link: "/",
+    },
+    {
+      name: "DD Group",
+      type: "Web App",
+      thumbnail: "/flip.png",
+      desc: "",
+      link: "/",
+    },
+  ];
 
   return (
     <main ref={containerRef}>
@@ -678,13 +711,147 @@ export default function Home() {
             </motion.div>
             <TransitionGrid pageScroll={pageScroll} mode="dtr" />
 
-            <div className="min-h-screen bg-asymmetri-red">
-              <ProjectCard />
+            <div className="min-h-[200vh] bg-asymmetri-red  relative ">
+              {projects.map((x, i) => {
+                return (
+                  <motion.div
+                    className="min-h-screen -translate-y-1/2 fixed top-1/2 left-1/2 flex justify-center items-center  w-1/4 flex-col gap-6 group cursor-pointer"
+                    style={{
+                      zIndex: 5 - i,
+                      y: useTransform(
+                        pageScroll,
+                        [0.55, 0.56, 0.57],
+                        [1000, 500, 0],
+                      ),
+                      left: useTransform(
+                        pageScroll,
+                        [0.57, 0.59],
+                        [
+                          "50%",
+                          i === 0
+                            ? "0%"
+                            : i === 1
+                              ? "25%"
+                              : i === 2
+                                ? "50%"
+                                : i === 3
+                                  ? "75%"
+                                  : "",
+                        ],
+                      ),
+                      x: useTransform(pageScroll, [0.57, 0.59], ["-50%", "0%"]),
+                    }}
+                  >
+                    <motion.div
+                      style={{
+                        left: "0%",
+                        opacity: useTransform(
+                          pageScroll,
+                          [0.58, 0.59],
+                          ["0", "1"],
+                        ),
+                      }}
+                      className="fixed top-0  h-screen w-[0.5px] bg-white/50 opacity-0 group-hover:opacity-100 duration-200"
+                    ></motion.div>
+                    <motion.div
+                      style={{
+                        left: "100%",
+                        opacity: useTransform(
+                          pageScroll,
+                          [0.63, 0.64],
+                          ["0", "1"],
+                        ),
+                      }}
+                      className="fixed top-0  h-screen w-[0.5px] bg-white/50  duration-200"
+                    ></motion.div>
+
+                    <motion.div
+                      initial={{
+                        rotate:
+                          i === 0
+                            ? "3deg"
+                            : i === 1
+                              ? "-3deg"
+                              : i === 2
+                                ? "5deg"
+                                : i === 3
+                                  ? "-5deg"
+                                  : "",
+                      }}
+                      whileHover={{
+                        rotate: "0deg",
+                      }}
+                      key={x.name}
+                      className="border border-white  rounded-2xl overflow-hidden  bg-asymmetri-red  z-4 relative"
+                    >
+                      <motion.img
+                        style={{
+                          scale: useTransform(
+                            pageScroll,
+                            [0.55, 0.59, 0.61],
+                            [3, 2, 1.5],
+                          ),
+                        }}
+                        src="/card.png"
+                        className="w-72  translate-x-8 z-999999 relative bg-asymmetri-red group-hover:opacity-0 duration-200"
+                        alt=""
+                      />
+                      <motion.img
+                        src={x.thumbnail}
+                        className="w-72   absolute top-0 left-0 z-10 h-full"
+                        alt=""
+                      />
+                    </motion.div>
+                    <motion.div
+                      className="text-xl text-white font-chakra-petch"
+                      style={{
+                        opacity: useTransform(
+                          pageScroll,
+                          [0.57, 0.58],
+                          ["0", "1"],
+                        ),
+                      }}
+                    >
+                      {x.name}
+                    </motion.div>
+                    <motion.div
+                      className="text-lg text-white/70 font-chakra-petch -translate-y-6"
+                      style={{
+                        opacity: useTransform(
+                          pageScroll,
+                          [0.58, 0.59],
+                          ["0", "1"],
+                        ),
+                      }}
+                    >
+                      {x.type}
+                    </motion.div>
+                    <motion.div
+                      style={{
+                        scale: useTransform(
+                          pageScroll,
+                          [0.58, 0.581],
+                          ["0", "1"],
+                        ),
+                      }}
+                      className="absolute bottom-3 group-hover:opacity-100 opacity-0 duration-250 border-white border-2 rounded-full hover:bg-white hover:text-black cursor-pointer group"
+                    >
+                      <ArrowUpRight
+                        className="text-white hover:text-black duration-150"
+                        size={120}
+                        strokeWidth={0.5}
+                      ></ArrowUpRight>
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
+          <div className="min-h-screen bg-asymmetri-red"></div>
         </motion.div>
+        <div className="min-h-screen bg-black z-999999 relative"></div>
 
-        <div className="min-h-[900vh]"></div>
+        <div className="min-h-[700vh]"></div>
       </section>
     </main>
   );
@@ -799,17 +966,17 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = jitteredRange(i, 0.54, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.56, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
-      value = jitteredRange(i, 0.51, 0.006, 0.007, 0.012);
-    } else if (setB.includes(i)) {
       value = jitteredRange(i, 0.53, 0.006, 0.007, 0.012);
+    } else if (setB.includes(i)) {
+      value = jitteredRange(i, 0.55, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.495, 0.006, 0.007, 0.012);
-    } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.51, 0.006, 0.007, 0.012);
-    } else if (setD.includes(i)) {
       value = jitteredRange(i, 0.52, 0.006, 0.007, 0.012);
+    } else if (setE.includes(i)) {
+      value = jitteredRange(i, 0.56, 0.006, 0.007, 0.012);
+    } else if (setD.includes(i)) {
+      value = jitteredRange(i, 0.58, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
       value = jitteredRange(i, 0.49, 0.006, 0.007, 0.012);
     }
@@ -868,7 +1035,7 @@ function FEC({
     <>
       <motion.span
         style={{
-          opacity: useTransform(pageScroll, range, [0.2, 1]),
+          opacity: useTransform(pageScroll, range, [0, 1]),
           filter: useTransform(pageScroll, range, ["blur(10px)", "blur(0)"]),
         }}
       >
@@ -881,7 +1048,16 @@ function FEC({
 const FE = memo(FEC);
 
 function ProjectCardComponent() {
-  return <></>;
+  return (
+    <>
+      <ReactFlipCard
+        frontStyle={{}}
+        backStyle={{}}
+        frontComponent={<div>Hover me!</div>}
+        backComponent={<div>Back!</div>}
+      />
+    </>
+  );
 }
 
 const ProjectCard = memo(ProjectCardComponent);
