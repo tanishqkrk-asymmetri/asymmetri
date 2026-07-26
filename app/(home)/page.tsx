@@ -1,6 +1,7 @@
 "use client";
 
 import random from "random";
+import chalk from "chalk";
 import {
   AnimatePresence,
   motion,
@@ -16,6 +17,11 @@ import { Navbar } from "@/components/shared/navbar";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
 import { ServicesAccordion } from "@/components/ServicesAccordion";
 import playSoundOnHover from "@/lib/sound";
+import { art, art2, art3, art4, art5, art6 } from "@/lib/art";
+import { returnTestimonials } from "@/lib/Testimonials";
+import { MemoGridBG } from "@/components/GridScan";
+import BlurFadeText from "@/components/BlurFadeText";
+import { T } from "@/components/Text";
 
 export default function Home() {
   const pageRef = useRef(null);
@@ -25,55 +31,48 @@ export default function Home() {
   });
 
   const [blackBoxSizeState, setBlackBoxSizeState] = useState(0);
-  const [loaderPct, setLoaderPct] = useState(0);
+  // ! TURN BACK TO 0
+  const [loaderPct, setLoaderPct] = useState(100);
 
   const [whiteBG, setWhiteBg] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const tabletQuery = window.matchMedia(
-      "(min-width: 768px) and (max-width: 1279px)",
-    );
-    const updateTabletState = (event?: MediaQueryListEvent) => {
-      setIsTablet(event ? event.matches : tabletQuery.matches);
-    };
+  // useEffect(() => {
+  //   const tabletQuery = window.matchMedia(
+  //     "(min-width: 768px) and (max-width: 1279px)",
+  //   );
+  //   const updateTabletState = (event?: MediaQueryListEvent) => {
+  //     setIsTablet(event ? event.matches : tabletQuery.matches);
+  //   };
 
-    updateTabletState();
-    tabletQuery.addEventListener("change", updateTabletState);
-    return () => tabletQuery.removeEventListener("change", updateTabletState);
-  }, []);
+  //   updateTabletState();
+  //   tabletQuery.addEventListener("change", updateTabletState);
+  //   return () => tabletQuery.removeEventListener("change", updateTabletState);
+  // }, []);
 
-  useEffect(() => {
-    const mobileQuery = window.matchMedia("(max-width: 767px)");
-    const updateMobile = (event?: MediaQueryListEvent) => {
-      setIsMobile(event ? event.matches : mobileQuery.matches);
-    };
-    updateMobile();
-    mobileQuery.addEventListener("change", updateMobile);
-    return () => mobileQuery.removeEventListener("change", updateMobile);
-  }, []);
+  // useEffect(() => {
+  //   const mobileQuery = window.matchMedia("(max-width: 767px)");
+  //   const updateMobile = (event?: MediaQueryListEvent) => {
+  //     setIsMobile(event ? event.matches : mobileQuery.matches);
+  //   };
+  //   updateMobile();
+  //   mobileQuery.addEventListener("change", updateMobile);
+  //   return () => mobileQuery.removeEventListener("change", updateMobile);
+  // }, []);
 
   /** Mobile + tablet: numeric scroll offsets and compact touch layouts */
   const isCompact = isMobile || isTablet;
 
   /** Viewport height for tablet “below fold” offsets (Motion cannot interpolate calc(dvh) → px reliably). */
   const [tabletBelowFoldPx, setTabletBelowFoldPx] = useState(1400);
-  useEffect(() => {
-    const update = () =>
-      setTabletBelowFoldPx(Math.ceil(window.innerHeight * 1.42 + 120));
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  // const secondSectionOpacity = useTransform(
-  //   pageScroll,
-  //   [0, 0.1, 0.2],
-  //   isCompact
-  //     ? [tabletBelowFoldPx + 48, tabletBelowFoldPx + 48, 0]
-  //     : [1000, 1000, 0],
-  // );
+  // useEffect(() => {
+  //   const update = () =>
+  //     setTabletBelowFoldPx(Math.ceil(window.innerHeight * 1.42 + 120));
+  //   update();
+  //   window.addEventListener("resize", update);
+  //   return () => window.removeEventListener("resize", update);
+  // }, []);
 
   const secondSectionHeight = useTransform(
     pageScroll,
@@ -92,114 +91,21 @@ export default function Home() {
     ["0%", "-150vh"],
   );
 
-  const transitionY = useTransform(pageScroll, [0.3, 0.35], ["100%", "-100%"]);
-
-  const thirdSectionY = useTransform(pageScroll, [0.4, 0.6], ["0%", "60%"]);
-  const whatWeDoTitleX = useTransform(pageScroll, [0.4, 0.45], ["0%", "100%"]);
-
   const secondSectionBG = useTransform(
     pageScroll,
     [0.13, 0.2],
-    ["#FFFFFF", "#000000"],
+    ["#ffffff", "#000000"],
   );
-  // const lightToDarkY = useTransform(pageScroll, [0.25, 0.5], ["100%", "-100%"]);
   const secondSectionText = useTransform(
     pageScroll,
     [0.19, 0.2],
     ["#000000", "#ffffff"],
   );
-  // const secondSectionText = useTransform(pageScroll, [0, 0.3, 0.32], [0, 0, 1]);
-  const secondSectionLines = useTransform(
-    pageScroll,
-    [0, 0.32, 0.33],
-    [0, 0, 1],
-  );
 
-  const secondSectionRed = useTransform(
-    pageScroll,
-    [0.19, 0.2],
-    ["#000000", "#ff0000"],
-  );
-  const secondSectionGrid = useTransform(
-    pageScroll,
-    [0, 0.38, 0.39],
-    [0, 0, 1],
-  );
-
-  const thirdSectionScale = useTransform(pageScroll, [0.42, 0.43], [1, 1]);
-  const thirdSectionClick = useTransform(
-    pageScroll,
-    [0, 0.43],
-    ["none", "all"],
-  );
-
-  const workCard1 = useTransform(pageScroll, [0.45, 0.46], [0, 1]);
-  const workCard2 = useTransform(pageScroll, [0.46, 0.47], [0, 1]);
-  const workCard3 = useTransform(pageScroll, [0.47, 0.48], [0, 1]);
-  const workCard4 = useTransform(pageScroll, [0.48, 0.49], [0, 1]);
-  const workCard5 = useTransform(pageScroll, [0.49, 0.5], [0, 1]);
-  const workCard6 = useTransform(pageScroll, [0.5, 0.51], [0, 1]);
-
-  const workCard1Pointer = useTransform(
-    pageScroll,
-    [0.45, 0.46],
-    ["none", "all"],
-  );
-  const workCard2Pointer = useTransform(
-    pageScroll,
-    [0.46, 0.47],
-    ["none", "all"],
-  );
-  const workCard3Pointer = useTransform(
-    pageScroll,
-    [0.47, 0.48],
-    ["none", "all"],
-  );
-  const workCard4Pointer = useTransform(
-    pageScroll,
-    [0.48, 0.49],
-    ["none", "all"],
-  );
-  const workCard5Pointer = useTransform(
-    pageScroll,
-    [0.49, 0.5],
-    ["none", "all"],
-  );
-  const workCard6Pointer = useTransform(
-    pageScroll,
-    [0.5, 0.51],
-    ["none", "all"],
-  );
-
-  const fourthSectionOpacity = useTransform(
-    pageScroll,
-    [0, 0.53, 0.6],
-    isCompact
-      ? [tabletBelowFoldPx + 56, tabletBelowFoldPx + 56, 0]
-      : [1000, 1000, 0],
-  );
-
-  const fourthSectionPointer = useTransform(
-    pageScroll,
-    [0, 0.55],
-    ["none", "all"],
-  );
-  const fourthSectionText = useTransform(pageScroll, [0.42, 0.43], [0, 1]);
   const fourthSectionColor = useTransform(
     pageScroll,
     [0, 0.6, 0.61, 0.7],
     ["#ffffff", "#ffffff", "#ff0000", "#ffffff"],
-  );
-
-  const fourthSectionBG = useTransform(
-    pageScroll,
-    [0, 0.6, 0.64, 0.7],
-    isCompact ? [360, 360, 0, -120] : [500, 500, 0, -200],
-  );
-  const fourthSectionGradient = useTransform(
-    pageScroll,
-    [0, 0.65, 0.7, 0.75],
-    ["#000000", "#000000", "#cd1717", "#ffffff"],
   );
 
   const fourthSectionDataScale = useTransform(
@@ -207,60 +113,12 @@ export default function Home() {
     [0.49, 0.5],
     [1, 0.5],
   );
-  const fourthSectionFinalOpacity = useTransform(
-    pageScroll,
-    [0, 0.73, 0.75],
-    [1, 1, 0],
-  );
-  const flipAnimationRotateY = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["0deg", "-180deg"],
-  );
-  const flipAnimationOpacity = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["brightness(1)", "brightness(0)"],
-  );
-  const flipAnimationRotateY2 = useTransform(
-    pageScroll,
-    [0.56, 0.57],
-    ["-180deg", "0deg"],
-  );
-  const flipAnimationOpacity2 = useTransform(pageScroll, [0.58, 0.6], [0, 1]);
+
   const flipContentX = useTransform(pageScroll, [0.52, 0.54], ["0", "100%"]);
   const flipContentXDesc = useTransform(pageScroll, [0.55, 0.56], ["0", "1"]);
   const flipContentX2Desc = useTransform(pageScroll, [0.55, 0.56], ["0", "1"]);
   const flipContentX2 = useTransform(pageScroll, [0.52, 0.54], ["0", "-100%"]);
   const flipContentOpacity = useTransform(pageScroll, [0.52, 0.53], [0, 1]);
-  const fifthSectionTitle = useTransform(
-    pageScroll,
-    [0.75, 0.76, 0.79],
-    [0, 1, 0],
-  );
-
-  const fifthSectionSecondTitle = useTransform(pageScroll, [0.79, 0.8], [0, 1]);
-  const fifthSectionSecondTitle2 = useTransform(
-    pageScroll,
-    [0.8, 0.81],
-    [0, 1],
-  );
-  const nandScale = useTransform(
-    pageScroll,
-    [0.77, 0.79],
-    isCompact ? [1, 1.06] : [1, 1.1],
-  );
-  const nandBlur = useTransform(
-    pageScroll,
-    [0.77, 0.79],
-    isCompact ? ["blur(0px)", "blur(7px)"] : ["blur(0px)", "blur(10px)"],
-  );
-
-  const fifthSectionLogo = useTransform(
-    pageScroll,
-    [0.76, 0.77, 0.79],
-    [0, 1, 0],
-  );
 
   const sixthSectionPointer = useTransform(
     pageScroll,
@@ -271,11 +129,6 @@ export default function Home() {
     pageScroll,
     [0.65, 0.7],
     ["-100vh", "0vh"],
-  );
-  const sixthSectionScale = useTransform(
-    pageScroll,
-    isCompact ? [0, 0.8, 0.83] : [0.8, 0.83],
-    isCompact ? [0.88, 0.88, 1.02] : [0.6, 1.1],
   );
 
   const sixthSectionTitle = useTransform(
@@ -295,69 +148,6 @@ export default function Home() {
     pageScroll,
     [0.76, 0.77],
     [0, 1],
-  );
-  const testimonialLayerY0 = useTransform(
-    pageScroll,
-    [0, 0.8, 0.86],
-    isCompact
-      ? [tabletBelowFoldPx + 112, tabletBelowFoldPx + 112, 0]
-      : [1040, 1040, 0],
-  );
-  const testimonialLayerY1 = useTransform(
-    pageScroll,
-    [0, 0.802, 0.862],
-    isCompact
-      ? [tabletBelowFoldPx + 88, tabletBelowFoldPx + 88, 0]
-      : [980, 980, 0],
-  );
-  const testimonialLayerY2 = useTransform(
-    pageScroll,
-    [0, 0.804, 0.864],
-    isCompact
-      ? [tabletBelowFoldPx + 132, tabletBelowFoldPx + 132, 0]
-      : [1120, 1120, 0],
-  );
-  const testimonialLayerY3 = useTransform(
-    pageScroll,
-    [0, 0.806, 0.866],
-    isCompact
-      ? [tabletBelowFoldPx + 72, tabletBelowFoldPx + 72, 0]
-      : [960, 960, 0],
-  );
-  const testimonialLayerY4 = useTransform(
-    pageScroll,
-    [0, 0.808, 0.868],
-    isCompact
-      ? [tabletBelowFoldPx + 124, tabletBelowFoldPx + 124, 0]
-      : [1080, 1080, 0],
-  );
-  const testimonialLayerY5 = useTransform(
-    pageScroll,
-    [0, 0.81, 0.86],
-    isCompact
-      ? [tabletBelowFoldPx + 56, tabletBelowFoldPx + 56, 0]
-      : [920, 920, 0],
-  );
-  const testimonialLayerY6 = useTransform(
-    pageScroll,
-    [0, 0.812, 0.87],
-    isCompact
-      ? [tabletBelowFoldPx + 148, tabletBelowFoldPx + 148, 0]
-      : [1160, 1160, 0],
-  );
-  const testimonialLayerY7 = useTransform(
-    pageScroll,
-    [0, 0.814, 0.859],
-    isCompact
-      ? [tabletBelowFoldPx + 68, tabletBelowFoldPx + 68, 0]
-      : [940, 940, 0],
-  );
-  const testimonialLayerY8 = useTransform(
-    pageScroll,
-    [0, 0.8, 0.86],
-    isCompact
-      ? [tabletBelowFoldPx + 96, tabletBelowFoldPx + 96, 0]
-      : [1020, 1020, 0],
   );
 
   const testimonialSlots = isCompact
@@ -382,98 +172,13 @@ export default function Home() {
         { left: "50%", top: "84%" },
       ];
 
-  const [testimonials, setTestimonials] = useState([
-    {
-      company: "TechNova Solutions",
-      testimonial:
-        "Working with this team has completely transformed our digital presence. Their attention to detail and commitment to quality is unmatched.",
-      image: "https://randomuser.me/api/portraits/women/45.jpg",
-      layerY: testimonialLayerY0,
-    },
-    {
-      company: "GreenLeaf Marketing",
-      testimonial:
-        "Their innovative strategies helped us grow our customer base faster than we imagined. Highly professional and reliable.",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      layerY: testimonialLayerY1,
-    },
-    {
-      company: "UrbanBuild Co.",
-      testimonial:
-        "From start to finish, the experience was seamless. The results exceeded our expectations in every way.",
-      image: "https://randomuser.me/api/portraits/women/68.jpg",
-      layerY: testimonialLayerY2,
-    },
-    {
-      company: "FinEdge Consulting",
-      testimonial:
-        "A truly outstanding service. Their expertise and dedication made a significant impact on our business growth.",
-      image: "https://randomuser.me/api/portraits/men/75.jpg",
-      layerY: testimonialLayerY3,
-    },
-    {
-      company: "BrightPath Education",
-      testimonial:
-        "We saw immediate improvements after implementing their solutions. The team is knowledgeable and easy to work with.",
-      image: "https://randomuser.me/api/portraits/women/22.jpg",
-      layerY: testimonialLayerY4,
-    },
-    {
-      company: "BlueOrbit Labs",
-      testimonial:
-        "Their sprint-based process kept us aligned and shipping every week. It felt like our internal team got stronger overnight.",
-      image: "https://randomuser.me/api/portraits/men/11.jpg",
-      layerY: testimonialLayerY5,
-    },
-    {
-      company: "Lumen Health",
-      testimonial:
-        "We needed clarity, speed, and polish. They delivered all three with a calm, collaborative workflow from kickoff to launch.",
-      image: "https://randomuser.me/api/portraits/women/9.jpg",
-      layerY: testimonialLayerY6,
-    },
-    {
-      company: "Northline Retail",
-      testimonial:
-        "The redesign helped customers find products faster and boosted conversions right away. The quality of execution was excellent.",
-      image: "https://randomuser.me/api/portraits/men/57.jpg",
-      layerY: testimonialLayerY7,
-    },
-    {
-      company: "Astra Mobility",
-      testimonial:
-        "They translated complex technical requirements into a product experience that feels simple, fast, and dependable.",
-      image: "https://randomuser.me/api/portraits/women/30.jpg",
-      layerY: testimonialLayerY8,
-    },
-  ]);
-
-  /** Clamp past scroll range: mixing calc() with px in Motion often snaps y to 0 before the footer segment. */
-  const footerSectionPointer = useTransform(
-    pageScroll,
-    [0, 0.92],
-    ["none", "all"],
+  const [testimonials, setTestimonials] = useState(
+    returnTestimonials({
+      pageScroll,
+      isCompact,
+      tabletBelowFoldPx,
+    }),
   );
-  const footerSectionY = useTransform(
-    pageScroll,
-    [0, 0.9, 0.94],
-    isCompact ? [tabletBelowFoldPx, tabletBelowFoldPx, 0] : [1000, 1000, 0],
-  );
-  const footerSectionScale = useTransform(
-    pageScroll,
-    isCompact ? [0, 0.9, 0.94] : [0.9, 0.94],
-    isCompact ? [0.92, 0.92, 1.02] : [0.6, 1.1],
-  );
-  const footerSectionTitle = useTransform(pageScroll, [0.95, 0.96], [0, 1]);
-  const footerSectionButtonA = useTransform(pageScroll, [0.96, 0.97], [0, 1]);
-  const footerSectionButtonB = useTransform(pageScroll, [0.97, 0.98], [0, 1]);
-  const footerSectionButtonLogo = useTransform(
-    pageScroll,
-    [0.98, 0.99],
-    [0, 1],
-  );
-
-  const [entry, setEntry] = useState(false);
 
   const [gridColors, setGridColors] = useState({
     a: "#FFFFFF",
@@ -515,190 +220,39 @@ export default function Home() {
       .querySelectorAll(".sound")
       .forEach((x) => x.addEventListener("mouseenter", playSoundOnHover));
 
-    // var element = document.querySelector("pre");
-    // AsciiMorph(element, { x: 50, y: 25 });
+    console.log(chalk.redBright("Property of", art));
+    // ! TURN BACK ON
+    // document.body.classList.add("stop-scrolling");
 
-    // First, define some ascii art.
-    const art = `
-                       .,,uod8B8bou,,.
-              ..,uod8BBBBBBBBBBBBBBBBRPFT?l!i:.
-         ,=m8BBBBBBBBBBBBBBBRPFT?!||||||||||||
-         !...:!TVBBBRPFT||||||||||!!^^""'   ||||
-         !.......:!?|||||!!^^""'            ||||
-         !.........||||                     ||||
-         !.........||||  ##                 ||||
-         !.........||||                     ||||
-         !.........||||                     ||||
-         !.........||||                     ||||
-         !.........||||                     ||||
-         \`.........||||                    ,||||
-          .;.......||||               _.-!!|||||
-   .,uodWBBBBb.....||||       _.-!!|||||||||!:'
-!YBBBBBBBBBBBBBBb..!|||:..-!!|||||||!iof68BBBBBb....
-!..YBBBBBBBBBBBBBBb!!||||||||!iof68BBBBBBRPFT?!::   \`.
-!....YBBBBBBBBBBBBBBbaaitf68BBBBBBRPFT?!:::::::::     \`.
-!......YBBBBBBBBBBBBBBBBBBBRPFT?!::::::;:!^\`\`;:::       \`.
-!........YBBBBBBBBBBRPFT?!::::::::::^''...::::::;         iBBbo.
-\`..........YBRPFT?!::::::::::::::::::::::::;iof68bo.      WBBBBbo.
-  \`..........:::::::::::::::::::::::;iof688888888888b.     \`YBBBP^'
-    \`........::::::::::::::::;iof688888888888888888888b.     \`
-      \`......:::::::::;iof688888888888888888888888888888b.
-        \`....:::;iof688888888888888888888888888888888899fT!
-          \`..::!8888888888888888888888888888888899fT|!^"'
-            \`' !!988888888888888888888888899fT|!^"'
-                \`!!8888888888888888899fT|!^"'
-                  \`!988888888899fT|!^"'
-                    \`!9899fT|!^"'
-                      \`!^"'
-`;
+    // let local = 0;
 
-    console.log(art);
-
-    let local = 0;
-    const incrementTimer = setInterval(() => {
-      local = local + 1;
-      setLoaderPct(local);
-      if (local === 100) {
-        setEntry(true);
-        clearInterval(incrementTimer);
-      }
-    }, 1000);
-    return () => clearInterval(incrementTimer);
+    // const incrementTimer = setInterval(() => {
+    //   local = local + 1;
+    //   setLoaderPct(local);
+    //   if (local === 100) {
+    //     clearInterval(incrementTimer);
+    //   }
+    // }, 0.001);
+    // return () => clearInterval(incrementTimer);
   }, []);
 
-  const workCategories = [
-    {
-      name: "Mobile App Development",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "cyan",
-      data: true,
-      animation: workCard1,
-      pointer: workCard1Pointer,
-    },
-    {
-      name: "WebApp & SaaS Development",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "pink",
-      data: true,
-      animation: workCard2,
-      pointer: workCard2Pointer,
-    },
-
-    {
-      name: "Custom Website Development",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "blue",
-      data: true,
-      animation: workCard3,
-      pointer: workCard3Pointer,
-    },
-
-    {
-      name: "AI & Agentic Systems",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "green",
-      data: true,
-      animation: workCard4,
-      pointer: workCard4Pointer,
-    },
-
-    {
-      name: "UI/UX & Product Design",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "red",
-      data: true,
-      animation: workCard5,
-      pointer: workCard5Pointer,
-    },
-    {
-      name: "Emerging Tech (AR/VR, Simulation, Blockchain)",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "orange",
-      data: true,
-      animation: workCard6,
-      pointer: workCard6Pointer,
-    },
-    {
-      name: "Digital Marketing & SEO",
-      description:
-        "Dummy content for now. This category can be filled with detailed service copy later.",
-      image: "purple",
-      data: true,
-      animation: workCard6,
-      pointer: workCard6Pointer,
-    },
-  ];
-
-  const [selectedWorkCategory, setSelectedWorkCategory] = useState<string>(
-    workCategories[0].name,
-  );
-
-  const dummyProjects = [
-    {
-      name: "Parallax Museum",
-      images: [],
-      coverImage: "https://picsum.photos/800/500",
-      year: "2022",
-      description: "",
-    },
-    {
-      name: "Driftwood Portfolio",
-      images: [],
-      coverImage: "https://picsum.photos/750/480",
-      year: "2023",
-      description: "",
-    },
-    {
-      name: "Luminary Landing Page",
-      images: [],
-      coverImage: "https://picsum.photos/820/460",
-      year: "2021",
-      description: "",
-    },
-    {
-      name: "Crestline Interactive",
-      images: [],
-      coverImage: "https://picsum.photos/780/520",
-      year: "2024",
-      description: "",
-    },
-    {
-      name: "Opaline Storefront",
-      images: [],
-      coverImage: "https://picsum.photos/760/440",
-      year: "2020",
-      description: "",
-    },
-  ];
-
-  const projects = {
-    "Mobile App Development": dummyProjects,
-    "WebApp & SaaS Development": dummyProjects,
-    "Custom Website Development": dummyProjects,
-    "AI & Agentic Systems": dummyProjects,
-    "UI/UX & Product Design": dummyProjects,
-    "Emerging Tech (AR/VR, Simulation, Blockchain)": dummyProjects,
-    "Digital Marketing & SEO": dummyProjects,
-  };
-
-  const [categoryChanged, setCategoryChanged] = useState(false);
-
-  const [selectedProject, setSelectedProject] = useState<string | null>(
-    // @ts-expect-error unuanudna
-    projects[workCategories[0].name as keyof projects][0].name,
-  );
-
-  const workGridLastColumnIndexes = [3, 7, 11];
+  useEffect(() => {
+    if (loaderPct === 100) {
+      (async function () {
+        try {
+          const L = (await import("locomotive-scroll")).default;
+          new L();
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+      console.log(loaderPct);
+      // document.body.classList.remove("stop-scrolling");
+    }
+  }, [loaderPct]);
 
   return (
     <main ref={containerRef}>
-      {/* <LS></LS> */}
       <Navbar pageScroll={pageScroll} />
       <section ref={pageRef} className="">
         <motion.div className="relative ">
@@ -823,11 +377,12 @@ export default function Home() {
               className={`absolute left-1/2 -translate-x-1/2 z-[10003] ${isMobile ? "top-[42%] -translate-y-1/2 w-[min(13rem,calc(100vw-3rem))] max-w-[calc(100vw-3rem)]" : `top-1/2 -translate-y-1/2 ${isCompact ? "w-64 max-w-[min(21rem,85vw)]" : "w-84"}`}`}
             />
 
-            {/* <div
+            <div
               className="relative z-0 isolate "
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
-              <MemoGridBG
+              {/* // ! TURN BACK ON */}
+              {/* <MemoGridBG
                 scanGlow={isMobile ? 0.92 : 0.6}
                 scanDirection="backward"
                 lineStyle="solid"
@@ -844,8 +399,8 @@ export default function Home() {
                 bloomIntensity={0.08}
                 chromaticAberration={0.002}
                 noiseIntensity={isMobile ? 0.006 : 0.01}
-              />
-            </div> */}
+              /> */}
+            </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
             {/* {!isMobile && <FatCursors scale={1} />} */}
@@ -859,19 +414,8 @@ export default function Home() {
             <div className="text-asymmetri-red absolute top-[60%] left-1/2  -translate-x-1/2 font-bold font-chakra-petch text-xl">
               {loaderPct === 100 ? "100" : loaderPct}%
             </div>
-            {/* <div
-              style={{
-                transform: `translateY(-${loaderPct + "%"})`,
-              }}
-              id="loader"
-              className="absolute right-0 bottom-0 duration-300 "
-            >
-              <span className="text-black text-[12em]  font-mono tabular-nums  duration-200">
-                {loaderPct === 100 ? "100" : loaderPct}%
-              </span>
-            </div> */}
           </div>
-          <div className="min-h-[600vh]"></div>
+          <div className="min-h-[650vh]"></div>
         </motion.div>
 
         <motion.div
@@ -995,7 +539,7 @@ export default function Home() {
                 className={`text-black  duration-200 py-36     ${isMobile ? "text-3xl min-h-40 gap-3" : isCompact ? "text-4xl --min-h-52 gap-4" : "text-6xl --min-h-78 gap-6"} relative border-x border-black/20`}
               >
                 {/* <div className="w-full h-px bg-black/20 absolute top-0 left-0"></div> */}
-                <div className="w-full h-px bg-black/20 absolute bottom-0 left-0"></div>
+                {/* <div className="w-full h-px bg-black/60 absolute bottom-0 left-0"></div> */}
                 {/* <motion.div
                   style={{
                     y: useTransform(pageScroll, [0.3, 0.6], ["0%", "100%"]),
@@ -1005,138 +549,149 @@ export default function Home() {
                   ?
                 </motion.div> */}
                 <motion.div className="w-full   space-y-6 px-8">
-                  <div className="text-asymmetri-red font-semibold text-right">
-                    <span>Bring us the challenge.</span> <br />{" "}
-                    <span className="pr-16">ambitious product, tangle</span>{" "}
+                  <motion.div
+                    style={{
+                      y: useTransform(pageScroll, [0.23, 0.3], [500, -100]),
+                    }}
+                    className="text-asymmetri-red font-semibold text-right uppercase"
+                  >
+                    <T>Bring us the challenge.</T>
+                    <span className="pr-16 inline-block">
+                      <T className="max-h-fit" delay={0.1}>
+                        ambitious product, tangle
+                      </T>
+                    </span>{" "}
                     <br />
-                    <span className="pr-16">roadmap, tight deadline.</span>
-                  </div>
-                  <div className="text-xl max-w-72 space-y-6">
-                    <div className="">
-                      we'll help turn it into something worth shipping — work
-                      that moves.
-                    </div>
-                    <button className="text-xl bg-white border rounded-sm  p-2 duration-150 hover:bg-asymmetri-red hover:text-white cursor-pointer">
-                      Discuss Project
-                    </button>
-                  </div>
+                    <span className="pr-16 inline-block">
+                      <T delay={0.2}>roadmap, tight deadline.</T>
+                    </span>
+                  </motion.div>
+                  <motion.div
+                    style={{
+                      y: useTransform(pageScroll, [0.23, 0.36], [500, -100]),
+                    }}
+                    className="text-xl max-w-82 space-y-6"
+                  >
+                    <T delay={0.5} className="">
+                      We cut through your chaos. Build fast, build smart, and
+                      ship products that are recklessly good.
+                    </T>
+                    <T delay={0.7}>
+                      <button className="text-xl bg-white border rounded-sm  p-2 duration-150 hover:bg-asymmetri-red hover:text-white cursor-pointer">
+                        Discuss Project
+                      </button>
+                    </T>
+                  </motion.div>
                 </motion.div>
-                <div className=" mt-16   mx-auto w-full ">
+                <motion.div
+                  style={{
+                    y: useTransform(pageScroll, [0.32, 0.39], [500, -500]),
+                  }}
+                  className=" mt-16   mx-auto w-full "
+                >
                   <ServicesAccordion isCompact={isCompact} />
-                </div>
+                </motion.div>
                 <div className=" mt-16  flex flex-col justify-center items-center mx-auto w-full space-y-16">
-                  <div className="text-4xl font-semibold">
-                    More than 50 clients <br /> have partnered with us
-                  </div>
-                  <div className="grid grid-cols-7 w-full justify-items-center ">
-                    {[
-                      {
-                        name: "DD Group",
-                        logo: "DD Group Internal Designs.png",
-                      },
-                      {
-                        name: "Kommerz OS",
-                        logo: "Komerz Frame.svg",
-                      },
-                      {
-                        name: "Prescribe Life",
-                        logo: "Prescribe Life Frame.png",
-                      },
-                      {
-                        name: "Quicli",
-                        logo: "Quicli Layer 2.png",
-                      },
-                      {
-                        name: "Reform",
-                        logo: "Reform Logos Final.png",
-                      },
-                      {
-                        name: "Sochcast/Campus Gal",
-                        logo: "Sochcast Campus Gal Logo.png",
-                      },
-                      {
-                        name: "Zimkey",
-                        logo: "Zimkey Final Logo.png",
-                      },
-                    ].map((x) => {
-                      return (
-                        <div
-                          key={x.logo}
-                          className="flex justify-center items-center w-full h-full p-6 "
-                        >
-                          <img src={"/logos/" + x.logo} className="w-24 " />
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <motion.div
+                    style={{
+                      y: useTransform(pageScroll, [0.37, 0.39], [200, -200]),
+                    }}
+                  >
+                    <T delay={0.3}>
+                      <div className="text-4xl font-semibold text-center">
+                        More than 50 clients <br /> have partnered with us
+                      </div>
+                    </T>
+                  </motion.div>
+                  {[1, 2, 3].map((x, i) => {
+                    return (
+                      <motion.div
+                        style={{
+                          y: useTransform(pageScroll, [0.39, 0.4], [200, -200]),
+                        }}
+                        initial={{
+                          opacity: 0,
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                        }}
+                        transition={{
+                          delay: 0.1 * x + 2,
+                        }}
+                        key={x}
+                        className="grid grid-cols-7 w-full justify-items-center "
+                      >
+                        {[
+                          {
+                            name: "DD Group",
+                            logo: "DD Group Internal Designs.png",
+                          },
+                          {
+                            name: "Kommerz OS",
+                            logo: "Komerz Frame.svg",
+                          },
+                          {
+                            name: "Prescribe Life",
+                            logo: "Prescribe Life Frame.jpg",
+                          },
+                          {
+                            name: "Quicli",
+                            logo: "Quicli Layer 2.jpg",
+                          },
+                          {
+                            name: "Reform",
+                            logo: "Reform Logos Final.webp",
+                          },
+                          {
+                            name: "Sochcast/Campus Gal",
+                            logo: "Sochcast Campus Gal Logo.png",
+                          },
+                          {
+                            name: "Zimkey",
+                            logo: "Zimkey Final Logo.png",
+                          },
+                        ].map((x, i) => {
+                          return (
+                            <T
+                              delay={0.1 + (i + 1) / 10}
+                              key={x.logo}
+                              className="flex justify-center items-center w-full h-full p-6 "
+                            >
+                              <img
+                                style={{
+                                  scale: x.name === "Reform" ? 2 : 1,
+                                  borderRadius:
+                                    x.name === "Prescribe Life" ? "6px" : "0px",
+                                }}
+                                src={"/logos/" + x.logo}
+                                className="w-24 "
+                              />
+                            </T>
+                          );
+                        })}
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </motion.div>
             </div>
-
-            <AnimatePresence>
-              {selectedWorkCategory && (
-                <motion.div
-                  initial={{
-                    x: "-100%",
-                  }}
-                  animate={{
-                    x: categoryChanged
-                      ? "0%"
-                      : isMobile
-                        ? "-100%"
-                        : isCompact
-                          ? "-100%"
-                          : "-100%",
-                  }}
-                  exit={{
-                    x: "-100%",
-                  }}
-                  transition={{
-                    duration: isMobile ? 0.72 : isCompact ? 0.85 : 1.2,
-                    ease: "circInOut",
-                  }}
-                  className="bg-asymmetri-red w-screen h-screen  z-9999999999999 fixed top-0 left-0"
-                ></motion.div>
-              )}
-            </AnimatePresence>
           </motion.div>
           <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
 
           <div className="bg-[#0a0a0a] z-9999999999 relative">
-            <motion.div
-              style={{
-                scale: fourthSectionDataScale,
-                opacity: useTransform(pageScroll, [0.52, 0.53], [1, 0]),
-              }}
-              className={` z-99999 relative w-screen min-w-0 font-chakra-petch text-center text-white ${isCompact ? "mx-auto mt-[min(22vh,180px)] mb-auto w-[min(26rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2rem)] px-3 text-pretty text-2xl" : "mx-auto max-w-2xl px-2 text-5xl"} min-h-screen flex justify-center items-center flex-col sticky top-0`}
-            >
-              The ideas that define
-              <motion.span
-                style={{
-                  color: fourthSectionColor,
-                }}
-                className=""
-              >
-                <ScrambledText
-                  className="z-999999 text-asymmetri-red"
-                  radius={100}
-                  style={{
-                    color: "red",
-                    fontSize: "1.2em",
-                    width: "fit-content",
-                    fontFamily: "Chakra Petch",
-                    textAlign: "center",
-                    margin: "0",
-                    display: "inline",
-                  }}
-                  duration={3}
-                  speed={0.9}
-                  scrambleChars=".:-"
-                >
-                  Asymmetri
-                </ScrambledText>
-              </motion.span>{" "}
-              and the mindset behind the work you see.
+            <motion.div className="w-full   space-y-6 px-8">
+              <div className=" text-asymmetri-red font-semibold text-left uppercase">
+                <T className="pl-16">The part where we</T>
+                <span className=" inline-block">
+                  <T className="max-h-fit" delay={0.1}>
+                    Stop talking and show you
+                  </T>
+                </span>{" "}
+                <br />
+                <span className=" inline-block">
+                  <T delay={0.2}>our best work</T>
+                </span>
+              </div>
             </motion.div>
             {/* <MemoizedTransitionGrid mode={"dtr"} pageScroll={pageScroll} /> */}
             <motion.div className="min-h-screen flex justify-center items-center   z-999999999 sticky top-0 ">
@@ -1482,7 +1037,7 @@ function TransitionGrid({
     } else if (setD.includes(i)) {
       value = jitteredRange(i, 0.27, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.19, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.22, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
       value = jitteredRange(i, 0.26, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
@@ -1491,26 +1046,26 @@ function TransitionGrid({
     return value;
   }
   function returnBoxOpacity2(i: number): number[] {
-    const setA = [84, 21, 9, 64, 63, 98, 30, 32, 12, 68, 36, 22, 41, 2, 20, 79];
+    const setA = [21, 9, 68, 36, 2, 12, 98, 64, 41, 63, 84, 32, 30, 20, 79, 22];
     const setB = [
-      1, 2, 3, 4, 5, 7, 97, 98, 39, 40, 70, 19, 48, 74, 23, 27, 71, 67, 90, 82,
-      42, 81, 90, 91, 92,
+      19, 82, 91, 70, 40, 90, 4, 2, 90, 92, 5, 74, 27, 39, 67, 48, 1, 3, 97, 81,
+      23, 98, 7, 71, 42,
     ];
     const setC = [
-      25, 62, 75, 31, 94, 86, 10, 18, 47, 3, 51, 83, 93, 94, 95, 33, 96, 99,
+      25, 99, 83, 33, 86, 3, 51, 47, 96, 18, 10, 94, 75, 95, 62, 94, 93, 31,
     ];
-    const setD = [43, 57, 35, 53, 8, 38, 60, 61, 16, 4, 46, 85, 14];
-    const setE = [26, 96, 17, 54, 72, 11, 15, 34, 56, 95, 93, 78];
-    const setF = [0, 13, 24, 52, 89, 28, 69, 80, 65, 77, 45, 37, 73, 50];
-    const setG = [91, 66, 97, 76, 55, 59, 29, 87, 88, 99, 58, 49, 92, 44];
+    const setD = [60, 46, 53, 16, 14, 4, 35, 38, 43, 85, 8, 61, 57];
+    const setE = [95, 26, 11, 93, 17, 96, 15, 54, 56, 78, 34, 72];
+    const setF = [89, 69, 28, 52, 45, 80, 37, 50, 13, 0, 65, 77, 24, 73];
+    const setG = [59, 49, 55, 58, 92, 91, 88, 99, 66, 76, 44, 29, 87, 97];
 
     let value: number[] = [0, 0];
 
-    if (setB.includes(i)) {
-      value = jitteredRange(i, 0.38, 0.006, 0.007, 0.012);
-    } else if (setA.includes(i)) {
-      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
+    if (setA.includes(i)) {
+      value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
+      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
+    } else if (setB.includes(i)) {
       value = jitteredRange(i, 0.41, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
       value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
@@ -1519,7 +1074,7 @@ function TransitionGrid({
     } else if (setD.includes(i)) {
       value = jitteredRange(i, 0.44, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
-      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
     }
     return value;
   }
@@ -1609,6 +1164,7 @@ function FE({
       <motion.span
         style={{
           opacity: useTransform(pageScroll, range, [0, 1]),
+          filter: useTransform(pageScroll, range, ["blur(10px)", "blur(0)"]),
         }}
       >
         {text}

@@ -14,8 +14,17 @@ body::-webkit-scrollbar {
   display: none !important;
 }
 
+body {
+  /* max-width: 100% !important; */
+}
+
 html {
-  /* overflow-x: hidden !important; */
+  overflow-x: hidden !important;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }
 
 /*  */

@@ -35,28 +35,29 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
 
   const bg = useTransform(
     pageScroll,
-    [0, 0.25, 0.26],
-    ["#000", "#000", "#fff"],
+    [0, 0.1, 0.3, 0.31],
+    ["#00000000", "#000000ff", "#000000ff", "#ffffffff"],
   );
   const text = useTransform(
     pageScroll,
-    [0, 0.25, 0.26],
+    [0, 0.3, 0.31],
     ["#fff", "#fff", "#000"],
   );
 
   return (
     <motion.header
-      // initial={{
-      //   opacity: 0,
-      // }}
-      // animate={{
-      //   opacity: 1,
-      // }}
-      // transition={{
-      //   delay: 2,
-      //   duration: 0.01,
-      // }}
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        delay: 2.5,
+        // duration: 0.01,
+      }}
       style={{
+        // background: "transparent",
         background: bg,
         color: text,
       }}

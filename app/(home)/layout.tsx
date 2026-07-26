@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import LS from "@/components/LS";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <main>
-      <LS></LS>
+      {/* <LS></LS> */}
       {children}
     </main>
   );

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Plus } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 type ServiceItem = {
   id: string;
@@ -89,7 +89,7 @@ type ServicesAccordionProps = {
   isCompact?: boolean;
 };
 
-export function ServicesAccordion({ isCompact }: ServicesAccordionProps) {
+function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -99,12 +99,32 @@ export function ServicesAccordion({ isCompact }: ServicesAccordionProps) {
 
   return (
     <div className="w-full border-y border-black/20">
-      {services.map((service) => {
+      {services.map((service, i) => {
         const isExpanded = expandedId === service.id;
         const isHovered = hoveredId === service.id && !isExpanded;
 
         return (
-          <div
+          <motion.div
+            initial={{
+              filter: "blur(12px)",
+              y: 20,
+              opacity: 0,
+            }}
+            whileInView={{
+              filter: "blur(0)",
+              y: 0,
+              opacity: 1,
+            }}
+            transition={{
+              type: "tween",
+              duration: 0.6,
+              ease: "easeInOut",
+              delay: i * 0.05,
+            }}
+            viewport={{
+              once: true,
+              // margin: "100%",
+            }}
             key={service.id}
             className="border-b border-black/20 last:border-b-0 z-99999999 relative"
           >
@@ -215,9 +235,11 @@ export function ServicesAccordion({ isCompact }: ServicesAccordionProps) {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
         );
       })}
     </div>
   );
 }
+
+export const ServicesAccordion = memo(ServicesAccordionComponent);
