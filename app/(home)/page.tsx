@@ -607,7 +607,11 @@ export default function Home() {
                     return (
                       <motion.div
                         style={{
-                          y: useTransform(pageScroll, [0.39, 0.4], [200, -200]),
+                          y: useTransform(
+                            pageScroll,
+                            [0.39, 0.43],
+                            [200, -200],
+                          ),
                         }}
                         initial={{
                           opacity: 0,
@@ -616,7 +620,7 @@ export default function Home() {
                           opacity: 1,
                         }}
                         transition={{
-                          delay: 0.1 * x + 2,
+                          delay: 0.1 * x,
                         }}
                         key={x}
                         className="grid grid-cols-7 w-full justify-items-center "
@@ -1066,9 +1070,9 @@ function TransitionGrid({
     } else if (setC.includes(i)) {
       value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
     } else if (setB.includes(i)) {
-      value = jitteredRange(i, 0.41, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
       value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
