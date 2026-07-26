@@ -34,7 +34,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     // { label: "Get in Touch", href: "/#contact" },
   ] as const;
 
-  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44];
+  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44, 0.54, 0.55];
 
   const bg = useTransform(pageScroll, sectionsIndi, [
     "#000000",
@@ -42,12 +42,16 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff",
     "#ffffff",
     "#0a0a0a",
+    "#0a0a0a",
+    "#ff0000",
   ]);
   const text = useTransform(pageScroll, sectionsIndi, [
     "#ffffff",
     "#ffffff",
     "#000000",
     "#000000",
+    "#ffffff",
+    "#ffffff",
     "#ffffff",
   ]);
 
@@ -116,12 +120,16 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
           variants={item}
           className="flex flex-1 items-center justify-end"
         >
-          <Link
+          <motion.a
+            style={{
+              background: text,
+              color: bg,
+            }}
             href="/#contact"
-            className="font-chakra-petch  tracking-wide text-white hover:text-white/90 transition-colors bg-asymmetri-red p-3 py-2 "
+            className="font-chakra-petch  tracking-wide  p-3 py-2 "
           >
             Get in touch
-          </Link>
+          </motion.a>
         </motion.div>
       </motion.div>
     </motion.header>

@@ -502,16 +502,6 @@ export default function Home() {
                 }}
                 className={`text-black  duration-200 py-36     ${isMobile ? "text-3xl min-h-40 gap-3" : isCompact ? "text-4xl --min-h-52 gap-4" : "text-6xl --min-h-78 gap-6"} relative border-x border-black/20`}
               >
-                {/* <div className="w-full h-px bg-black/20 absolute top-0 left-0"></div> */}
-                {/* <div className="w-full h-px bg-black/60 absolute bottom-0 left-0"></div> */}
-                {/* <motion.div
-                  style={{
-                    y: useTransform(pageScroll, [0.3, 0.6], ["0%", "100%"]),
-                  }}
-                  className="absolute -top-36  right-0 text-[16em] text-asymmetri-red/20 pointer-events-none"
-                >
-                  ?
-                </motion.div> */}
                 <motion.div className="w-full   space-y-6 px-8">
                   <motion.div
                     style={{
@@ -646,307 +636,51 @@ export default function Home() {
           </motion.div>
           <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
 
-          <div className="bg-[#0a0a0a] z-9999999999 relative">
-            <motion.div className="w-full   space-y-6 px-8">
-              <div className=" text-asymmetri-red font-semibold text-left uppercase">
-                <T className="pl-16">The part where we</T>
-                <span className=" inline-block">
-                  <T className="max-h-fit" delay={0.1}>
+          <div className="bg-[#0a0a0a] z-9999999999 relative ">
+            <motion.div className="w-full   space-y-6 px-8 text-6xl font-chakra-petch">
+              <motion.div
+                style={{
+                  y: useTransform(pageScroll, [0.47, 0.53], [300, -300]),
+                }}
+                className=" text-asymmetri-red font-semibold text-left uppercase px-36"
+              >
+                <motion.div>
+                  <T delay={0.1} className="pl-36">
+                    The part where we
+                  </T>
+                </motion.div>
+                <motion.span className=" inline-block">
+                  <T className="max-h-fit" delay={0.2}>
                     Stop talking and show you
                   </T>
-                </span>{" "}
+                </motion.span>{" "}
                 <br />
                 <span className=" inline-block">
-                  <T delay={0.2}>our best work</T>
+                  <T delay={0.3}>our best work</T>
                 </span>
-              </div>
-            </motion.div>
-            {/* <MemoizedTransitionGrid mode={"dtr"} pageScroll={pageScroll} /> */}
-            <motion.div className="min-h-screen flex justify-center items-center   z-999999999 sticky top-0 ">
-              <motion.div className="relative">
-                <motion.img
-                  src="/flip.png"
-                  alt=""
-                  className={`relative z-10 block h-auto max-w-full object-contain w-96 `}
-                />
-                <motion.div
-                  style={{
-                    x: flipContentX,
-                    opacity: flipContentOpacity,
-                  }}
-                  className="pointer-events-none absolute z-0 mx-auto flex w-full max-w-sm flex-col items-center gap-4 pb-1 border-t border-white text-left pl-3 top-[1px]"
-                >
-                  <div className="font-chakra-petch text-white pt-3 text-5xl text-left w-full">
-                    Vision
-                  </div>
-                  <motion.div
-                    style={{
-                      opacity: flipContentXDesc,
-                    }}
-                    className="max-w-full min-w-0 font-chakra-petch text-base leading-relaxed break-words text-white"
-                  >
-                    To be a team that consistently delivers technology that’s
-                    seamless, intentional, and future-ready.
-                  </motion.div>
-                </motion.div>
-                <motion.div
-                  style={{
-                    x: flipContentX2,
-                    opacity: flipContentOpacity,
-                  }}
-                  className="pointer-events-none absolute z-0 mx-auto flex w-full max-w-sm flex-col items-center gap-4 pb-1 border-t border-white text-right pr-3 top-px   "
-                >
-                  <div className="font-chakra-petch text-white pt-3 text-5xl text-right w-full">
-                    Philosophy
-                  </div>
-                  <motion.div
-                    style={{
-                      opacity: flipContentX2Desc,
-                    }}
-                    className="max-w-full min-w-0 font-chakra-petch text-base leading-relaxed break-words text-white"
-                  >
-                    Build fast. Build smart. Build products that are recklessly
-                    good.
-                  </motion.div>
-                </motion.div>
               </motion.div>
-            </motion.div>
-            <div className="min-h-[120vh]"></div>{" "}
-            <div className="min-h-screen flex justify-center items-center   z-999999999 pointer-events-none">
               <motion.div
                 style={{
-                  width: founderSectionWidth,
-                  background: secondSectionBG,
-                  overflow: "hidden",
+                  y: useTransform(pageScroll, [0.48, 0.5], [300, 0]),
                 }}
-                transition={{
-                  ease: "backIn",
-                }}
-                className=" bg-white z-999 fixed   left-0  min-w-screen w-screen  pointer-events-none top-1/2 translate-y-[-50%] "
-              ></motion.div>
-
-              <motion.div className="relative flex flex-col justify-center items-center gap-36">
-                <motion.div
-                  style={{
-                    opacity: useTransform(pageScroll, [0.56, 0.565], [0, 1]),
-                  }}
-                  className="w-screen h-screen  fixed top-0 left-0 z-99999999999 "
+                className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36 "
+              >
+                <T
+                  delay={0.5}
+                  className="text-white
+                "
                 >
-                  <MemoizedTransitionGrid
-                    pageScroll={pageScroll}
-                    mode="dtr"
-                  ></MemoizedTransitionGrid>
-                </motion.div>
-                <motion.img
-                  style={{
-                    y: useTransform(pageScroll, [0.6, 0.7], ["0%", "100vh"]),
-                  }}
-                  src="/nand3.jpg"
-                  alt=""
-                  className={`relative  block h-auto max-w-full object-contain w-128 z-9999999999999`}
-                />
-                <motion.div
-                  className={`relative  block h-auto max-w-full object-contain  z-99999999999999 text-white text-6xl font-bold font-chakra-petch`}
-                >
-                  Hi I'm Nandagopal, founder of
-                </motion.div>
-                <motion.img
-                  style={{
-                    y: useTransform(pageScroll, [0.6, 0.65], ["60vh", "0vh"]),
-                    // scale: useTransform(pageScroll, [0.66, 0.67], [1, 6]),
-                  }}
-                  src="/logo.png"
-                  alt=""
-                  className={`fixed top-1/2  left-1/2 -translate-y-1/2 -translate-x-1/2  h-auto max-w-full object-contain  z-9999999999999  w-[64em] hello`}
-                />
-                {/* <motion.div
-                  className={`relative  block h-auto max object-contain  z-99999999999999 text-white text-base text-center font-bold font-chakra-petch max-w-128`}
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-                  magnam corporis possimus facere doloribus minus atque nobis
-                  optio perferendis esse animi aliquid soluta, facilis vero
-                  fugiat aut obcaecati veniam nulla beatae, pariatur quidem
-                  suscipit? Maxime eligendi molestiae totam ipsum dolore!
-                </motion.div> */}
+                  We partner with companies that care about being great at what
+                  they ship. From early-stage founders to fast-growing teams and
+                  established enterprises.
+                </T>
               </motion.div>
-            </div>
+            </motion.div>
+            <TransitionGrid pageScroll={pageScroll} mode="dtr" />
+
+            <div className="min-h-screen bg-asymmetri-red"></div>
           </div>
         </motion.div>
-        <motion.div
-          className={`isolate bg-black w-screen fixed top-0 left-0 z-99999999 flex min-h-0 flex-col ${isMobile ? "h-dvh max-h-dvh items-stretch overflow-x-hidden overflow-hidden pt-[max(0.5rem,env(safe-area-inset-top))]" : "items-center justify-center overflow-hidden  " + (isCompact ? "h-dvh max-h-dvh" : "h-screen")}`}
-          style={
-            isMobile
-              ? { y: sixthSectionY, pointerEvents: "none" }
-              : {
-                  y: sixthSectionY,
-                  // scale: sixthSectionScale,
-                  pointerEvents: sixthSectionPointer,
-                }
-          }
-        >
-          <motion.div
-            style={{
-              opacity: sixthSectionTitleBG,
-            }}
-            className="heroDark pointer-events-none absolute inset-0 z-0 bg-black max-md:hidden"
-          />
-
-          {!isMobile && (
-            <FatCursors color="#FFFFFF50" scale={1} min={1}></FatCursors>
-          )}
-
-          {isMobile ? (
-            <>
-              <div className="pointer-events-auto flex w-full flex-col items-center justify-center px-0 pb-28 pt-2 max-md:min-h-screen">
-                <motion.div
-                  style={{
-                    opacity: testimonialLayerOpacity,
-                  }}
-                  className="relative z-10 mb-5 max-w-[min(18rem,calc(100vw-3rem))] shrink-0 px-6 text-center font-chakra-petch text-xl leading-snug text-white"
-                >
-                  Feedback from the folks who know us best.
-                </motion.div>
-
-                <motion.div
-                  style={{ opacity: testimonialLayerOpacity }}
-                  className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2"
-                >
-                  <MobileTestimonialsCarousel
-                    items={testimonials.map(
-                      ({ company, testimonial, image }) => ({
-                        company,
-                        testimonial,
-                        image,
-                      }),
-                    )}
-                    className="w-full min-w-0 max-w-full touch-pan-x"
-                  />
-                </motion.div>
-              </div>
-
-              <motion.div
-                style={{
-                  opacity: testimonialLayerOpacity,
-                }}
-                className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(18rem,calc(100vw-3rem))] max-w-[calc(100vw-3rem)] -translate-x-1/2 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 text-center font-chakra-petch text-[11px] leading-snug text-white/50"
-              >
-                Collaborative agency for bold ideas, beautiful code and digital
-                experiences
-              </motion.div>
-            </>
-          ) : (
-            <>
-              {testimonials.map((x, i) => {
-                const slot =
-                  testimonialSlots[(i - 1) % testimonialSlots.length];
-                return (
-                  <motion.div
-                    style={{
-                      y: x.layerY,
-                      // opacity: testimonialLayerOpacity,
-                    }}
-                    animate={{
-                      top: i === 0 ? "50%" : slot.top,
-                      left: i === 0 ? "50%" : slot.left,
-                      scale: i === 0 ? 1 : isCompact ? 0.5 : 0.42,
-                    }}
-                    transition={{
-                      duration: isCompact ? 0.75 : 1,
-                      ease: "easeInOut",
-                    }}
-                    key={x.company}
-                    onClick={() => {
-                      if (i === 0) return;
-                      const newArray = [
-                        x,
-                        ...testimonials.filter((y) => y.company !== x.company),
-                      ];
-                      setTestimonials(newArray);
-                    }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 font-chakra-petch z-[10] ${i === 0 ? "cursor-default" : "cursor-pointer"}`}
-                  >
-                    <img
-                      src={x.image}
-                      className={`duration-500 ${isCompact ? "w-48" : "w-64"} ${i === 0 ? "grayscale-0" : "grayscale"}`}
-                      alt=""
-                    />
-                    <AnimatePresence>
-                      {i === 0 && (
-                        <motion.div
-                          initial={{
-                            opacity: 0,
-                          }}
-                          animate={{
-                            opacity: 1,
-                          }}
-                          exit={{
-                            opacity: 0,
-                          }}
-                          transition={{
-                            delay: 0.8,
-                          }}
-                          className={
-                            isCompact
-                              ? "absolute top-[calc(100%+0.5rem)] left-1/2 z-[11] flex -translate-x-1/2 flex-col items-center gap-3 text-center"
-                              : "absolute top-0 left-[calc(100%+0.75rem)] z-[11] flex flex-col gap-6 text-left"
-                          }
-                        >
-                          <div
-                            className={`text-white ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
-                          >
-                            {x.testimonial}
-                          </div>
-                          <div
-                            className={`text-asymmetri-red z-[12] ${isCompact ? "w-56 text-sm" : "w-40 text-sm"}`}
-                          >
-                            <ScrambledText
-                              className="z-[12]"
-                              radius={100}
-                              style={{
-                                color: "inherit",
-                                fontSize: "inherit",
-                                width: "100%",
-                                fontFamily: "Chakra Petch",
-                                textAlign: isCompact ? "center" : "left",
-                                margin: "0",
-                              }}
-                              duration={3}
-                              speed={0.9}
-                              scrambleChars=".:-"
-                            >
-                              {x.company}
-                            </ScrambledText>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                );
-              })}
-
-              <motion.div
-                style={{
-                  opacity: sixthSectionTitle,
-                }}
-                className={`pointer-events-none z-[20] max-w-lg px-6 text-center font-chakra-petch text-white ${isCompact ? "relative text-3xl leading-snug" : "relative text-7xl"}`}
-              >
-                Feedback from the folks who know us best.
-              </motion.div>
-
-              <motion.div
-                style={{
-                  opacity: sixthSectionTitle2,
-                }}
-                className={`pointer-events-none z-[20] px-4 text-center font-chakra-petch text-white/50 ${isCompact ? "absolute bottom-10 left-1/2 max-w-none -translate-x-1/2 text-[11px]" : "absolute bottom-20 left-1/2 max-w-none -translate-x-1/2 text-xs"}`}
-              >
-                Collaborative agency for bold ideas, beautiful code and digital
-                experiences
-              </motion.div>
-            </>
-          )}
-        </motion.div>
-
-        <motion.div></motion.div>
 
         <div className="min-h-[900vh]"></div>
       </section>
@@ -1030,15 +764,15 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.44, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
       value = jitteredRange(i, 0.45, 0.006, 0.007, 0.012);
     } else if (setB.includes(i)) {
       value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.41, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.46, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.43, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
       value = jitteredRange(i, 0.45, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
@@ -1063,19 +797,19 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = jitteredRange(i, 0.57);
-    } else if (setB.includes(i)) {
-      value = jitteredRange(i, 0.58);
+      value = jitteredRange(i, 0.54, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
-      value = jitteredRange(i, 0.572);
-    } else if (setD.includes(i)) {
-      value = jitteredRange(i, 0.584);
-    } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.586);
+      value = jitteredRange(i, 0.51, 0.006, 0.007, 0.012);
+    } else if (setB.includes(i)) {
+      value = jitteredRange(i, 0.53, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.576);
+      value = jitteredRange(i, 0.495, 0.006, 0.007, 0.012);
+    } else if (setE.includes(i)) {
+      value = jitteredRange(i, 0.51, 0.006, 0.007, 0.012);
+    } else if (setD.includes(i)) {
+      value = jitteredRange(i, 0.52, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
-      value = jitteredRange(i, 0.58);
+      value = jitteredRange(i, 0.49, 0.006, 0.007, 0.012);
     }
     return value;
   }
@@ -1107,7 +841,8 @@ function TransitionGrid({
                     ? ["#ffffff", "#0a0a0a"]
                     : ["#00000000", "#ff0000"],
               ),
-              scale: 1.02,
+              scale: 1,
+              // scale: 1.02,
             }}
             className=" w-full h-full"
             id={i.toString()}

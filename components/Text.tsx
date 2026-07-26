@@ -27,8 +27,8 @@ function Text({
       }}
       transition={{
         type: "tween",
-        duration: duration && 1.3,
-        ease: "easeInOut",
+        duration: duration && 0.3,
+        ease: "circInOut",
         delay,
       }}
       viewport={
