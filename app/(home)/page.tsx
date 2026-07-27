@@ -113,7 +113,7 @@ export default function Home() {
         AsciiMorph.morph(art);
       }
       local = local + 1;
-      if (local === 50) {
+      if (local === 600) {
         clearInterval(a);
       }
     }, 3500);
@@ -980,8 +980,24 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <div className="min-h-[200vh]"></div>
+        <motion.div className="min-h-[200vh] bg-white relative z-99999999 flex flex-col justify-start items-center p-6">
+          <motion.div
+            style={{
+              y: useTransform(pageScroll, [0.93, 0.96], ["600px", "-100px"]),
+            }}
+            className="text-5xl font-chakra-petch text-asymmetri-red font-bold "
+          >
+            Hi I'm Nandagopal, founder of{" "}
+          </motion.div>
+          <motion.img
+            style={{
+              y: useTransform(pageScroll, [0.96, 0.98], ["900px", "-400px"]),
+            }}
+            src="/logo_dark.png"
+            className=""
+            alt=""
+          />
+        </motion.div>
       </section>
     </main>
   );
