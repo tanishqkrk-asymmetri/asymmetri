@@ -26,6 +26,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.3
         version: 1.3.1(@types/react@19.2.17)(react@19.2.4)
+      ascii-morph:
+        specifier: 0.2.3
+        version: 0.2.3
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
@@ -128,6 +131,9 @@ importers:
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.6.0
+      textmode.js:
+        specifier: ^0.17.0
+        version: 0.17.0
       three:
         specifier: ^0.184.0
         version: 0.184.0
@@ -2106,6 +2112,9 @@ packages:
   arraybuffer.prototype.slice@1.0.4:
     resolution: {integrity: sha512-BNoCY6SXXPQ7gF2opIP4GBE+Xw7U+pHMYKuzjgCN3GwiaIR09UUeKfheyIry77QtrCBlC0KK0q5/TER/tYh3PQ==}
     engines: {node: '>= 0.4'}
+
+  ascii-morph@0.2.3:
+    resolution: {integrity: sha512-tDgiLQFv4W0zsVROFGsLYEfYgPziwkq9nDBqqYpNsoJgvp69hXueZkevUhR2uy8Pv8JrmDaky8pwm/4Nk4OP+g==}
 
   ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
@@ -4441,6 +4450,10 @@ packages:
   tapable@2.3.3:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
+
+  textmode.js@0.17.0:
+    resolution: {integrity: sha512-Y56+MR6LfgF0Dso2Z0qc1rociOnKiAJidzYh17TGh9jkgX0sr/Aw4UtKlmlV6lmjm3yVfjZTl8PWmROzcLgN5w==}
+    engines: {node: '>=20.8.1'}
 
   three@0.184.0:
     resolution: {integrity: sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==}
@@ -6861,6 +6874,8 @@ snapshots:
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       is-array-buffer: 3.0.5
+
+  ascii-morph@0.2.3: {}
 
   ast-types-flow@0.0.8: {}
 
@@ -9613,6 +9628,8 @@ snapshots:
   tailwindcss@4.3.3: {}
 
   tapable@2.3.3: {}
+
+  textmode.js@0.17.0: {}
 
   three@0.184.0: {}
 

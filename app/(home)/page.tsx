@@ -1,5 +1,6 @@
 "use client";
 
+import { AsciiMorph } from "@/lib/asciiMorph";
 import ReactFlipCard from "reactjs-flip-card";
 import random from "random";
 import chalk from "chalk";
@@ -18,7 +19,21 @@ import { Navbar } from "@/components/shared/navbar";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
 import { ServicesAccordion } from "@/components/ServicesAccordion";
 import playSoundOnHover from "@/lib/sound";
-import { art, art2, art3, art4, art5, art6 } from "@/lib/art";
+import {
+  art,
+  art2,
+  art3,
+  art4,
+  art5,
+  art6,
+  art6Main,
+  logo,
+  logo2,
+  logo2Main,
+  logoMain,
+  newlogo,
+  pc,
+} from "@/lib/art";
 import { returnTestimonials } from "@/lib/Testimonials";
 import { T } from "@/components/Text";
 import usePauseScroll from "@/hooks/usePauseScroll";
@@ -29,7 +44,7 @@ export default function Home() {
 
   const pageRef = useRef(null);
   const containerRef = useRef(null);
-  const { scrollYProgress: pageScroll } = useScroll({
+  const { scrollYProgress: pageScroll, scrollY } = useScroll({
     target: pageRef,
   });
 
@@ -75,6 +90,34 @@ export default function Home() {
   //   window.addEventListener("resize", update);
   //   return () => window.removeEventListener("resize", update);
   // }, []);
+
+  useEffect(() => {
+    var element = document.querySelector("pre");
+    AsciiMorph(element, { x: 0, y: 50 });
+
+    let local = 0;
+
+    const a = setInterval(() => {
+      const random = Math.floor(Math.random() * 4);
+      console.log(random);
+      if (random === 0) {
+        AsciiMorph.morph(logoMain);
+      }
+      if (random === 1) {
+        AsciiMorph.morph(logo2Main);
+      }
+      if (random === 2) {
+        AsciiMorph.morph(newlogo);
+      }
+      if (random === 3) {
+        AsciiMorph.morph(art);
+      }
+      local = local + 1;
+      if (local === 50) {
+        clearInterval(a);
+      }
+    }, 3500);
+  }, []);
 
   const secondSectionHeight = useTransform(
     pageScroll,
@@ -245,6 +288,25 @@ export default function Home() {
       thumbnail: "/flip.png",
       desc: "",
       link: "/",
+    },
+  ];
+
+  const pointers = [
+    {
+      title: "INTENT",
+      body: "In a world full of noise, we choose clarity. Lean engineering and considered design aren't finishing touches—they're built into every decision from day one.",
+    },
+    {
+      title: "ENGINEERING",
+      body: "Beautiful products are built from the inside out. Long before the interface comes to life, we focus on the foundations that make software exceptional: clean architecture, reliable infrastructure, scalable backends, and code that's made to last",
+    },
+    {
+      title: "VELOCITY",
+      body: "Speed isn't about rushing, it's about removing friction. Our teams stay small, experienced, and close to the work, allowing ideas to become prototypes and prototypes to reach real users quickly.",
+    },
+    {
+      title: "OWNERSHIP",
+      body: "We don't build for you—we build with you. Your goals become our goals, and your success becomes our measure of success. We communicate openly, make decisions together, and take responsibility for the outcome.",
     },
   ];
 
@@ -715,6 +777,7 @@ export default function Home() {
               {projects.map((x, i) => {
                 return (
                   <motion.div
+                    key={x.name}
                     className="min-h-screen -translate-y-1/2 fixed top-1/2 left-1/2 flex justify-center items-center  w-1/4 flex-col gap-6 group cursor-pointer"
                     style={{
                       zIndex: 5 - i,
@@ -849,9 +912,76 @@ export default function Home() {
           </div>
           <div className="min-h-screen bg-asymmetri-red"></div>
         </motion.div>
-        <div className="min-h-screen bg-black z-999999 relative"></div>
+        <div className="h-screen min-h-[600vh] bg-black z-999999  text-white flex justify-center items-center divide-x divide-white/50 relative">
+          <motion.div
+            className="w-[50%]  h-full flex justify-center 
+          items-start bg-black relative"
+          >
+            <motion.div
+              style={{
+                width: useTransform(
+                  pageScroll,
+                  [0.85, 0.87],
+                  ["40vw", "100vw"],
+                ),
+              }}
+              className="absolute bg-black top-0 left-0 h-full z-999999999 text-xs"
+            ></motion.div>
+            <motion.pre
+              style={{
+                color: useTransform(
+                  pageScroll,
+                  [0.85, 0.86],
+                  ["#ffffff", "#ff0000"],
+                ),
+                x: useTransform(pageScroll, [0.86, 0.87], ["0%", "50%"]),
 
-        <div className="min-h-[700vh]"></div>
+                fontSize: "0.6em",
+              }}
+              className="w-full  sticky top-16 z-999999999 ascii-element "
+            ></motion.pre>
+          </motion.div>
+          <div className="w-[50%] h-full relative">
+            <div className=" text-white font-semibold text-left uppercase font-chakra-petch text-4xl p-8 sticky top-16 min-h-screen">
+              <T delay={0.3}>ALL WORK AND NO PLAY MAKES</T>
+              <T delay={0.5}>BORING SOFTWARE. WE HAVE FUN</T>
+              <T delay={0.8}>BUILDING GREAT THINGS.</T>
+            </div>
+            <div className="flex flex-col ">
+              {pointers.map((x, i) => {
+                return (
+                  <div
+                    style={{
+                      top:
+                        i === 0
+                          ? "15em"
+                          : i === 1
+                            ? "20em"
+                            : i === 2
+                              ? "25em"
+                              : i === 3
+                                ? "30em"
+                                : "",
+                    }}
+                    key={x.title}
+                    id={x.title}
+                    className="sticky border-t border-white/50 p-6 font-chakra-petch min-h-screen bg-black"
+                  >
+                    <T delay={0.1} className="text-xl">
+                      {x.title}
+                    </T>
+                    <T delay={0.3} className="text-white/60">
+                      {x.body}
+                    </T>
+                  </div>
+                );
+              })}
+              <div className="min-h-screen"></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="min-h-[200vh]"></div>
       </section>
     </main>
   );
