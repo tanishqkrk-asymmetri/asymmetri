@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useTransform, type MotionValue } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { CircularTestimonial } from "@/lib/Testimonials";
+import { T } from "./Text";
 
 export type { CircularTestimonial };
 
@@ -89,8 +90,8 @@ function Card({
         <img
           src={item.image}
           alt=""
-          style={{ width: imageSize, height: imageSize }}
-          className="object-cover"
+          style={{ width: imageSize, height: imageSize + 50 }}
+          className="object-cover aspect-16/9"
         />
         <motion.div
           style={{ opacity: textOpacity }}
@@ -123,7 +124,7 @@ export function CircularTestimonials({
   items,
   className,
   pageScroll,
-  scrollRange = [0.94, 1],
+  scrollRange = [0.9, 0.98],
   stepVh = 50,
 }: CircularTestimonialsProps) {
   const progress = useTransform(pageScroll, scrollRange, [0, 1], {
@@ -156,9 +157,12 @@ export function CircularTestimonials({
       className={cn("relative w-full", className)}
     >
       <div className="heroDark sticky top-0 flex h-screen w-full flex-col overflow-hidden bg-black">
-        <div className="relative z-10 mx-auto max-w-xl px-6 pt-24 text-center font-chakra-petch text-3xl leading-tight text-white md:pt-32 md:text-5xl">
+        <T
+          delay={0.5}
+          className="relative z-10 mx-auto max-w-xl px-6 pt-24 text-center font-chakra-petch text-3xl leading-tight text-white md:pt-32 md:text-5xl"
+        >
           Feedback from the folks who know us best.
-        </div>
+        </T>
 
         <div className="relative z-10 mt-auto mb-[2vh] h-[min(68vh,620px)] w-full translate-y-1/2 md:mb-[4vh]">
           {items.map((item, index) => (

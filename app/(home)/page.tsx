@@ -39,6 +39,8 @@ import { circularTestimonials, returnTestimonials } from "@/lib/Testimonials";
 import { T } from "@/components/Text";
 import usePauseScroll from "@/hooks/usePauseScroll";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MemoGridBG } from "@/components/GridScan";
 
 export default function Home() {
   const { loaderPct } = usePauseScroll();
@@ -367,7 +369,7 @@ export default function Home() {
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
               {/* // ! TURN BACK ON */}
-              {/* <MemoGridBG
+              <MemoGridBG
                 scanGlow={isMobile ? 0.92 : 0.6}
                 scanDirection="backward"
                 lineStyle="solid"
@@ -384,7 +386,7 @@ export default function Home() {
                 bloomIntensity={0.08}
                 chromaticAberration={0.002}
                 noiseIntensity={isMobile ? 0.006 : 0.01}
-              /> */}
+              />
             </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
@@ -661,7 +663,7 @@ export default function Home() {
             <motion.div className="w-full   space-y-6 px-8 text-6xl font-chakra-petch">
               <motion.div
                 style={{
-                  y: useTransform(pageScroll, [0.45, 0.51], [100, -300]),
+                  y: useTransform(pageScroll, [0.39, 0.43], [100, -300]),
                 }}
                 className=" text-asymmetri-red font-semibold text-left uppercase px-36"
               >
@@ -682,12 +684,12 @@ export default function Home() {
               </motion.div>
               <motion.div
                 style={{
-                  y: useTransform(pageScroll, [0.46, 0.48], [300, -100]),
+                  y: useTransform(pageScroll, [0.35, 0.41], [300, -100]),
                 }}
                 className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36 "
               >
                 <T
-                  delay={0.5}
+                  delay={0.3}
                   className="text-white
                 "
                 >
@@ -699,7 +701,7 @@ export default function Home() {
             </motion.div>
             <TransitionGrid pageScroll={pageScroll} mode="dtr" />
 
-            <div className="min-h-[200vh] bg-asymmetri-red  relative ">
+            <div className="min-h-[200vh] bg-asymmetri-red   relative ">
               {projects.map((x, i) => {
                 return (
                   <motion.div
@@ -709,12 +711,12 @@ export default function Home() {
                       zIndex: 5 - i,
                       y: useTransform(
                         pageScroll,
-                        [0.53, 0.54, 0.55],
+                        [0.39, 0.41, 0.45],
                         [1000, 500, 0],
                       ),
                       left: useTransform(
                         pageScroll,
-                        [0.57, 0.59],
+                        [0.46, 0.49],
                         [
                           "50%",
                           i === 0
@@ -728,7 +730,7 @@ export default function Home() {
                                   : "",
                         ],
                       ),
-                      x: useTransform(pageScroll, [0.57, 0.59], ["-50%", "0%"]),
+                      x: useTransform(pageScroll, [0.46, 0.49], ["-50%", "0%"]),
                     }}
                   >
                     <motion.div
@@ -736,23 +738,23 @@ export default function Home() {
                         left: "0%",
                         opacity: useTransform(
                           pageScroll,
-                          [0.56, 0.57],
+                          [0.48, 0.49],
                           ["0", "1"],
                         ),
                       }}
                       className="fixed top-0  h-screen w-[0.5px] bg-white/50 opacity-0 group-hover:opacity-100 duration-200"
                     ></motion.div>
-                    <motion.div
+                    {/* <motion.div
                       style={{
                         left: "100%",
                         opacity: useTransform(
                           pageScroll,
-                          [0.61, 0.62],
+                          [0.48, 0.49],
                           ["0", "1"],
                         ),
                       }}
                       className="fixed top-0  h-screen w-[0.5px] bg-white/50  duration-200"
-                    ></motion.div>
+                    ></motion.div> */}
 
                     <motion.div
                       initial={{
@@ -777,7 +779,7 @@ export default function Home() {
                         style={{
                           scale: useTransform(
                             pageScroll,
-                            [0.53, 0.57, 0.59],
+                            [0.48, 0.49, 0.52],
                             [3, 2, 1.5],
                           ),
                         }}
@@ -796,7 +798,7 @@ export default function Home() {
                       style={{
                         opacity: useTransform(
                           pageScroll,
-                          [0.55, 0.56],
+                          [0.49, 0.5],
                           ["0", "1"],
                         ),
                       }}
@@ -808,7 +810,7 @@ export default function Home() {
                       style={{
                         opacity: useTransform(
                           pageScroll,
-                          [0.56, 0.57],
+                          [0.49, 0.5],
                           ["0", "1"],
                         ),
                       }}
@@ -819,7 +821,7 @@ export default function Home() {
                       style={{
                         scale: useTransform(
                           pageScroll,
-                          [0.56, 0.561],
+                          [0.49, 0.5],
                           ["0", "1"],
                         ),
                       }}
@@ -847,7 +849,7 @@ export default function Home() {
               style={{
                 width: useTransform(
                   pageScroll,
-                  [0.79, 0.83],
+                  [0.69, 0.72],
                   ["50vw", "100vw"],
                 ),
                 // background: useTransform(
@@ -862,10 +864,10 @@ export default function Home() {
               style={{
                 color: useTransform(
                   pageScroll,
-                  [0.8, 0.82],
+                  [0.69, 0.72],
                   ["#ffffff", "#ff0000"],
                 ),
-                x: useTransform(pageScroll, [0.82, 0.83], ["0%", "50%"]),
+                x: useTransform(pageScroll, [0.69, 0.72], ["0%", "50%"]),
 
                 fontSize: "0.6em",
               }}
@@ -914,7 +916,7 @@ export default function Home() {
         <motion.div className="min-h-[300vh] bg-white relative z-99999999 flex flex-col justify-start items-center p-6">
           <motion.div
             style={{
-              y: useTransform(pageScroll, [0.89, 0.92], ["300px", "0px"]),
+              y: useTransform(pageScroll, [0.73, 0.78], ["300px", "0px"]),
             }}
             className="text-5xl font-chakra-petch text-asymmetri-red font-bold "
           >
@@ -922,7 +924,7 @@ export default function Home() {
           </motion.div>
           <motion.div
             style={{
-              y: useTransform(pageScroll, [0.92, 0.96], ["100vh", "-10vh"]),
+              y: useTransform(pageScroll, [0.78, 0.83], ["100vh", "-10vh"]),
               // opacity: useTransform(pageScroll, [0.95, 0.96], ["1", "1"]),
             }}
             className="text-6xl font-chakra-petch text-black max-w-2/3 font-bold fixed top-36 left-6 z-999999999"
@@ -933,7 +935,7 @@ export default function Home() {
           </motion.div>
           <motion.div
             style={{
-              y: useTransform(pageScroll, [0.94, 0.97], ["600px", "0px"]),
+              y: useTransform(pageScroll, [0.79, 0.84], ["600px", "0px"]),
               // opacity: useTransform(pageScroll, [0.97, 0.98], ["1", "1"]),
             }}
             className="text-xl font-chakra-petch text-black/70 max-w-sm ml-auto font-semibold fixed bottom-26  right-16 z-999999999"
@@ -949,10 +951,10 @@ export default function Home() {
           </motion.div>
           <motion.img
             style={{
-              y: useTransform(pageScroll, [0.89, 0.92], ["100vh", "0vh"]),
+              y: useTransform(pageScroll, [0.74, 0.78], ["100vh", "0vh"]),
               filter: useTransform(
                 pageScroll,
-                [0.93, 0.99, 1],
+                [0.78, 0.79, 1],
                 ["blur(0px)", "blur(6px)", "blur(8px)"],
               ),
             }}
@@ -962,7 +964,7 @@ export default function Home() {
           />
           <motion.img
             style={{
-              y: useTransform(pageScroll, [0.89, 0.91], ["500px", "100px"]),
+              y: useTransform(pageScroll, [0.74, 0.79], ["500px", "100px"]),
             }}
             src="/logo_dark.png"
             className=""
@@ -972,28 +974,54 @@ export default function Home() {
         <motion.div
           style={{
             // y: "95%",
-            y: useTransform(pageScroll, [0.85, 0.9], ["100vh", "0vh"]),
+            y: useTransform(pageScroll, [0.84, 0.89], ["100vh", "0vh"]),
+            // scale: useTransform(pageScroll, [0.85, 0.89], ["0.8", "1"]),
           }}
-          className=" z-1000000000 w-screen fixed top-0 left-0"
+          className=" z-1000000000 w-screen fixed top-0 left-0 rounded-3xl bg-red-500"
         >
           <CircularTestimonials
             items={circularTestimonials}
             pageScroll={pageScroll}
           />
         </motion.div>
+
         <div
           style={{
             minHeight: (circularTestimonials.length / 2) * 100 + "vh",
           }}
-          className=""
+          className="bg-white"
         ></div>
       </section>
-      {/* <motion.div
+      <motion.div
         style={{
-          scale: useTransform(pageScroll, [0.995, 0.999], [0.8, 1]),
+          y: useTransform(pageScroll, [0.98, 1], ["100vh", "0vh"]),
+          scale: useTransform(pageScroll, [0.98, 1], ["0.8", "1"]),
         }}
-        className="min-h-screen bg-asymmetri-red fixed top-0 left-0 z-999999999999 w-screen h-screen"
-      ></motion.div> */}
+        className="min-h-screen bg-asymmetri-red fixed top-0 left-0 z-999999999999 w-screen h-screen rounded-2xl"
+      >
+        <section className="flex flex-col gap-6 xl:gap-8 items-center justify-center text-center bg-asymmetri-red min-h-screen w-full z-99 fixed bottom-0 ">
+          <h2 className="font-chakra-petch font-medium text-2xl lg:text-4xl xl:text-5xl">
+            Let’s turn your ideas into <br /> beautiful asymmetry.
+          </h2>
+
+          <div className="flex flex-row gap-2 xl:gap-4">
+            <Button
+              size="lg"
+              className="font-chakra-petch text-asymmetri-red py-4 font-semibold"
+              asChild
+            >
+              <a href="/contact-us">Get in touch</a>
+            </Button>
+            <Button
+              size="lg"
+              className="font-chakra-petch bg-transparent font-semibold"
+              variant={"outline"}
+            >
+              Join our team
+            </Button>
+          </div>
+        </section>
+      </motion.div>
     </main>
   );
 }
@@ -1109,19 +1137,19 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = jitteredRange(i, 0.54, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
     } else if (setC.includes(i)) {
-      value = jitteredRange(i, 0.51, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.38, 0.006, 0.007, 0.012);
     } else if (setB.includes(i)) {
-      value = jitteredRange(i, 0.54, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
-      value = jitteredRange(i, 0.5, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.395, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.54, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
-      value = jitteredRange(i, 0.56, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.36, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
-      value = jitteredRange(i, 0.47, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
     }
     return value;
   }

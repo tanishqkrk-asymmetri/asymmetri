@@ -11,8 +11,9 @@ export function Footer() {
         <Button
           size="lg"
           className="font-chakra-petch text-asymmetri-red py-4 font-semibold"
+          asChild
         >
-          Get in touch
+          <a href="/contact-us">Get in touch</a>
         </Button>
         <Button
           size="lg"

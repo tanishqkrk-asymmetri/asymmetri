@@ -7,7 +7,7 @@ function Text({
   duration,
   className,
 }: {
-  children: Readonly<React.ReactElement> | string;
+  children: Readonly<React.ReactElement> | string | any;
   delay?: number;
   duration?: number;
   className?: string;
@@ -31,9 +31,11 @@ function Text({
         ease: "circInOut",
         delay,
       }}
-      viewport={{
-        once: true,
-      }}
+      viewport={
+        {
+          // once: true,
+        }
+      }
       className={className}
     >
       {children}

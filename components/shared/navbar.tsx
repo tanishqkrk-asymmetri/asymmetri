@@ -3,6 +3,7 @@
 import ScrambledText from "@/components/ScrambledText";
 import Link from "next/link";
 import { motion, useTransform, Variant, Variants } from "motion/react";
+import { usePathname } from "next/navigation";
 
 const container = {
   hidden: { opacity: 0 },
@@ -35,7 +36,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
   ] as const;
 
   const sectionsIndi = [
-    0, 0.3, 0.31, 0.43, 0.44, 0.56, 0.57, 0.65, 0.66, 0.91, 0.92,
+    0, 0.18, 0.185, 0.33, 0.335, 0.42, 0.425, 0.55, 0.555, 0.77, 0.775, 0.88,
+    0.885,
   ];
 
   const bg = useTransform(pageScroll, sectionsIndi, [
@@ -50,6 +52,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#000000",
     "#000000",
     "#ffffff",
+    "#ffffff",
+    "#000000",
   ]);
   const text = useTransform(pageScroll, sectionsIndi, [
     "#ffffff",
@@ -63,6 +67,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff",
     "#ffffff",
     "#000000",
+    "#000000",
+    "#ffffff",
   ]);
   const border = useTransform(pageScroll, sectionsIndi, [
     "#ffffff30",
@@ -76,8 +82,13 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff90",
     "#ffffff90",
     "#00000030",
+    "#00000030",
+    "#ffffff30",
   ]);
 
+  const path = usePathname();
+
+  console.log(path);
   return (
     <motion.header
       initial={{
@@ -88,13 +99,11 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
       }}
       transition={{
         delay: 2.5,
-        // duration: 0.01,
       }}
       style={{
-        background: "transparent",
-        // background: bg,
-        color: text,
-        borderColor: border,
+        background: path === "/" ? bg : "#FFFFFF",
+        color: path === "/" ? text : "#000000",
+        borderColor: path === "/" ? border : "#00000050",
       }}
       className="fixed top-0 w-full  z-999999999999999  border-b "
     >
@@ -107,10 +116,10 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         <motion.div variants={item} className="flex flex-1 items-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2  transition-colors"
+            className=" items-center gap-2  transition-colors  w-9 p-1 "
             aria-label="Asymmetri"
           >
-            <img className="w-6" src="/logo_mini.png" alt="" />
+            <img className="w-6  " src="/logo_mini.png" alt="" />
           </Link>
         </motion.div>
 
@@ -146,10 +155,10 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         >
           <motion.a
             style={{
-              background: text,
-              color: bg,
+              background: path === "/" ? text : "#ff0000",
+              color: path === "/" ? bg : "#ffffff",
             }}
-            href="/#contact"
+            href="/contact-us"
             className="font-chakra-petch  tracking-wide  p-3 py-2 "
           >
             Get in touch
