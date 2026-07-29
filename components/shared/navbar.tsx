@@ -105,7 +105,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         color: path === "/" ? text : "#000000",
         borderColor: path === "/" ? border : "#00000050",
       }}
-      className="fixed top-0 w-full  z-999999999999999  border-b "
+      className="fixed top-0 w-full  z-9999999999  border-b "
     >
       <motion.div
         variants={container}

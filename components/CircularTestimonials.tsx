@@ -84,7 +84,13 @@ function Card({
   return (
     <motion.div
       style={{ x, y, scale, opacity, zIndex }}
-      className="absolute top-1/2 left-1/2 will-change-transform"
+      initial={{
+        filter: "blur(6px)",
+      }}
+      whileInView={{
+        filter: "blur(0)",
+      }}
+      className="absolute top-1/2 left-1/2 translate-y-10 will-change-transform"
     >
       <div className="relative -translate-x-1/2 -translate-y-1/2">
         <img
@@ -159,7 +165,7 @@ export function CircularTestimonials({
       <div className="heroDark sticky top-0 flex h-screen w-full flex-col overflow-hidden bg-black">
         <T
           delay={0.5}
-          className="relative z-10 mx-auto max-w-xl px-6 pt-24 text-center font-chakra-petch text-3xl leading-tight text-white md:pt-32 md:text-5xl"
+          className="relative z-10 mx-auto max-w-xl px-6 pt-24 text-center font-chakra-petch text-3xl leading-tight text-white md:pt-32 md:text-5xl "
         >
           Feedback from the folks who know us best.
         </T>

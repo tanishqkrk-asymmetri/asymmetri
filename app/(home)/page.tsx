@@ -1,6 +1,8 @@
 "use client";
 
 import { AsciiMorph } from "@/lib/asciiMorph";
+import { shuffle } from "fast-shuffle";
+
 import ReactFlipCard from "reactjs-flip-card";
 import random from "random";
 import chalk from "chalk";
@@ -97,29 +99,37 @@ export default function Home() {
   useEffect(() => {
     var element = document.querySelector("pre");
     AsciiMorph(element, { x: 0, y: 50 });
-
+    const stuff = [logoMain, logo2Main, newlogo, art];
     let local = 0;
 
+    // stuff.forEach((x) => {
+    //   setInterval(() => {
+    //     AsciiMorph.morph(x);
+    //   }, 1000);
+    // });
+    AsciiMorph.morph(logoMain);
     const a = setInterval(() => {
       const random = Math.floor(Math.random() * 4);
+      let lastGraphic = 0;
       console.log(random);
-      if (random === 0) {
+      if (random === 0 && lastGraphic !== random) {
         AsciiMorph.morph(logoMain);
-      }
-      if (random === 1) {
+        lastGraphic = random;
+      } else if (random === 1 && lastGraphic !== random) {
         AsciiMorph.morph(logo2Main);
-      }
-      if (random === 2) {
+        lastGraphic = random;
+      } else if (random === 2 && lastGraphic !== random) {
         AsciiMorph.morph(newlogo);
-      }
-      if (random === 3) {
+        lastGraphic = random;
+      } else if (random === 3 && lastGraphic !== random) {
         AsciiMorph.morph(art);
+        lastGraphic = random;
       }
       local = local + 1;
       if (local === 600) {
         clearInterval(a);
       }
-    }, 3500);
+    }, 3000);
   }, []);
 
   const secondSectionHeight = useTransform(
@@ -571,7 +581,7 @@ export default function Home() {
                 <div className=" mt-16  flex flex-col justify-center items-center mx-auto w-full space-y-16">
                   <motion.div
                     style={{
-                      y: useTransform(pageScroll, [0.31, 0.32], [100, -500]),
+                      y: useTransform(pageScroll, [0.31, 0.32], [100, -600]),
                     }}
                   >
                     <T delay={0.3}>
@@ -596,13 +606,18 @@ export default function Home() {
                         whileInView={{
                           opacity: 1,
                         }}
-                        transition={{
-                          delay: 0.1 * x,
+                        transition={
+                          {
+                            // delay: 0.1 * x + 1,
+                          }
+                        }
+                        viewport={{
+                          once: true,
                         }}
                         key={x}
                         className="grid grid-cols-7 w-full justify-items-center "
                       >
-                        {[
+                        {shuffle([
                           {
                             name: "DD Group",
                             logo: "DD Group Internal Designs.png",
@@ -631,7 +646,7 @@ export default function Home() {
                             name: "Zimkey",
                             logo: "Zimkey Final Logo.png",
                           },
-                        ].map((x, i) => {
+                        ]).map((x, i) => {
                           return (
                             <T
                               delay={0.1 + (i + 1) / 10}
@@ -708,6 +723,11 @@ export default function Home() {
                     key={x.name}
                     className="min-h-screen -translate-y-1/2 fixed top-1/2 left-1/2 flex justify-center items-center  w-1/4 flex-col gap-6 group cursor-pointer"
                     style={{
+                      pointerEvents: useTransform(
+                        pageScroll,
+                        [0.49, 0.5],
+                        ["none", "all"],
+                      ),
                       zIndex: 5 - i,
                       y: useTransform(
                         pageScroll,
@@ -925,9 +945,14 @@ export default function Home() {
           <motion.div
             style={{
               y: useTransform(pageScroll, [0.78, 0.83], ["100vh", "-10vh"]),
+              scale: useTransform(
+                pageScroll,
+                [0.78, 0.805, 0.82, 0.83],
+                [1, 0.95, 1.05, 1],
+              ),
               // opacity: useTransform(pageScroll, [0.95, 0.96], ["1", "1"]),
             }}
-            className="text-6xl font-chakra-petch text-black max-w-2/3 font-bold fixed top-36 left-6 z-999999999"
+            className="text-6xl font-chakra-petch text-white max-w-2/3 font-bold fixed top-36 left-6 z-999999999 mix-blend-difference"
           >
             Asymmetri was never meant to be just another software company. It’s
             a place where smart, curious people build things they’re proud of,
@@ -936,6 +961,11 @@ export default function Home() {
           <motion.div
             style={{
               y: useTransform(pageScroll, [0.79, 0.84], ["600px", "0px"]),
+              scale: useTransform(
+                pageScroll,
+                [0.79, 0.81, 0.82, 0.84],
+                [1, 0.95, 1.05, 1],
+              ),
               // opacity: useTransform(pageScroll, [0.97, 0.98], ["1", "1"]),
             }}
             className="text-xl font-chakra-petch text-black/70 max-w-sm ml-auto font-semibold fixed bottom-26  right-16 z-999999999"
@@ -954,12 +984,12 @@ export default function Home() {
               y: useTransform(pageScroll, [0.74, 0.78], ["100vh", "0vh"]),
               filter: useTransform(
                 pageScroll,
-                [0.78, 0.79, 1],
-                ["blur(0px)", "blur(6px)", "blur(8px)"],
+                [0.79, 0.8, 1],
+                ["blur(0px)", "blur(4px)", "blur(4px)"],
               ),
             }}
-            src="/nand3.jpg"
-            className="w-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            src="/nand.jpg"
+            className="w-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
             alt=""
           />
           <motion.img
@@ -974,8 +1004,8 @@ export default function Home() {
         <motion.div
           style={{
             // y: "95%",
-            y: useTransform(pageScroll, [0.84, 0.89], ["100vh", "0vh"]),
-            // scale: useTransform(pageScroll, [0.85, 0.89], ["0.8", "1"]),
+            y: useTransform(pageScroll, [0.84, 0.88], ["150vh", "0vh"]),
+            // scale: useTransform(pageScroll, [0.85, 0.87], ["1.25", "1"]),
           }}
           className=" z-1000000000 w-screen fixed top-0 left-0 rounded-3xl bg-red-500"
         >
@@ -1137,15 +1167,15 @@ function TransitionGrid({
     let value: number[] = [0, 0];
 
     if (setA.includes(i)) {
-      value = jitteredRange(i, 0.4, 0.006, 0.007, 0.012);
-    } else if (setC.includes(i)) {
       value = jitteredRange(i, 0.38, 0.006, 0.007, 0.012);
-    } else if (setB.includes(i)) {
+    } else if (setC.includes(i)) {
       value = jitteredRange(i, 0.39, 0.006, 0.007, 0.012);
+    } else if (setB.includes(i)) {
+      value = jitteredRange(i, 0.38, 0.006, 0.007, 0.012);
     } else if (setF.includes(i)) {
       value = jitteredRange(i, 0.395, 0.006, 0.007, 0.012);
     } else if (setE.includes(i)) {
-      value = jitteredRange(i, 0.42, 0.006, 0.007, 0.012);
+      value = jitteredRange(i, 0.389, 0.006, 0.007, 0.012);
     } else if (setD.includes(i)) {
       value = jitteredRange(i, 0.36, 0.006, 0.007, 0.012);
     } else if (setG.includes(i)) {
