@@ -34,7 +34,9 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     // { label: "Get in Touch", href: "/#contact" },
   ] as const;
 
-  const sectionsIndi = [0, 0.3, 0.31, 0.43, 0.44, 0.56, 0.57, 0.65, 0.66];
+  const sectionsIndi = [
+    0, 0.3, 0.31, 0.43, 0.44, 0.56, 0.57, 0.65, 0.66, 0.91, 0.92,
+  ];
 
   const bg = useTransform(pageScroll, sectionsIndi, [
     "#000000",
@@ -46,6 +48,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ff0000",
     "#ff0000",
     "#000000",
+    "#000000",
+    "#ffffff",
   ]);
   const text = useTransform(pageScroll, sectionsIndi, [
     "#ffffff",
@@ -57,6 +61,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff",
     "#ffffff",
     "#ffffff",
+    "#ffffff",
+    "#000000",
   ]);
   const border = useTransform(pageScroll, sectionsIndi, [
     "#ffffff30",
@@ -68,6 +74,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff90",
     "#ffffff90",
     "#ffffff90",
+    "#ffffff90",
+    "#00000030",
   ]);
 
   return (
@@ -83,8 +91,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         // duration: 0.01,
       }}
       style={{
-        // background: "transparent",
-        background: bg,
+        background: "transparent",
+        // background: bg,
         color: text,
         borderColor: border,
       }}

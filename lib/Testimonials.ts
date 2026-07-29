@@ -1,5 +1,62 @@
 import { useTransform } from "motion/react";
 
+export type CircularTestimonial = {
+  name: string;
+  testimonial: string;
+  image: string;
+};
+
+export const circularTestimonials: CircularTestimonial[] = [
+  {
+    name: "james cordon",
+    testimonial:
+      "Working with Asymmetry felt like having a top-tier product team on demand. Sharp ideas, smooth execution, zero drama. Loved the process.",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    name: "maya ellison",
+    testimonial:
+      "Working with this team has completely transformed our digital presence. Their attention to detail and commitment to quality is unmatched.",
+    image: "https://randomuser.me/api/portraits/women/45.jpg",
+  },
+  {
+    name: "noah park",
+    testimonial:
+      "Their innovative strategies helped us grow our customer base faster than we imagined. Highly professional and reliable.",
+    image: "https://randomuser.me/api/portraits/men/75.jpg",
+  },
+  {
+    name: "sara nguyen",
+    testimonial:
+      "From start to finish, the experience was seamless. The results exceeded our expectations in every way.",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+  },
+  {
+    name: "eli roth",
+    testimonial:
+      "A truly outstanding service. Their expertise and dedication made a significant impact on our business growth.",
+    image: "https://randomuser.me/api/portraits/men/11.jpg",
+  },
+  {
+    name: "priya shah",
+    testimonial:
+      "We saw immediate improvements after implementing their solutions. The team is knowledgeable and easy to work with.",
+    image: "https://randomuser.me/api/portraits/women/22.jpg",
+  },
+  {
+    name: "lucas meyer",
+    testimonial:
+      "Their sprint-based process kept us aligned and shipping every week. It felt like our internal team got stronger overnight.",
+    image: "https://randomuser.me/api/portraits/men/57.jpg",
+  },
+  {
+    name: "ava chen",
+    testimonial:
+      "We needed clarity, speed, and polish. They delivered all three with a calm, collaborative workflow from kickoff to launch.",
+    image: "https://randomuser.me/api/portraits/women/9.jpg",
+  },
+];
+
 export function returnTestimonials({
   pageScroll,
   isCompact,

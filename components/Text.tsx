@@ -31,11 +31,9 @@ function Text({
         ease: "circInOut",
         delay,
       }}
-      viewport={
-        {
-          // once: true,
-        }
-      }
+      viewport={{
+        once: true,
+      }}
       className={className}
     >
       {children}
