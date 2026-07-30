@@ -28,7 +28,7 @@ const item: Variants = {
 
 export function Navbar({ pageScroll }: { pageScroll: any }) {
   const links = [
-    { label: "About", href: "/#about" },
+    { label: "About", href: "/about" },
     { label: "Work", href: "" },
     { label: "Services", href: "/#services" },
     { label: "Careers", href: "/jobs" },

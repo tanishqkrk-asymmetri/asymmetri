@@ -7,13 +7,21 @@
 ✔ Section 8 @done(26-07-28 19:03)
 ✔ Section 9 @done(26-07-28 19:03)
 
-☐ Home page animation coordination
+✔ Home page animation coordination @done(26-07-30 18:07)
 ☐ About page
-☐ Careers page revamp
-☐ Contact us page
-☐ Case study page
+    ✔ Story section @started(26-07-30 18:10) @done(26-07-30 18:38) @lasted(28m22s)
+    ☐ Steps section
+    ☐ Results section
+    ☐ Built stuff section
+    ☐ Team section
 
-☐ Navbar color coordination
-☐ Mobile view
-☐ Tablet view
-☐ Content
+
+    Later: 
+ Careers page revamp
+ Contact us page
+ Case study page
+
+ Navbar color coordination
+ Mobile view
+ Tablet view
+ Content
