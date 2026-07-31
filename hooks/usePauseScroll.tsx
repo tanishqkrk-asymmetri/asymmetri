@@ -5,7 +5,7 @@ export default function usePauseScroll() {
   const [loaderPct, setLoaderPct] = useState(0);
 
   useEffect(() => {
-    ! TURN BACK ON
+    // ! TURN BACK ON
     document.body.classList.add("stop-scrolling");
     let local = 0;
     const incrementTimer = setInterval(() => {
