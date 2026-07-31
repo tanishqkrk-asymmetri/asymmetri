@@ -112,16 +112,16 @@ export default function Home() {
       const random = Math.floor(Math.random() * 4);
       let lastGraphic = 0;
       console.log(random);
-      if (random === 0 && lastGraphic !== random) {
+      if (random === 0) {
         AsciiMorph.morph(logoMain);
         lastGraphic = random;
-      } else if (random === 1 && lastGraphic !== random) {
+      } else if (random === 1) {
         AsciiMorph.morph(logo2Main);
         lastGraphic = random;
-      } else if (random === 2 && lastGraphic !== random) {
+      } else if (random === 2) {
         AsciiMorph.morph(newlogo);
         lastGraphic = random;
-      } else if (random === 3 && lastGraphic !== random) {
+      } else if (random === 3) {
         AsciiMorph.morph(art);
         lastGraphic = random;
       }
