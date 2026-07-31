@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 
 export default function usePauseScroll() {
   // ! TURN BACK ON
-  const [loaderPct, setLoaderPct] = useState(100);
+  const [loaderPct, setLoaderPct] = useState(0);
 
   useEffect(() => {
-    // ! TURN BACK ON
-    // document.body.classList.add("stop-scrolling");
-    // let local = 0;
-    // const incrementTimer = setInterval(() => {
-    //   local = local + 1;
-    //   setLoaderPct(local);
-    //   if (local === 100) {
-    //     clearInterval(incrementTimer);
-    //   }
-    // }, 10);
-    // return () => clearInterval(incrementTimer);
+    ! TURN BACK ON
+    document.body.classList.add("stop-scrolling");
+    let local = 0;
+    const incrementTimer = setInterval(() => {
+      local = local + 1;
+      setLoaderPct(local);
+      if (local === 100) {
+        clearInterval(incrementTimer);
+      }
+    }, 10);
+    return () => clearInterval(incrementTimer);
   }, []);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function usePauseScroll() {
         }
       })();
       console.log(loaderPct);
-      // document.body.classList.remove("stop-scrolling");
+      document.body.classList.remove("stop-scrolling");
     }
   }, [loaderPct]);
 
