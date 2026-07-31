@@ -554,7 +554,7 @@ export default function AboutUs() {
             style={{
               opacity: useTransform(pageScroll, [0.69, 0.71], ["0", "1"]),
             }}
-            className="text-7xl font-semibold font-chakra-petch text-asymmetri-red  px-16 sticky top-36"
+            className="text-7xl font-semibold font-chakra-petch text-asymmetri-red  px-16 sticky top-28"
           >
             Results, not promises
           </motion.div>
@@ -567,21 +567,27 @@ export default function AboutUs() {
                     y: useTransform(
                       pageScroll,
                       x === 1
-                        ? [0.74, 0.76]
+                        ? [0.71, 0.75, 1]
                         : x === 2
-                          ? [0.76, 0.78]
+                          ? [0.74, 0.79, 1]
                           : x === 3
-                            ? [0.78, 0.8]
-                            : [0.72, 0.74],
+                            ? [0.78, 0.82, 1]
+                            : [0.72, 0.74, 1],
                       [
                         "100vh",
-
                         x === 1
-                          ? "22vh"
+                          ? "30vh"
                           : x === 2
-                            ? "44vh"
+                            ? "50vh"
                             : x === 3
-                              ? "66vh"
+                              ? "70vh"
+                              : "0vh",
+                        x === 1
+                          ? "20vh"
+                          : x === 2
+                            ? "25vh"
+                            : x === 3
+                              ? "35vh"
                               : "0vh",
                       ],
                     ),
@@ -645,7 +651,7 @@ export default function AboutUs() {
             })}
           </div>
         </motion.div>
-        <div className="min-h-[100vh] bg-white z-99999 relative"></div>
+        <div className="min-h-[200vh] bg-white z-99999 relative"></div>
         <div className="min-h-screen bg-white relative z-99999999">
           <motion.div
             style={{
@@ -682,11 +688,52 @@ export default function AboutUs() {
             })}
           </motion.div>
         </div>
-        <div className="min-h-screen bg-black relative z-999999999 flex justify-center items-center">
-          <div className="text-8xl font-semibold font-chakra-petch text-white">
+        <motion.div
+          style={{
+            y: useTransform(
+              pageScroll,
+              [0.94, 0.98, 1],
+              ["100vh", "0vh", "0vh"],
+            ),
+          }}
+          className="min-h-screen bg-black  z-999999999 flex justify-center items-center fixed top-0 left-0 w-full"
+        >
+          <T
+            delay={0.3}
+            className="text-8xl font-semibold font-chakra-petch text-white"
+          >
             MEET OUR TEAM
-          </div>
-        </div>
+          </T>
+        </motion.div>
+        <motion.div
+          style={{
+            y: useTransform(
+              pageScroll,
+              [0.98, 1, 1],
+              ["100vh", "-100vh", "-100vh"],
+            ),
+          }}
+          className="min-h-screen   z-999999999 flex justify-center items-center fixed top-0 left-1/2 -translate-x-1/2 w-full flex-col gap-6"
+        >
+          {[1, 2, 3, 4, 5].map((x, i) => {
+            return (
+              <motion.div
+                style={{}}
+                key={x.toString()}
+                className="max-w-xl mx-auto  flex flex-col "
+              >
+                <div className="bg-[#0B0B0B] p-6 flex flex-col justify-center items-center min-w-72 font-chakra-petch gap-2 ">
+                  <img src="/tanisha.png" className="w-29" alt="" />
+                  <div className="text-white text-2xl">Tanisha Goyal</div>
+                  <div className="text-asymmetri-red ">
+                    Senior UI/UX Designer
+                  </div>
+                  <div className="text-white/50 text-xs">New Delhi</div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </div>
   );
