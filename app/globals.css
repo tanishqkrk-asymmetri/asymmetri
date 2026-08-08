@@ -11,13 +11,13 @@
 }
 
 body::-webkit-scrollbar {
-  display: none !important;
+  /* display: none !important; */
 }
 /*  */
 body {
   /* max-width: 100% !important; */
 }
-
+/*  */
 html {
   overflow-x: hidden !important;
   max-width: 100vw !important;

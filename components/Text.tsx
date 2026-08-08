@@ -27,7 +27,7 @@ function Text({
       }}
       transition={{
         type: "tween",
-        duration: duration && 0.3,
+        duration: duration || 0.3,
         ease: "circInOut",
         delay,
       }}

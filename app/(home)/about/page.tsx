@@ -1,5 +1,6 @@
 "use client";
 
+import { RiseText } from "@/components/RiseText";
 import { T } from "@/components/Text";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import {
@@ -388,15 +389,31 @@ export default function AboutUs() {
                 ["blur(0px)", "blur(4px)"],
               ),
             }}
-            className=" bg-black text-white font-chakra-petch text-7xl font-semibold w-fit h-full flex flex-col justify-center items-start"
+            className=" bg-black text-white font-chakra-petch max-w-[70%]  w-full text-7xl font-semibold  h-full flex flex-col justify-center items-start"
           >
-            <T className="pl-96">IN OUR ECOSYSTEM</T>
+            <RiseText
+              delay={0}
+              className="overflow-hidden ml-auto"
+              lines={["IN OUR ECOSYSTEM"]}
+            ></RiseText>
 
-            <T>
-              EACH ENTITY <span className="text-asymmetri-red">NURTURES</span>
-            </T>
-
-            <T>EACH OTHER</T>
+            <div className="flex gap-3 mr-auto">
+              <RiseText
+                delay={0.2}
+                className="overflow-hidden"
+                lines={["EACH ENTITY"]}
+              ></RiseText>
+              <RiseText
+                delay={0.4}
+                className="overflow-hidden text-asymmetri-red"
+                lines={["NURTURES"]}
+              ></RiseText>
+            </div>
+            <RiseText
+              delay={0.6}
+              className="overflow-hidden mr-auto"
+              lines={["EACH OTHER"]}
+            ></RiseText>
           </motion.div>
           <motion.div
             style={{

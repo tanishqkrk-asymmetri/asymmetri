@@ -1,0 +1,341 @@
+"use client";
+
+import {
+  MotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "motion/react";
+import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { Button } from "@/components/button";
+import { RiseText } from "@/components/RiseText";
+import usePauseScroll from "@/hooks/usePauseScroll";
+import { T } from "@/components/Text";
+import ScrambledText from "@/components/ScrambledText";
+import { ASYM_RED } from "@/lib/color";
+import RotatingText from "@/components/fancyText";
+
+const FRAME_COUNT = 500;
+
+function frameSrc(frame: number) {
+  return `/careers2/${String(frame).padStart(3, "0")}.png`;
+}
+
+function RevealWord({
+  progress,
+  range,
+  children,
+}: {
+  progress: MotionValue<number>;
+  range: [number, number];
+  children: string;
+}) {
+  const color = useTransform(progress, range, ["#00000030", "#000000"]);
+  return (
+    <motion.span style={{ color }} className="mr-[0.28em]">
+      {children}
+    </motion.span>
+  );
+}
+
+function ScrollTextReveal({
+  progress,
+  lines,
+  start = 0.67,
+  end = 0.7,
+}: {
+  progress: MotionValue<number>;
+  lines: string[];
+  start?: number;
+  end?: number;
+}) {
+  const totalWords = lines.reduce(
+    (acc, line) => acc + (line ? line.split(" ").length : 0),
+    0,
+  );
+  let wordIndex = 0;
+  return (
+    <div className="flex flex-col gap-2">
+      {lines.map((line, li) => {
+        if (!line) return <div key={li} className="h-4" />;
+        return (
+          <div key={li} className="flex flex-wrap">
+            {line.split(" ").map((word, wi) => {
+              const i = wordIndex++;
+              const s = start + (i / totalWords) * (end - start);
+              const e = start + ((i + 1) / totalWords) * (end - start);
+              return (
+                <RevealWord key={wi} progress={progress} range={[s, e]}>
+                  {word}
+                </RevealWord>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function Careers() {
+  const { loaderPct } = usePauseScroll();
+  const pageRef = useRef(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const lastFrameRef = useRef(0);
+  const { scrollYProgress: pageScroll } = useScroll({
+    target: pageRef,
+    // container: containerRef,
+    // offset: ["start start", "end end"],
+  });
+
+  const [currentFrame, setCurrentFrame] = useState("ezgif-frame-001.jpg");
+
+  function pad(num: any, size: any) {
+    num = num.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
+  }
+
+  useMotionValueEvent(pageScroll, "change", (latest) => {
+    const frame = Math.min(
+      FRAME_COUNT - 1,
+      Math.max(0, Math.round(latest * (FRAME_COUNT - 1))),
+    );
+    if (frame < 150) {
+      setCurrentFrame("ezgif-frame-" + pad(frame + 1, 3) + ".jpg");
+    } else {
+      setCurrentFrame("ezgif-frame-" + pad(150 + 1, 3) + ".jpg");
+    }
+  });
+
+  return (
+    <div className=" ">
+      {/* <Navbar pageScroll={pageScroll}></Navbar> */}
+      <main className="" ref={pageRef}>
+        <motion.div className="min-h-screen flex flex-col justify-center items-center gap-3 bg-black sticky top-0 pt-16  overflow-hidden">
+          <motion.img
+            ref={imgRef}
+            src={"/careers3/" + currentFrame}
+            alt=""
+            style={{}}
+            className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-60"
+          />
+          <motion.div
+            style={{
+              y: useTransform(pageScroll, [0, 0.3], ["0px", "-100vh"]),
+              // filter: useTransform(
+              //   pageScroll,
+              //   [0.2, 0.4],
+              //   ["blur(0px)", "blur(8px)"],
+              // ),
+            }}
+            className="w-full"
+          >
+            <RiseText
+              className="relative z-10 uppercase text-7xl text-white font-chakra-petch text-left flex justify-start items-start mr-auto ml-36 flex-col"
+              lines={["Buidling a", "Culture of", "Brilliant", "Misfits"]}
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              y: useTransform(pageScroll, [0, 0.5], ["0px", "-500vh"]),
+              // filter: useTransform(
+              //   pageScroll,
+              //   [0.2, 0.5],
+              //   ["blur(0px)", "blur(8px)"],
+              // ),
+            }}
+            className="w-full"
+          >
+            <RiseText
+              className="relative z-10 max-w-84 text-white font-chakra-petch text-left flex justify-start items-start ml-auto mr-36 flex flex-col"
+              lines={[
+                "We're a small team with big potential, we take",
+                "the work seriously and ourselves a lot less.",
+                "Most of it happens async, feedback flies fast,",
+                "and everyone's juggling at least three",
+                "projects across different domains at any",
+                "given time. We love pulling problems apart",
+                "and finding the fix.",
+              ]}
+              fromY="100%"
+              delay={0.9}
+              duration={0.3}
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              y: useTransform(pageScroll, [0.5, 1], ["0px", "-100vh"]),
+            }}
+            className="relative z-10 my-6 bg-black"
+          >
+            <Button className="">See open positions</Button>
+          </motion.div>
+        </motion.div>
+
+        <div className="min-h-[300vh] bg-black"></div>
+
+        <motion.div
+          style={{
+            background: useTransform(
+              pageScroll,
+              [0.4, 0.45],
+              ["#000000", ASYM_RED],
+            ),
+          }}
+          className="bg-black  z-999 min-h-screen border border-white/50 sticky top-0 pl-16 flex justify-between items-start"
+        >
+          <div className="border-l border-white/50 min-h-screen pl-3 py-36 w-1/4 flex flex-col justify-between relative">
+            <div className="flex flex-col">
+              <T
+                duration={0.9}
+                className="text-4xl font-chakra-petch text-white/60"
+              >
+                Life at
+              </T>
+              <motion.div
+                style={{
+                  color: useTransform(
+                    pageScroll,
+                    [0.4, 0.45],
+                    [ASYM_RED, "#ffffff"],
+                  ),
+                }}
+              >
+                <T
+                  delay={0.3}
+                  duration={0.9}
+                  className="text-5xl font-chakra-petch "
+                >
+                  Asymmetri
+                </T>
+              </motion.div>
+            </div>
+            <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.38, 0.45], [1, 0]),
+              }}
+              className="absolute bottom-36 text-white font-chakra-petch"
+            >
+              No strict 9-to-5. Work when you want, where you want, as long as
+              you hit your timelines and keep your team in the loop. No layers,
+              no theatre, no waiting your turn. Just people who like this work,
+              doing it together.
+            </motion.div>
+            <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.45, 0.47], [0, 1]),
+              }}
+              className="absolute bottom-36 text-white font-chakra-petch"
+            >
+              We’re a close-knit team of designers, developers, and
+              problem-solvers who care deeply about the work we do. We take on
+              meaningful challenges, move with intent, and stay grounded in
+              craft — from the first idea to the final line of code.
+            </motion.div>
+          </div>
+          <div className="w-3/5  min-h-screen flex flex-col ">
+            <motion.div
+              style={{
+                y: useTransform(pageScroll, [0.31, 0.5], ["100vh", "0vh"]),
+              }}
+              className="w-full"
+            >
+              <motion.img className="w-full" src="/careersstuff/1.png" alt="" />
+            </motion.div>
+            <div className="flex">
+              <motion.div
+                style={{
+                  y: useTransform(pageScroll, [0.4, 0.52], ["100vh", "0vh"]),
+                }}
+                className=" w-full"
+              >
+                <motion.img
+                  className="w-full"
+                  src="/careersstuff/2.png"
+                  alt=""
+                />
+              </motion.div>
+              <motion.div
+                style={{
+                  y: useTransform(pageScroll, [0.4, 0.51], ["100vh", "0vh"]),
+                }}
+                className=" w-full"
+              >
+                <motion.img
+                  className="w-full"
+                  src="/careersstuff/4.png"
+                  alt=""
+                />
+              </motion.div>
+              <motion.div
+                style={{
+                  y: useTransform(pageScroll, [0.4, 0.53], ["100vh", "0vh"]),
+                }}
+                className=" w-full"
+              >
+                <motion.img
+                  className="w-full"
+                  src="/careersstuff/3.png"
+                  alt=""
+                />
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+        <motion.div
+          className="top-0 left-0 w-screen h-screen bg-white fixed z-999 rounded-xl flex justify-start items-center "
+          style={{
+            y: useTransform(pageScroll, [0.54, 0.62], ["100vh", "0vh"]),
+            scale: useTransform(pageScroll, [0.54, 0.63], [0.5, 1.1]),
+          }}
+        >
+          <motion.div
+            style={{
+              x: useTransform(pageScroll, [0.54, 0.62], ["0vw", "10vw"]),
+            }}
+            className="min-w-screen flex justify-center flex-col items-center"
+          >
+            <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.62, 0.65], ["0", "1"]),
+              }}
+              className="text-black font-chakra-petch text-5xl uppercase text-center font-semibold"
+            >
+              You don’t want to <br /> work for Asymmetri
+            </motion.div>
+
+            <motion.div
+              style={{
+                opacity: useTransform(pageScroll, [0.65, 0.67], ["0", "1"]),
+              }}
+              className="max-w-5xl mx-auto  font-chakra-petch my-16 font-semibold text-left "
+            >
+              <ScrollTextReveal
+                progress={pageScroll}
+                start={0.66}
+                end={0.75}
+                lines={[
+                  "We work across domains, so no two days look alike. We meet",
+                  "problems with a simple belief: everything is figureoutable. If",
+                  "you want to explore, do more, and have real, independent input",
+                  "in what you make, this is your kind of place. If you're after",
+                  "streamlined processes, tidy workflows, and a quiet desk job,",
+                  "maybe a startup isn't for you.",
+                  "",
+                  "We ship fast and work close to founders, without layers of",
+                  "confusion in between. We're looking for people with grit, the",
+                  "ones who believe in failing faster to succeed sooner. If any of",
+                  "that sounds like you, you're exactly where you're supposed to be.",
+                ]}
+              />
+            </motion.div>
+          </motion.div>
+          <div className="min-w-screen bg-red-500"></div>
+        </motion.div>
+        <div className="min-h-[600vh]"></div>
+      </main>
+    </div>
+  );
+}
