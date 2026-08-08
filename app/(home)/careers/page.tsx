@@ -120,6 +120,7 @@ export default function Careers() {
             alt=""
             style={{}}
             className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-60"
+            fetchPriority="high"
           />
           <motion.div
             style={{
@@ -293,46 +294,61 @@ export default function Careers() {
         >
           <motion.div
             style={{
-              x: useTransform(pageScroll, [0.54, 0.62], ["0vw", "10vw"]),
+              x: useTransform(pageScroll, [0.75, 0.9], ["0vw", "-100vw"]),
             }}
-            className="min-w-screen flex justify-center flex-col items-center"
+            className="flex justify-start items-center"
           >
-            <motion.div
-              style={{
-                opacity: useTransform(pageScroll, [0.62, 0.65], ["0", "1"]),
-              }}
-              className="text-black font-chakra-petch text-5xl uppercase text-center font-semibold"
-            >
-              You don’t want to <br /> work for Asymmetri
-            </motion.div>
+            <motion.div className="min-w-screen flex justify-center flex-col items-center">
+              <motion.div
+                style={{
+                  opacity: useTransform(
+                    pageScroll,
+                    [0.62, 0.65, 1],
+                    ["0", "1", "1"],
+                  ),
+                }}
+                className="text-black font-chakra-petch text-5xl uppercase text-center font-semibold"
+              >
+                You don’t want to <br /> work for Asymmetri
+              </motion.div>
 
+              <motion.div
+                style={{
+                  opacity: useTransform(
+                    pageScroll,
+                    [0.65, 0.67, 1],
+                    ["0", "1", "1"],
+                  ),
+                }}
+                className="max-w-5xl mx-auto  font-chakra-petch my-16 font-semibold text-left "
+              >
+                <ScrollTextReveal
+                  progress={pageScroll}
+                  start={0.66}
+                  end={0.75}
+                  lines={[
+                    "We work across domains, so no two days look alike. We meet",
+                    "problems with a simple belief: everything is figureoutable. If",
+                    "you want to explore, do more, and have real, independent input",
+                    "in what you make, this is your kind of place. If you're after",
+                    "streamlined processes, tidy workflows, and a quiet desk job,",
+                    "maybe a startup isn't for you.",
+                    "",
+                    "We ship fast and work close to founders, without layers of",
+                    "confusion in between. We're looking for people with grit, the",
+                    "ones who believe in failing faster to succeed sooner. If any of",
+                    "that sounds like you, you're exactly where you're supposed to be.",
+                  ]}
+                />
+              </motion.div>
+            </motion.div>
             <motion.div
               style={{
-                opacity: useTransform(pageScroll, [0.65, 0.67], ["0", "1"]),
+                opacity: useTransform(pageScroll, [0.62, 0.63, 1], [0, 1, 1]),
               }}
-              className="max-w-5xl mx-auto  font-chakra-petch my-16 font-semibold text-left "
-            >
-              <ScrollTextReveal
-                progress={pageScroll}
-                start={0.66}
-                end={0.75}
-                lines={[
-                  "We work across domains, so no two days look alike. We meet",
-                  "problems with a simple belief: everything is figureoutable. If",
-                  "you want to explore, do more, and have real, independent input",
-                  "in what you make, this is your kind of place. If you're after",
-                  "streamlined processes, tidy workflows, and a quiet desk job,",
-                  "maybe a startup isn't for you.",
-                  "",
-                  "We ship fast and work close to founders, without layers of",
-                  "confusion in between. We're looking for people with grit, the",
-                  "ones who believe in failing faster to succeed sooner. If any of",
-                  "that sounds like you, you're exactly where you're supposed to be.",
-                ]}
-              />
-            </motion.div>
+              className="min-w-screen bg-red-500 min-h-screen"
+            ></motion.div>
           </motion.div>
-          <div className="min-w-screen bg-red-500"></div>
         </motion.div>
         <div className="min-h-[600vh]"></div>
       </main>
