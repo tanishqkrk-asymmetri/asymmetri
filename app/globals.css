@@ -28,6 +28,11 @@ html {
   overflow: hidden;
 }
 
+.ungabunga [aria-hidden="true"] {
+  inset: initial !important;
+  /* left: 6px !important; */
+}
+
 /*  */
 @theme inline {
   --color-asymmetri-red: #cd1717;

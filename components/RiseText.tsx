@@ -1,9 +1,10 @@
 "use client";
 
+import { type ReactNode } from "react";
 import { motion } from "motion/react";
 
 type RiseTextProps = {
-  lines: string[];
+  lines: ReactNode[];
   className?: string;
   lineClassName?: string;
   /** Delay before the first line starts animating. */
@@ -27,7 +28,7 @@ export function RiseText({
   return (
     <div className={className}>
       {lines.map((line, i) => (
-        <motion.span key={`${i}-${line}`} className={lineClassName}>
+        <motion.span key={i} className={lineClassName}>
           <motion.div
             initial={{ y: fromY }}
             animate={{ y: "0%" }}

@@ -5,7 +5,7 @@ import SpecularButton, {
 } from "@/components/SpecularButton";
 
 const defaults = {
-  className: "font-chakra-petch",
+  className: "font-chakra-petch inset-0",
   size: "lg",
   radius: 0,
   tint: "#ffffff",

@@ -15,6 +15,7 @@ import { T } from "@/components/Text";
 import ScrambledText from "@/components/ScrambledText";
 import { ASYM_RED } from "@/lib/color";
 import RotatingText from "@/components/fancyText";
+import { Laptop, Workflow } from "lucide-react";
 
 const FRAME_COUNT = 500;
 
@@ -56,9 +57,9 @@ function ScrollTextReveal({
   );
   let wordIndex = 0;
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-px">
       {lines.map((line, li) => {
-        if (!line) return <div key={li} className="h-4" />;
+        if (!line) return <div key={li} className="h-1" />;
         return (
           <div key={li} className="flex flex-wrap">
             {line.split(" ").map((word, wi) => {
@@ -169,13 +170,20 @@ export default function Careers() {
             style={{
               y: useTransform(pageScroll, [0.5, 1], ["0px", "-100vh"]),
             }}
-            className="relative z-10 my-6 bg-black"
+            className="relative z-10 my-6 bg-black "
           >
-            <Button className="">See open positions</Button>
+            <Button
+              onClick={() => {
+                window.location.href = "/careers/positions";
+              }}
+              className=""
+            >
+              See open positions
+            </Button>
           </motion.div>
         </motion.div>
 
-        <div className="min-h-[300vh] bg-black"></div>
+        <div className="min-h-[400vh] bg-black"></div>
 
         <motion.div
           style={{
@@ -236,14 +244,18 @@ export default function Careers() {
               craft — from the first idea to the final line of code.
             </motion.div>
           </div>
-          <div className="w-3/5  min-h-screen flex flex-col ">
+          <div className="w-3/5  min-h-screen grid grid-rows-2 justify-between gap-0 ">
             <motion.div
               style={{
                 y: useTransform(pageScroll, [0.31, 0.5], ["100vh", "0vh"]),
               }}
-              className="w-full"
+              className="w-full h-full"
             >
-              <motion.img className="w-full" src="/careersstuff/1.png" alt="" />
+              <motion.img
+                className="w-full h-full object-cover"
+                src="/careersstuff/1.png"
+                alt=""
+              />
             </motion.div>
             <div className="flex">
               <motion.div
@@ -253,7 +265,7 @@ export default function Careers() {
                 className=" w-full"
               >
                 <motion.img
-                  className="w-full"
+                  className="w-full h-full object-cover"
                   src="/careersstuff/2.png"
                   alt=""
                 />
@@ -265,7 +277,7 @@ export default function Careers() {
                 className=" w-full"
               >
                 <motion.img
-                  className="w-full"
+                  className="w-full h-full object-cover"
                   src="/careersstuff/4.png"
                   alt=""
                 />
@@ -277,7 +289,7 @@ export default function Careers() {
                 className=" w-full"
               >
                 <motion.img
-                  className="w-full"
+                  className="w-full h-full object-cover"
                   src="/careersstuff/3.png"
                   alt=""
                 />
@@ -294,7 +306,7 @@ export default function Careers() {
         >
           <motion.div
             style={{
-              x: useTransform(pageScroll, [0.75, 0.9], ["0vw", "-100vw"]),
+              x: useTransform(pageScroll, [0.75, 0.9], ["0vw", "-250vw"]),
             }}
             className="flex justify-start items-center"
           >
@@ -346,11 +358,228 @@ export default function Careers() {
               style={{
                 opacity: useTransform(pageScroll, [0.62, 0.63, 1], [0, 1, 1]),
               }}
-              className="min-w-screen bg-red-500 min-h-screen"
-            ></motion.div>
+              className="min-w-screen  min-h-screen flex justify-center items-center"
+            >
+              {[
+                {
+                  title: "Decisions that compound",
+                  subtitle:
+                    "You'll make real calls at the stage where judgment matters most, before choices harden into architecture and headcount. We hired you for that judgment; we don't second-guess it.",
+                },
+                {
+                  title: "No layer between you and the outcome",
+                  subtitle:
+                    "We're small on purpose. What you build reaches real users directly, ships, and gets judged by whether it holds up, not by how it looked in a deck.",
+                },
+                {
+                  title: "Range that keeps you sharp",
+                  subtitle:
+                    "Different domains, different stacks, a new problem before the last one goes stale. You won't coast, because there's nothing here to coast on.",
+                },
+              ].map((x, i) => {
+                return (
+                  <div
+                    className="w-[80vw] flex justify-center items-center relative  min-h-screen px-16 font-chakra-petch gap-8"
+                    key={x.toString()}
+                  >
+                    <div className="w-1/3 min-h-screen p-3 flex justify-center items-center relative">
+                      <div className="min-h-screen bg-black/20 w-px absolute left-0 top-0"></div>
+                      <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
+                      <motion.img
+                        style={{
+                          y: useTransform(
+                            pageScroll,
+                            [
+                              i === 0
+                                ? 0.68
+                                : i === 1
+                                  ? 0.71
+                                  : i === 2
+                                    ? 0.78
+                                    : 0.68,
+                              1,
+                            ],
+                            ["30vh", "-30vh"],
+                          ),
+                          filter:
+                            i === 0
+                              ? "hue-rotate(400deg)"
+                              : i === 1
+                                ? "hue-rotate(100deg)"
+                                : i === 2
+                                  ? "hue-rotate(280deg)"
+                                  : "hue-rotate(400deg)",
+                        }}
+                        src="/about2.png"
+                        className="rounded-lg w-84 -translate-y-36 aspect-square object-cover"
+                        alt=""
+                      />
+                    </div>
+                    <motion.div className="w-1/3 min-h-screen flex flex-col justify-center items-start pt-16 relative">
+                      <motion.div
+                        style={{
+                          y: useTransform(
+                            pageScroll,
+                            [
+                              i === 0
+                                ? 0.68
+                                : i === 1
+                                  ? 0.71
+                                  : i === 2
+                                    ? 0.78
+                                    : 0.68,
+                              1,
+                            ],
+                            ["-30vh", "50vh"],
+                          ),
+                        }}
+                        className="text-xl font-semibold text-black/50"
+                      >
+                        0{i + 1}
+                      </motion.div>
+                      <motion.div
+                        style={{
+                          y: useTransform(
+                            pageScroll,
+                            [
+                              i === 0
+                                ? 0.68
+                                : i === 1
+                                  ? 0.71
+                                  : i === 2
+                                    ? 0.78
+                                    : 0.68,
+                              1,
+                            ],
+                            ["-30vh", "50vh"],
+                          ),
+                        }}
+                        className="text-4xl font-semibold "
+                      >
+                        {x.title}
+                      </motion.div>
+                      <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
+                      <div className="min-h-screen bg-black/20 w-px absolute -left-3 top-0"></div>
+                    </motion.div>
+                    <div className="w-1/3 min-h-screen flex justify-center items-end pb-36 ">
+                      <motion.p
+                        style={{
+                          y: useTransform(
+                            pageScroll,
+                            [
+                              i === 0
+                                ? 0.68
+                                : i === 1
+                                  ? 0.71
+                                  : i === 2
+                                    ? 0.78
+                                    : 0.68,
+                              1,
+                            ],
+                            ["0vh", "-60vh"],
+                          ),
+                        }}
+                      >
+                        {x.subtitle}
+                      </motion.p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
           </motion.div>
         </motion.div>
-        <div className="min-h-[600vh]"></div>
+
+        <motion.div
+          style={{
+            y: useTransform(pageScroll, [0.89, 0.94], ["100vh", "0vh"]),
+            scale: useTransform(pageScroll, [0.89, 0.94], [0.5, 1.1]),
+          }}
+          className="top-0 left-0 w-screen h-screen bg-black fixed z-999 rounded-xl flex justify-center items-center flex-col"
+        >
+          <div className="flex w-full flex-col items-center justify-center px-6 py-20 font-chakra-petch gap-8 relative">
+            <RotatingText
+              pageScroll={pageScroll}
+              className="text-center text-4xl font-semibold text-white font-chakra-petch md:text-5xl  "
+              containerClassName="max-h-14 overflow-hidden space-y-2"
+              yRange={[0.94, 0.96]}
+              yOutput={["0px", "-55px"]}
+              opacityInput={[[0.89, 0.94]]}
+              opacityOutput={[[0, 1]]}
+              items={["Supporting You To Do", "Your Best Work"]}
+            />
+
+            <ul className="flex flex-col gap-12">
+              {[
+                "Work from anywhere",
+                "Work from anywhere",
+                "Work from anywhere",
+              ].map((title, i) => {
+                const start =
+                  i === 0 ? 0.94 : i === 1 ? 0.95 : i === 2 ? 0.96 : 0.97;
+                const end = 1;
+                // i === 0 ? 0.95 : i === 1 ? 0.96 : i === 2 ? 0.97 : 0.97;
+                return (
+                  <motion.li
+                    key={i}
+                    style={{
+                      opacity: useTransform(pageScroll, [start, end], [0, 1]),
+                      y: useTransform(pageScroll, [start, end], [48, 0]),
+                      filter: useTransform(
+                        pageScroll,
+                        [start, end],
+                        ["blur(8px)", "blur(0px)"],
+                      ),
+                    }}
+                    className="flex items-center gap-6"
+                  >
+                    <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-white/50">
+                      <Laptop
+                        size={50}
+                        strokeWidth={1}
+                        className=""
+                        color="white"
+                      ></Laptop>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-lg font-semibold text-white">
+                        {title}
+                      </span>
+                      <span className="mt-0.5 max-w-[14rem] text-sm leading-snug text-white/50">
+                        No micromanagement,
+                        <br />
+                        no weird late-night messages.
+                      </span>
+                    </div>
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </div>
+          <motion.div
+            style={{
+              opacity: useTransform(pageScroll, [0.98, 1], [0, 1]),
+              y: useTransform(pageScroll, [0.98, 1], [48, 0]),
+              filter: useTransform(
+                pageScroll,
+                [0.98, 1],
+                ["blur(8px)", "blur(0px)"],
+              ),
+            }}
+            className="w-full flex justify-center items-center  ungabunga"
+          >
+            <Button
+              onClick={() => {
+                window.location.href = "/careers/positions";
+              }}
+              className="inset-0 w-64"
+            >
+              See open positions
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        <div className="min-h-[800vh]"></div>
       </main>
     </div>
   );
