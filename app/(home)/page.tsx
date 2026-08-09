@@ -1,8 +1,6 @@
 "use client";
 
 import { AsciiMorph } from "@/lib/asciiMorph";
-import { shuffle } from "fast-shuffle";
-
 import ReactFlipCard from "reactjs-flip-card";
 import random from "random";
 import chalk from "chalk";
@@ -43,6 +41,10 @@ import usePauseScroll from "@/hooks/usePauseScroll";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MemoGridBG } from "@/components/GridScan";
+import {
+  ScrollVelocityContainer,
+  ScrollVelocityRow,
+} from "@/components/ui/scroll-based-velocity";
 
 export default function Home() {
   const { loaderPct } = usePauseScroll();
@@ -231,20 +233,16 @@ export default function Home() {
 
   const pointers = [
     {
-      title: "INTENT",
-      body: "In a world full of noise, we choose clarity. Lean engineering and considered design aren't finishing touches—they're built into every decision from day one.",
+      title: "Curiosity first",
+      body: 'We ask "why" before we design anything. Good work starts with understanding the problem, not the pixels.',
     },
     {
-      title: "ENGINEERING",
-      body: "Beautiful products are built from the inside out. Long before the interface comes to life, we focus on the foundations that make software exceptional: clean architecture, reliable infrastructure, scalable backends, and code that's made to last",
+      title: "Built to last",
+      body: "No throwaway prototypes. Every product we ship is built to hold up in production, not just in a pitch deck",
     },
     {
-      title: "VELOCITY",
-      body: "Speed isn't about rushing, it's about removing friction. Our teams stay small, experienced, and close to the work, allowing ideas to become prototypes and prototypes to reach real users quickly.",
-    },
-    {
-      title: "OWNERSHIP",
-      body: "We don't build for you—we build with you. Your goals become our goals, and your success becomes our measure of success. We communicate openly, make decisions together, and take responsibility for the outcome.",
+      title: "Outcomes over output",
+      body: "We measure success by what moves your numbers, not how many screens we designed.",
     },
   ];
 
@@ -319,7 +317,7 @@ export default function Home() {
               }}
               className={`absolute text-white font-chakra-petch z-[10002] ${isMobile ? "left-1/2 top-[max(6rem,18svh)] w-[min(19rem,calc(100vw-3rem))] -translate-x-1/2 translate-y-0 px-3 text-center text-[15px] leading-snug" : `${isCompact ? "left-20 text-base" : "left-40 text-xl"} text-left top-1/2 -translate-y-8 max-w-[calc(100vw-2.5rem)]`}`}
             >
-              Ideas Built into <br /> Experiences
+              Full stack <br /> collaborative agency
             </motion.div>
             <motion.div
               initial={{
@@ -334,8 +332,8 @@ export default function Home() {
               }}
               className={`absolute text-white/50 left-1/2 -translate-x-1/2 font-chakra-petch z-[10002] ${isMobile ? "top-[calc(52svh+0.5rem)] bottom-auto max-w-[min(18rem,calc(100vw-3rem))] px-5 text-center text-[11px] leading-snug" : isCompact ? "bottom-12 max-w-lg px-8 text-center text-[11px]" : "bottom-20 max-w-none px-0 text-left text-xs"}`}
             >
-              Collaborative agency for bold ideas, beautiful code and digital
-              experiences
+              We build digital products and experiences that work in the real
+              world.
             </motion.div>
             <motion.div
               initial={{
@@ -432,78 +430,96 @@ export default function Home() {
               y: secondSectionY,
               // wordSpacing: "10px",
             }}
-            className={`text-black leading-12  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-2xl text-4xl font-semibold flex-wrap flex justify-center items-center gap-16"}`}
+            className={`text-black leading-8  absolute top-1/2 left-1/2 font-chakra-petch text-center -translate-x-1/2 -translate-y-1/2 px-6 ${isMobile ? "max-w-[min(18rem,calc(100vw-3rem))] px-6 text-base leading-relaxed" : isCompact ? "max-w-lg text-lg" : "max-w-7xl text-3xl font-semibold flex-wrap flex justify-center items-center gap-16"}`}
           >
             <motion.div>
-              <FE text="Not" range={[0.015, 0.02]} pageScroll={pageScroll}></FE>
+              <FE text="We" range={[0.015, 0.019]} pageScroll={pageScroll}></FE>
               <FE
-                text="just"
-                range={[0.02, 0.025]}
+                text="design"
+                range={[0.019, 0.023]}
                 pageScroll={pageScroll}
               ></FE>
               <FE
-                text="another"
-                range={[0.025, 0.03]}
-                pageScroll={pageScroll}
-              ></FE>
-
-              <FE
-                text="software"
-                range={[0.03, 0.035]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="company"
-                range={[0.035, 0.04]}
-                pageScroll={pageScroll}
-              ></FE>
-
-              {/* A place where curious people build things they're proud of */}
-              <FE text="A" range={[0.04, 0.045]} pageScroll={pageScroll}></FE>
-              <FE
-                text="place"
-                range={[0.045, 0.05]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="where"
-                range={[0.05, 0.055]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="curious"
-                range={[0.055, 0.06]}
-                pageScroll={pageScroll}
-              ></FE>
-              <FE
-                text="people"
-                range={[0.06, 0.065]}
+                text="and"
+                range={[0.023, 0.027]}
                 pageScroll={pageScroll}
               ></FE>
               <FE
                 text="build"
-                range={[0.065, 0.07]}
+                range={[0.027, 0.031]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="digital"
+                range={[0.031, 0.035]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="products"
+                range={[0.035, 0.039]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="that"
+                range={[0.039, 0.043]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="actually"
+                range={[0.043, 0.047]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="ship."
+                range={[0.047, 0.051]}
+                pageScroll={pageScroll}
+              ></FE>
+
+              <FE text="A" range={[0.051, 0.055]} pageScroll={pageScroll}></FE>
+              <FE
+                text="place"
+                range={[0.055, 0.059]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="where"
+                range={[0.059, 0.063]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="curious"
+                range={[0.063, 0.067]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="people"
+                range={[0.067, 0.071]}
+                pageScroll={pageScroll}
+              ></FE>
+              <FE
+                text="build"
+                range={[0.071, 0.075]}
                 pageScroll={pageScroll}
               ></FE>
               <div className="text-asymmetri-red">
                 <FE
                   text="things"
-                  range={[0.07, 0.075]}
+                  range={[0.075, 0.079]}
                   pageScroll={pageScroll}
                 ></FE>
                 <FE
                   text="they're"
-                  range={[0.075, 0.08]}
+                  range={[0.079, 0.083]}
                   pageScroll={pageScroll}
                 ></FE>
                 <FE
                   text="proud"
-                  range={[0.08, 0.085]}
+                  range={[0.083, 0.087]}
                   pageScroll={pageScroll}
                 ></FE>
                 <FE
                   text="of."
-                  range={[0.085, 0.09]}
+                  range={[0.087, 0.09]}
                   pageScroll={pageScroll}
                 ></FE>
               </div>
@@ -564,9 +580,12 @@ export default function Home() {
                       ship products that are recklessly good.
                     </T>
                     <T delay={0.1}>
-                      <button className="text-xl bg-white border rounded-sm  p-2 duration-150 hover:bg-asymmetri-red hover:text-white cursor-pointer">
+                      <a
+                        href="/contact-us"
+                        className="text-xl bg-white border rounded-sm  p-2 duration-150 hover:bg-asymmetri-red hover:text-white cursor-pointer"
+                      >
                         Discuss Project
-                      </button>
+                      </a>
                     </T>
                   </motion.div>
                 </motion.div>
@@ -590,34 +609,22 @@ export default function Home() {
                       </div>
                     </T>
                   </motion.div>
-                  {[1, 2, 3].map((x, i) => {
-                    return (
-                      <motion.div
-                        style={{
-                          y: useTransform(
-                            pageScroll,
-                            [0.26, 0.29 + (i + 1) / 100],
-                            [500, -300],
-                          ),
-                        }}
-                        initial={{
-                          opacity: 0,
-                        }}
-                        whileInView={{
-                          opacity: 1,
-                        }}
-                        transition={
-                          {
-                            // delay: 0.1 * x + 1,
-                          }
-                        }
-                        viewport={{
-                          once: true,
-                        }}
-                        key={x}
-                        className="grid grid-cols-7 w-full justify-items-center "
+                  <motion.div
+                    style={{
+                      y: useTransform(pageScroll, [0.26, 0.32], [500, -500]),
+                    }}
+                    // initial={{ opacity: 0 }}
+                    // whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="w-screen relative left-1/2 -translate-x-1/2"
+                  >
+                    <ScrollVelocityContainer className="w-screen">
+                      <ScrollVelocityRow
+                        baseVelocity={16}
+                        direction={1}
+                        className="w-screen"
                       >
-                        {shuffle([
+                        {[
                           {
                             name: "DD Group",
                             logo: "DD Group Internal Designs.png",
@@ -646,75 +653,82 @@ export default function Home() {
                             name: "Zimkey",
                             logo: "Zimkey Final Logo.png",
                           },
-                        ]).map((x, i) => {
-                          return (
-                            <T
-                              delay={0.1 + (i + 1) / 10}
-                              key={x.logo}
-                              className="flex justify-center items-center w-full h-full p-6 "
-                            >
-                              <img
-                                style={{
-                                  scale: x.name === "Reform" ? 2 : 1,
-                                  borderRadius:
-                                    x.name === "Prescribe Life" ? "6px" : "0px",
-                                }}
-                                src={"/logos/" + x.logo}
-                                className="w-24 "
-                              />
-                            </T>
-                          );
-                        })}
-                      </motion.div>
-                    );
-                  })}
+                        ].map((client) => (
+                          <div
+                            key={client.logo}
+                            className="flex justify-center items-center px-10 py-6"
+                          >
+                            <img
+                              alt={client.name}
+                              style={{
+                                scale: client.name === "Reform" ? 2 : 1,
+                                borderRadius:
+                                  client.name === "Prescribe Life"
+                                    ? "6px"
+                                    : "0px",
+                              }}
+                              src={"/logos/" + client.logo}
+                              className="w-24"
+                            />
+                          </div>
+                        ))}
+                      </ScrollVelocityRow>
+                    </ScrollVelocityContainer>
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
           </motion.div>
           <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
 
-          <div className="bg-[#0a0a0a] z-9999999999 relative ">
-            <motion.div className="w-full   space-y-6 px-8 text-6xl font-chakra-petch">
+          <div className="relative z-9999999999">
+            <div className="relative min-h-[150vh]">
               <motion.div
+                className="sticky top-0 flex h-screen w-full flex-col justify-center"
                 style={{
-                  y: useTransform(pageScroll, [0.39, 0.43], [100, -300]),
+                  backgroundColor: useTransform(
+                    pageScroll,
+                    [0.36, 0.37],
+                    ["#0a0a0a", "#cd1717"],
+                  ),
                 }}
-                className=" text-asymmetri-red font-semibold text-left uppercase px-36"
               >
-                <motion.div>
-                  <T delay={0.1} className="pl-36">
-                    The part where we
-                  </T>
+                <motion.div className="w-full space-y-6 px-8 text-6xl font-chakra-petch">
+                  <motion.div
+                    style={{
+                      color: useTransform(
+                        pageScroll,
+                        [0.36, 0.37],
+                        ["#cd1717", "#ffffff"],
+                      ),
+                    }}
+                    className="text-asymmetri-red font-semibold text-left uppercase px-36"
+                  >
+                    <motion.div>
+                      <T delay={0.1} className="pl-36">
+                        The part where we
+                      </T>
+                    </motion.div>
+                    <motion.span className="inline-block">
+                      <T className="max-h-fit" delay={0.2}>
+                        Stop talking and show you
+                      </T>
+                    </motion.span>{" "}
+                    <br />
+                    <span className="inline-block">
+                      <T delay={0.3}>our best work</T>
+                    </span>
+                  </motion.div>
+                  <div className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36">
+                    <T delay={0.3} className="text-white">
+                      We partner with companies that care about being great at
+                      what they ship. From early-stage founders to fast-growing
+                      teams and established enterprises.
+                    </T>
+                  </div>
                 </motion.div>
-                <motion.span className=" inline-block">
-                  <T className="max-h-fit" delay={0.2}>
-                    Stop talking and show you
-                  </T>
-                </motion.span>{" "}
-                <br />
-                <span className=" inline-block">
-                  <T delay={0.3}>our best work</T>
-                </span>
               </motion.div>
-              <motion.div
-                style={{
-                  y: useTransform(pageScroll, [0.35, 0.41], [300, -100]),
-                }}
-                className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36 "
-              >
-                <T
-                  delay={0.3}
-                  className="text-white
-                "
-                >
-                  We partner with companies that care about being great at what
-                  they ship. From early-stage founders to fast-growing teams and
-                  established enterprises.
-                </T>
-              </motion.div>
-            </motion.div>
-            <TransitionGrid pageScroll={pageScroll} mode="dtr" />
+            </div>
 
             <div className="min-h-[200vh] bg-asymmetri-red   relative ">
               {projects.map((x, i) => {
@@ -764,17 +778,6 @@ export default function Home() {
                       }}
                       className="fixed top-0  h-screen w-[0.5px] bg-white/50 opacity-0 group-hover:opacity-100 duration-200"
                     ></motion.div>
-                    {/* <motion.div
-                      style={{
-                        left: "100%",
-                        opacity: useTransform(
-                          pageScroll,
-                          [0.48, 0.49],
-                          ["0", "1"],
-                        ),
-                      }}
-                      className="fixed top-0  h-screen w-[0.5px] bg-white/50  duration-200"
-                    ></motion.div> */}
 
                     <motion.div
                       initial={{
@@ -909,21 +912,19 @@ export default function Home() {
                         i === 0
                           ? "15em"
                           : i === 1
-                            ? "20em"
+                            ? "25em"
                             : i === 2
-                              ? "25em"
-                              : i === 3
-                                ? "30em"
-                                : "",
+                              ? "35em"
+                              : "",
                     }}
                     key={x.title}
                     id={x.title}
-                    className="sticky border-t border-white/50 p-6 font-chakra-petch min-h-screen bg-black"
+                    className="sticky border-t border-white/50 p-6 font-chakra-petch min-h-screen bg-black space-y-4"
                   >
-                    <T delay={0.1} className="text-xl">
+                    <T delay={0.1} className="text-xl font-semibold text-white">
                       {x.title}
                     </T>
-                    <T delay={0.3} className="text-white/60">
+                    <T delay={0.3} className="text-base text-white/60">
                       {x.body}
                     </T>
                   </div>
@@ -945,14 +946,10 @@ export default function Home() {
           <motion.div
             style={{
               y: useTransform(pageScroll, [0.78, 0.83], ["100vh", "-10vh"]),
-              scale: useTransform(
-                pageScroll,
-                [0.78, 0.805, 0.82, 0.83],
-                [1, 0.95, 1.05, 1],
-              ),
+
               // opacity: useTransform(pageScroll, [0.95, 0.96], ["1", "1"]),
             }}
-            className="text-6xl font-chakra-petch text-white max-w-2/3 font-bold fixed top-36 left-6 z-999999999 mix-blend-difference"
+            className="text-6xl font-chakra-petch text-black max-w-2/3 font-bold fixed top-36 left-6 z-999999999 --mix-blend-difference"
           >
             Asymmetri was never meant to be just another software company. It’s
             a place where smart, curious people build things they’re proud of,
@@ -988,7 +985,7 @@ export default function Home() {
                 ["blur(0px)", "blur(4px)", "blur(4px)"],
               ),
             }}
-            src="/nand.jpg"
+            src="/nand3.jpg"
             className="w-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
             alt=""
           />
@@ -1004,7 +1001,7 @@ export default function Home() {
         <motion.div
           style={{
             // y: "95%",
-            y: useTransform(pageScroll, [0.84, 0.88], ["150vh", "0vh"]),
+            y: useTransform(pageScroll, [0.84, 0.88], ["100vh", "0vh"]),
             // scale: useTransform(pageScroll, [0.85, 0.87], ["1.25", "1"]),
           }}
           className=" z-1000000000 w-screen fixed top-0 left-0 rounded-3xl bg-red-500"
