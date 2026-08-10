@@ -1,6 +1,7 @@
 "use client";
 
 import { RiseText } from "@/components/RiseText";
+import { Navbar } from "@/components/shared/navbar";
 import { T } from "@/components/Text";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import {
@@ -374,6 +375,7 @@ export default function AboutUs() {
   ];
   return (
     <div className="">
+      <Navbar pageScroll={pageScroll}></Navbar>
       <div ref={pageRef} className="bg-black">
         <motion.div
           style={{
@@ -477,9 +479,9 @@ export default function AboutUs() {
           style={{
             opacity: useTransform(pageScroll, [0.41, 0.43, 1], [0, 1, 1]),
           }}
-          className=" fixed top-0 left-0 z-10 flex flex-col gap-10 h-screen w-screen bg-asymmetri-red justify-center"
+          className=" fixed top-0 left-0 z-10 flex flex-col gap-2 h-screen w-screen bg-asymmetri-red justify-center"
         >
-          <motion.div className="w-full  p-10 flex  justify-between h-fit pb-0">
+          <motion.div className="w-full  p-10 flex  justify-between items-end h-fit pb-0">
             <motion.div
               style={{
                 opacity: useTransform(
@@ -493,7 +495,7 @@ export default function AboutUs() {
                   ["blur(8px)", "blur(0px)", "blur(0px)"],
                 ),
               }}
-              className="text-7xl  font-chakra-petch text-white"
+              className="text-6xl  font-chakra-petch text-white"
             >
               Your Steps <br /> To Success
             </motion.div>
@@ -564,7 +566,7 @@ export default function AboutUs() {
               ["0.9", "1.01", "1.01"],
             ),
           }}
-          className="min-h-[200vh] bg-white relative z-999999999999 w-screen h-screen rounded-2xl pt-36 space-y-36"
+          className="min-h-[200vh] bg-white relative z-99999999 w-screen h-screen rounded-2xl pt-36 space-y-36"
         >
           <div className="absolute top-0 left-10 w-px bg-black/20 h-full"></div>
           <motion.div
@@ -584,28 +586,28 @@ export default function AboutUs() {
                     y: useTransform(
                       pageScroll,
                       x === 1
-                        ? [0.71, 0.75, 1]
+                        ? [0.71, 0.75]
                         : x === 2
-                          ? [0.74, 0.79, 1]
+                          ? [0.74, 0.79]
                           : x === 3
-                            ? [0.78, 0.82, 1]
-                            : [0.72, 0.74, 1],
+                            ? [0.78, 0.82]
+                            : [0.72, 0.74],
                       [
                         "100vh",
                         x === 1
-                          ? "30vh"
+                          ? "45vh"
                           : x === 2
-                            ? "50vh"
+                            ? "60vh"
                             : x === 3
-                              ? "70vh"
+                              ? "75vh"
                               : "0vh",
-                        x === 1
-                          ? "20vh"
-                          : x === 2
-                            ? "25vh"
-                            : x === 3
-                              ? "35vh"
-                              : "0vh",
+                        // x === 1
+                        //   ? "20vh"
+                        //   : x === 2
+                        //     ? "25vh"
+                        //     : x === 3
+                        //       ? "35vh"
+                        //       : "0vh",
                       ],
                     ),
                     background: useTransform(
@@ -669,7 +671,7 @@ export default function AboutUs() {
           </div>
         </motion.div>
         <div className="min-h-[200vh] bg-white z-99999 relative"></div>
-        <div className="min-h-screen bg-white relative z-99999999">
+        <div className="min-h-screen bg-white relative z-99999">
           <motion.div
             style={{
               opacity: useTransform(
@@ -709,7 +711,7 @@ export default function AboutUs() {
           style={{
             y: useTransform(
               pageScroll,
-              [0.94, 0.98, 1],
+              [0.92, 0.96, 1],
               ["100vh", "0vh", "0vh"],
             ),
           }}
@@ -724,30 +726,33 @@ export default function AboutUs() {
         </motion.div>
         <motion.div
           style={{
-            y: useTransform(
-              pageScroll,
-              [0.98, 1, 1],
-              ["100vh", "-100vh", "-100vh"],
-            ),
+            y: useTransform(pageScroll, [0.95, 1], ["100vh", "-150vh"]),
           }}
           className="min-h-screen   z-999999999 flex justify-center items-center fixed top-0 left-1/2 -translate-x-1/2 w-full flex-col gap-6"
         >
           {[1, 2, 3, 4, 5].map((x, i) => {
             return (
-              <motion.div
-                style={{}}
-                key={x.toString()}
-                className="max-w-xl mx-auto  flex flex-col "
+              <div
+                style={{
+                  justifyContent: x % 2 === 0 ? "start" : "end",
+                }}
+                className="w-full flex  items-center px-36"
               >
-                <div className="bg-[#0B0B0B] p-6 flex flex-col justify-center items-center min-w-72 font-chakra-petch gap-2 ">
-                  <img src="/tanisha.png" className="w-29" alt="" />
-                  <div className="text-white text-2xl">Tanisha Goyal</div>
-                  <div className="text-asymmetri-red ">
-                    Senior UI/UX Designer
+                <motion.div
+                  style={{}}
+                  key={x.toString()}
+                  className="max-w-xl   flex flex-col "
+                >
+                  <div className="bg-[#0B0B0B] p-6 flex flex-col justify-center items-center min-w-72 font-chakra-petch gap-2 ">
+                    <img src="/tanisha.png" className="w-29" alt="" />
+                    <div className="text-white text-2xl">Tanisha Goyal</div>
+                    <div className="text-asymmetri-red ">
+                      Senior UI/UX Designer
+                    </div>
+                    <div className="text-white/50 text-xs">New Delhi</div>
                   </div>
-                  <div className="text-white/50 text-xs">New Delhi</div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             );
           })}
         </motion.div>

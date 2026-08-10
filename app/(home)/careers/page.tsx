@@ -15,6 +15,7 @@ import { T } from "@/components/Text";
 import { ASYM_RED } from "@/lib/color";
 import RotatingText from "@/components/fancyText";
 import { Laptop } from "lucide-react";
+import { Navbar } from "@/components/shared/navbar";
 
 const FRAME_COUNT = 500;
 const HERO_FRAME_COUNT = 151;
@@ -170,10 +171,7 @@ function CareerPrinciple({
         >
           0{index + 1}
         </motion.div>
-        <motion.div
-          style={{ y: titleY }}
-          className="text-4xl font-semibold "
-        >
+        <motion.div style={{ y: titleY }} className="text-4xl font-semibold ">
           {item.title}
         </motion.div>
         <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
@@ -199,10 +197,11 @@ function BenefitItem({
   const end = 1;
   const opacity = useTransform(pageScroll, [start, end], [0, 1]);
   const y = useTransform(pageScroll, [start, end], [48, 0]);
-  const filter = useTransform(pageScroll, [start, end], [
-    "blur(8px)",
-    "blur(0px)",
-  ]);
+  const filter = useTransform(
+    pageScroll,
+    [start, end],
+    ["blur(8px)", "blur(0px)"],
+  );
 
   return (
     <motion.li
@@ -276,7 +275,7 @@ export default function Careers() {
 
   return (
     <div className=" ">
-      {/* <Navbar pageScroll={pageScroll}></Navbar> */}
+      <Navbar pageScroll={pageScroll}></Navbar>
       <main className="" ref={pageRef}>
         <motion.div className="min-h-screen flex flex-col justify-center items-center gap-3 bg-black sticky top-0 pt-16  overflow-hidden">
           <motion.img
@@ -582,7 +581,7 @@ export default function Careers() {
               onClick={() => {
                 window.location.href = "/careers/positions";
               }}
-              className="inset-0 w-64"
+              className="inset-0 w"
             >
               See open positions
             </Button>

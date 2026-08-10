@@ -31,12 +31,12 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     { label: "About", href: "/about" },
     { label: "Work", href: "" },
     { label: "Services", href: "/#services" },
-    { label: "Careers", href: "/jobs" },
+    { label: "Careers", href: "/careers" },
     // { label: "Get in Touch", href: "/#contact" },
   ] as const;
 
   const sectionsIndi = [
-    0, 0.18, 0.185, 0.33, 0.335, 0.36, 0.375, 0.55, 0.555, 0.77, 0.775, 0.88,
+    0, 0.18, 0.185, 0.33, 0.335, 0.37, 0.38, 0.55, 0.555, 0.77, 0.775, 0.88,
     0.885,
   ];
 
@@ -98,14 +98,14 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         opacity: 1,
       }}
       transition={{
-        delay: 2.5,
+        delay: path === "/" ? 2.5 : 0,
       }}
       style={{
-        background: path === "/" ? bg : "#FFFFFF",
-        color: path === "/" ? text : "#000000",
-        borderColor: path === "/" ? border : "#00000050",
+        background: path === "/" ? bg : "#000000",
+        color: path === "/" ? text : "#ffffff",
+        borderColor: path === "/" ? border : "#ffffff50",
       }}
-      className="fixed top-0 w-full  z-9999999999  border-b "
+      className="fixed top-0 w-full  z-9999999999999  border-b "
     >
       <motion.div
         variants={container}
@@ -126,7 +126,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         <nav className="hidden flex-none items-center  md:flex justify-center   text gap-36">
           {links.map((l) => (
             <motion.div key={l.href} className="sound">
-              <Link
+              <a
                 href={l.href}
                 className="font-chakra-petch text-[16px] tracking-wide hover:opacity-50 transition-colors "
               >
@@ -144,7 +144,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
                 >
                   {l.label}
                 </ScrambledText> */}
-              </Link>
+              </a>
             </motion.div>
           ))}
         </nav>

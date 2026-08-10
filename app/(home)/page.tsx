@@ -348,8 +348,8 @@ export default function Home() {
               }}
               className={`text-right absolute text-white top-1/2 font-chakra-petch translate-y-8 z-9999 ${isMobile ? "hidden" : isCompact ? "right-20 text-xs" : "right-40 text-sm"}`}
             >
-              Collaborative agency for bold <br />
-              ideas, beautiful code and digital <br /> experiences
+              We build digital products and experiences
+              <br /> that work in the real world.
             </motion.div>
 
             <motion.img
@@ -610,13 +610,15 @@ export default function Home() {
                     </T>
                   </motion.div>
                   <motion.div
-                    style={{
-                      y: useTransform(pageScroll, [0.26, 0.32], [500, -500]),
-                    }}
+                    style={
+                      {
+                        // y: useTransform(pageScroll, [0.26, 0.5], [0, 1000]),
+                      }
+                    }
                     // initial={{ opacity: 0 }}
                     // whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="w-screen relative left-1/2 -translate-x-1/2"
+                    className="w-screen relative left-1/2 -translate-x-1/2 min-h-[50vh] flex justify-center items-center"
                   >
                     <ScrollVelocityContainer className="w-screen">
                       <ScrollVelocityRow
@@ -688,12 +690,12 @@ export default function Home() {
                 style={{
                   backgroundColor: useTransform(
                     pageScroll,
-                    [0.36, 0.37],
+                    [0.37, 0.38],
                     ["#0a0a0a", "#cd1717"],
                   ),
                 }}
               >
-                <motion.div className="w-full space-y-6 px-8 text-6xl font-chakra-petch">
+                <motion.div className="w-full space-y-6 px-8 text-8xl font-chakra-petch">
                   <motion.div
                     style={{
                       color: useTransform(
@@ -705,19 +707,19 @@ export default function Home() {
                     className="text-asymmetri-red font-semibold text-left uppercase px-36"
                   >
                     <motion.div>
-                      <T delay={0.1} className="pl-36">
-                        The part where we
+                      <T delay={0.1} className="">
+                        Proof, Not
                       </T>
                     </motion.div>
                     <motion.span className="inline-block">
                       <T className="max-h-fit" delay={0.2}>
-                        Stop talking and show you
+                        Promises
                       </T>
                     </motion.span>{" "}
                     <br />
-                    <span className="inline-block">
+                    {/* <span className="inline-block">
                       <T delay={0.3}>our best work</T>
-                    </span>
+                    </span> */}
                   </motion.div>
                   <div className="text-xl max-w-82 space-y-6 w-full ml-auto mr-36">
                     <T delay={0.3} className="text-white">
@@ -739,18 +741,18 @@ export default function Home() {
                     style={{
                       pointerEvents: useTransform(
                         pageScroll,
-                        [0.49, 0.5],
+                        [0.47, 0.48],
                         ["none", "all"],
                       ),
                       zIndex: 5 - i,
                       y: useTransform(
                         pageScroll,
-                        [0.39, 0.41, 0.45],
+                        [0.37, 0.39, 0.43],
                         [1000, 500, 0],
                       ),
                       left: useTransform(
                         pageScroll,
-                        [0.46, 0.49],
+                        [0.44, 0.47],
                         [
                           "50%",
                           i === 0
@@ -764,7 +766,7 @@ export default function Home() {
                                   : "",
                         ],
                       ),
-                      x: useTransform(pageScroll, [0.46, 0.49], ["-50%", "0%"]),
+                      x: useTransform(pageScroll, [0.44, 0.47], ["-50%", "0%"]),
                     }}
                   >
                     <motion.div
@@ -772,7 +774,7 @@ export default function Home() {
                         left: "0%",
                         opacity: useTransform(
                           pageScroll,
-                          [0.48, 0.49],
+                          [0.46, 0.47],
                           ["0", "1"],
                         ),
                       }}
@@ -802,7 +804,7 @@ export default function Home() {
                         style={{
                           scale: useTransform(
                             pageScroll,
-                            [0.48, 0.49, 0.52],
+                            [0.46, 0.47, 0.5],
                             [3, 2, 1.5],
                           ),
                         }}
@@ -821,7 +823,7 @@ export default function Home() {
                       style={{
                         opacity: useTransform(
                           pageScroll,
-                          [0.49, 0.5],
+                          [0.45, 0.46],
                           ["0", "1"],
                         ),
                       }}
@@ -833,7 +835,7 @@ export default function Home() {
                       style={{
                         opacity: useTransform(
                           pageScroll,
-                          [0.49, 0.5],
+                          [0.46, 0.47],
                           ["0", "1"],
                         ),
                       }}
@@ -844,7 +846,7 @@ export default function Home() {
                       style={{
                         scale: useTransform(
                           pageScroll,
-                          [0.49, 0.5],
+                          [0.47, 0.48],
                           ["0", "1"],
                         ),
                       }}
