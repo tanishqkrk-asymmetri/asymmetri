@@ -30,13 +30,14 @@ const chakraPetch = Chakra_Petch({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://asymmetri.com",
+    process.env.NEXT_PUBLIC_APP_URL || "https://asymmetri.in",
   ),
   title: {
     default: "Asymmetri",
     template: "%s | Asymmetri",
   },
-  description: "A full-stack collaborative agency for ambitious digital products.",
+  description:
+    "A full-stack collaborative agency for ambitious digital products.",
   applicationName: "Asymmetri",
   keywords: [
     "Asymmetri",
@@ -61,7 +62,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Asymmetri",
-    description: "A full-stack collaborative agency for ambitious digital products.",
+    description:
+      "A full-stack collaborative agency for ambitious digital products.",
     type: "website",
     locale: "en_US",
     siteName: "Asymmetri",
@@ -77,7 +79,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Asymmetri",
-    description: "A full-stack collaborative agency for ambitious digital products.",
+    description:
+      "A full-stack collaborative agency for ambitious digital products.",
     images: ["/twitter-image.png"],
   },
 };

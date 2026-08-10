@@ -214,10 +214,10 @@ export default function ContactUsPage() {
               </T>
               <T delay={0.24}>
                 <a
-                  href="mailto:info@asymmetri.com"
+                  href="mailto:info@asymmetri.in"
                   className="block text-sm text-black/80 transition-opacity hover:opacity-60"
                 >
-                  info@asymmetri.com
+                  info@asymmetri.in
                 </a>
               </T>
             </div>

@@ -377,7 +377,7 @@ export default function Home() {
               style={{ width: "100%", height: "100vh", position: "relative" }}
             >
               {/* // ! TURN BACK ON */}
-              <MemoGridBG
+              {/* <MemoGridBG
                 scanGlow={isMobile ? 0.92 : 0.6}
                 scanDirection="backward"
                 lineStyle="solid"
@@ -394,7 +394,7 @@ export default function Home() {
                 bloomIntensity={0.08}
                 chromaticAberration={0.002}
                 noiseIntensity={isMobile ? 0.006 : 0.01}
-              />
+              /> */}
             </div>
           </motion.div>
           <div className="min-h-screen hero bg-white fixed w-full overflow-hidden">
