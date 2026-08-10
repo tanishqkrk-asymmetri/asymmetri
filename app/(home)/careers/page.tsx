@@ -6,21 +6,76 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/button";
 import { RiseText } from "@/components/RiseText";
 import usePauseScroll from "@/hooks/usePauseScroll";
 import { T } from "@/components/Text";
-import ScrambledText from "@/components/ScrambledText";
 import { ASYM_RED } from "@/lib/color";
 import RotatingText from "@/components/fancyText";
-import { Laptop, Workflow } from "lucide-react";
+import { Laptop } from "lucide-react";
 
 const FRAME_COUNT = 500;
+const HERO_FRAME_COUNT = 151;
+const CAREERS_FRAME_PATH = "/careers3";
+const CAREER_PRINCIPLE_STARTS = [0.68, 0.71, 0.78];
+const CAREER_PRINCIPLE_HUES = [
+  "hue-rotate(400deg)",
+  "hue-rotate(100deg)",
+  "hue-rotate(280deg)",
+];
+const CAREER_PRINCIPLES = [
+  {
+    title: "Decisions that compound",
+    subtitle:
+      "You'll make real calls at the stage where judgment matters most, before choices harden into architecture and headcount. We hired you for that judgment; we don't second-guess it.",
+  },
+  {
+    title: "No layer between you and the outcome",
+    subtitle:
+      "We're small on purpose. What you build reaches real users directly, ships, and gets judged by whether it holds up, not by how it looked in a deck.",
+  },
+  {
+    title: "Range that keeps you sharp",
+    subtitle:
+      "Different domains, different stacks, a new problem before the last one goes stale. You won't coast, because there's nothing here to coast on.",
+  },
+];
+const BENEFITS = [
+  "Work from anywhere",
+  "Work from anywhere",
+  "Work from anywhere",
+];
+const heroFrameCache = new Map<string, HTMLImageElement>();
 
-function frameSrc(frame: number) {
-  return `/careers2/${String(frame).padStart(3, "0")}.png`;
+function heroFrameName(frame: number) {
+  return `ezgif-frame-${String(frame).padStart(3, "0")}.jpg`;
+}
+
+function heroFrameSrc(frame: number) {
+  return `${CAREERS_FRAME_PATH}/${heroFrameName(frame)}`;
+}
+
+function warmImage(src: string) {
+  if (heroFrameCache.has(src)) {
+    return Promise.resolve();
+  }
+
+  return new Promise<void>((resolve) => {
+    const image = new Image();
+    heroFrameCache.set(src, image);
+    image.onload = () => {
+      const decoded = image.decode?.();
+      if (decoded) {
+        decoded.catch(() => undefined).finally(resolve);
+        return;
+      }
+      resolve();
+    };
+    image.onerror = () => resolve();
+    image.src = src;
+  });
 }
 
 function RevealWord({
@@ -79,8 +134,98 @@ function ScrollTextReveal({
   );
 }
 
+function CareerPrinciple({
+  item,
+  index,
+  pageScroll,
+}: {
+  item: (typeof CAREER_PRINCIPLES)[number];
+  index: number;
+  pageScroll: MotionValue<number>;
+}) {
+  const start = CAREER_PRINCIPLE_STARTS[index] ?? CAREER_PRINCIPLE_STARTS[0];
+  const imageY = useTransform(pageScroll, [start, 1], ["30vh", "-30vh"]);
+  const titleY = useTransform(pageScroll, [start, 1], ["-30vh", "50vh"]);
+  const subtitleY = useTransform(pageScroll, [start, 1], ["0vh", "-60vh"]);
+
+  return (
+    <div className="w-[80vw] flex justify-center items-center relative  min-h-screen px-16 font-chakra-petch gap-8">
+      <div className="w-1/3 min-h-screen p-3 flex justify-center items-center relative">
+        <div className="min-h-screen bg-black/20 w-px absolute left-0 top-0"></div>
+        <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
+        <motion.img
+          style={{
+            y: imageY,
+            filter: CAREER_PRINCIPLE_HUES[index] ?? CAREER_PRINCIPLE_HUES[0],
+          }}
+          src="/about2.png"
+          className="rounded-lg w-84 -translate-y-36 aspect-square object-cover"
+          alt=""
+        />
+      </div>
+      <motion.div className="w-1/3 min-h-screen flex flex-col justify-center items-start pt-16 relative">
+        <motion.div
+          style={{ y: titleY }}
+          className="text-xl font-semibold text-black/50"
+        >
+          0{index + 1}
+        </motion.div>
+        <motion.div
+          style={{ y: titleY }}
+          className="text-4xl font-semibold "
+        >
+          {item.title}
+        </motion.div>
+        <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
+        <div className="min-h-screen bg-black/20 w-px absolute -left-3 top-0"></div>
+      </motion.div>
+      <div className="w-1/3 min-h-screen flex justify-center items-end pb-36 ">
+        <motion.p style={{ y: subtitleY }}>{item.subtitle}</motion.p>
+      </div>
+    </div>
+  );
+}
+
+function BenefitItem({
+  title,
+  index,
+  pageScroll,
+}: {
+  title: string;
+  index: number;
+  pageScroll: MotionValue<number>;
+}) {
+  const start = index === 0 ? 0.94 : index === 1 ? 0.95 : 0.96;
+  const end = 1;
+  const opacity = useTransform(pageScroll, [start, end], [0, 1]);
+  const y = useTransform(pageScroll, [start, end], [48, 0]);
+  const filter = useTransform(pageScroll, [start, end], [
+    "blur(8px)",
+    "blur(0px)",
+  ]);
+
+  return (
+    <motion.li
+      style={{ opacity, y, filter }}
+      className="flex items-center gap-6"
+    >
+      <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-white/50">
+        <Laptop size={50} strokeWidth={1} className="" color="white"></Laptop>
+      </div>
+      <div className="flex flex-col text-left">
+        <span className="text-lg font-semibold text-white">{title}</span>
+        <span className="mt-0.5 max-w-[14rem] text-sm leading-snug text-white/50">
+          No micromanagement,
+          <br />
+          no weird late-night messages.
+        </span>
+      </div>
+    </motion.li>
+  );
+}
+
 export default function Careers() {
-  const { loaderPct } = usePauseScroll();
+  usePauseScroll();
   const pageRef = useRef(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const lastFrameRef = useRef(0);
@@ -92,21 +237,40 @@ export default function Careers() {
 
   const [currentFrame, setCurrentFrame] = useState("ezgif-frame-001.jpg");
 
-  function pad(num: any, size: any) {
-    num = num.toString();
-    while (num.length < size) num = "0" + num;
-    return num;
-  }
+  useEffect(() => {
+    let cancelled = false;
+    const frames = Array.from({ length: HERO_FRAME_COUNT }, (_, index) =>
+      heroFrameSrc(index + 1),
+    );
+
+    let nextFrameIndex = 0;
+    const worker = async () => {
+      while (!cancelled && nextFrameIndex < frames.length) {
+        const src = frames[nextFrameIndex++];
+        await warmImage(src);
+      }
+    };
+
+    const startPreloading = () => {
+      const workers = Array.from({ length: 8 }, worker);
+      void Promise.all(workers);
+    };
+
+    startPreloading();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useMotionValueEvent(pageScroll, "change", (latest) => {
     const frame = Math.min(
       FRAME_COUNT - 1,
       Math.max(0, Math.round(latest * (FRAME_COUNT - 1))),
     );
-    if (frame < 150) {
-      setCurrentFrame("ezgif-frame-" + pad(frame + 1, 3) + ".jpg");
-    } else {
-      setCurrentFrame("ezgif-frame-" + pad(150 + 1, 3) + ".jpg");
+    const resolvedFrame = Math.min(frame + 1, HERO_FRAME_COUNT);
+    if (lastFrameRef.current !== resolvedFrame) {
+      lastFrameRef.current = resolvedFrame;
+      setCurrentFrame(heroFrameName(resolvedFrame));
     }
   });
 
@@ -360,132 +524,14 @@ export default function Careers() {
               }}
               className="min-w-screen  min-h-screen flex justify-center items-center"
             >
-              {[
-                {
-                  title: "Decisions that compound",
-                  subtitle:
-                    "You'll make real calls at the stage where judgment matters most, before choices harden into architecture and headcount. We hired you for that judgment; we don't second-guess it.",
-                },
-                {
-                  title: "No layer between you and the outcome",
-                  subtitle:
-                    "We're small on purpose. What you build reaches real users directly, ships, and gets judged by whether it holds up, not by how it looked in a deck.",
-                },
-                {
-                  title: "Range that keeps you sharp",
-                  subtitle:
-                    "Different domains, different stacks, a new problem before the last one goes stale. You won't coast, because there's nothing here to coast on.",
-                },
-              ].map((x, i) => {
-                return (
-                  <div
-                    className="w-[80vw] flex justify-center items-center relative  min-h-screen px-16 font-chakra-petch gap-8"
-                    key={x.toString()}
-                  >
-                    <div className="w-1/3 min-h-screen p-3 flex justify-center items-center relative">
-                      <div className="min-h-screen bg-black/20 w-px absolute left-0 top-0"></div>
-                      <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
-                      <motion.img
-                        style={{
-                          y: useTransform(
-                            pageScroll,
-                            [
-                              i === 0
-                                ? 0.68
-                                : i === 1
-                                  ? 0.71
-                                  : i === 2
-                                    ? 0.78
-                                    : 0.68,
-                              1,
-                            ],
-                            ["30vh", "-30vh"],
-                          ),
-                          filter:
-                            i === 0
-                              ? "hue-rotate(400deg)"
-                              : i === 1
-                                ? "hue-rotate(100deg)"
-                                : i === 2
-                                  ? "hue-rotate(280deg)"
-                                  : "hue-rotate(400deg)",
-                        }}
-                        src="/about2.png"
-                        className="rounded-lg w-84 -translate-y-36 aspect-square object-cover"
-                        alt=""
-                      />
-                    </div>
-                    <motion.div className="w-1/3 min-h-screen flex flex-col justify-center items-start pt-16 relative">
-                      <motion.div
-                        style={{
-                          y: useTransform(
-                            pageScroll,
-                            [
-                              i === 0
-                                ? 0.68
-                                : i === 1
-                                  ? 0.71
-                                  : i === 2
-                                    ? 0.78
-                                    : 0.68,
-                              1,
-                            ],
-                            ["-30vh", "50vh"],
-                          ),
-                        }}
-                        className="text-xl font-semibold text-black/50"
-                      >
-                        0{i + 1}
-                      </motion.div>
-                      <motion.div
-                        style={{
-                          y: useTransform(
-                            pageScroll,
-                            [
-                              i === 0
-                                ? 0.68
-                                : i === 1
-                                  ? 0.71
-                                  : i === 2
-                                    ? 0.78
-                                    : 0.68,
-                              1,
-                            ],
-                            ["-30vh", "50vh"],
-                          ),
-                        }}
-                        className="text-4xl font-semibold "
-                      >
-                        {x.title}
-                      </motion.div>
-                      <div className="min-h-screen bg-black/20 w-px absolute right-0 top-0"></div>
-                      <div className="min-h-screen bg-black/20 w-px absolute -left-3 top-0"></div>
-                    </motion.div>
-                    <div className="w-1/3 min-h-screen flex justify-center items-end pb-36 ">
-                      <motion.p
-                        style={{
-                          y: useTransform(
-                            pageScroll,
-                            [
-                              i === 0
-                                ? 0.68
-                                : i === 1
-                                  ? 0.71
-                                  : i === 2
-                                    ? 0.78
-                                    : 0.68,
-                              1,
-                            ],
-                            ["0vh", "-60vh"],
-                          ),
-                        }}
-                      >
-                        {x.subtitle}
-                      </motion.p>
-                    </div>
-                  </div>
-                );
-              })}
+              {CAREER_PRINCIPLES.map((item, index) => (
+                <CareerPrinciple
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  pageScroll={pageScroll}
+                />
+              ))}
             </motion.div>
           </motion.div>
         </motion.div>
@@ -510,50 +556,14 @@ export default function Careers() {
             />
 
             <ul className="flex flex-col gap-12">
-              {[
-                "Work from anywhere",
-                "Work from anywhere",
-                "Work from anywhere",
-              ].map((title, i) => {
-                const start =
-                  i === 0 ? 0.94 : i === 1 ? 0.95 : i === 2 ? 0.96 : 0.97;
-                const end = 1;
-                // i === 0 ? 0.95 : i === 1 ? 0.96 : i === 2 ? 0.97 : 0.97;
-                return (
-                  <motion.li
-                    key={i}
-                    style={{
-                      opacity: useTransform(pageScroll, [start, end], [0, 1]),
-                      y: useTransform(pageScroll, [start, end], [48, 0]),
-                      filter: useTransform(
-                        pageScroll,
-                        [start, end],
-                        ["blur(8px)", "blur(0px)"],
-                      ),
-                    }}
-                    className="flex items-center gap-6"
-                  >
-                    <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-white/50">
-                      <Laptop
-                        size={50}
-                        strokeWidth={1}
-                        className=""
-                        color="white"
-                      ></Laptop>
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-lg font-semibold text-white">
-                        {title}
-                      </span>
-                      <span className="mt-0.5 max-w-[14rem] text-sm leading-snug text-white/50">
-                        No micromanagement,
-                        <br />
-                        no weird late-night messages.
-                      </span>
-                    </div>
-                  </motion.li>
-                );
-              })}
+              {BENEFITS.map((title, index) => (
+                <BenefitItem
+                  key={`${title}-${index}`}
+                  title={title}
+                  index={index}
+                  pageScroll={pageScroll}
+                />
+              ))}
             </ul>
           </div>
           <motion.div
