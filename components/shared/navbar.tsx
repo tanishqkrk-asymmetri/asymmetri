@@ -29,7 +29,7 @@ const item: Variants = {
 export function Navbar({ pageScroll }: { pageScroll: any }) {
   const links = [
     { label: "About", href: "/about" },
-    { label: "Work", href: "" },
+    { label: "Work", href: "/case-studies" },
     { label: "Services", href: "/#services" },
     { label: "Careers", href: "/careers" },
     // { label: "Get in Touch", href: "/#contact" },
@@ -101,7 +101,12 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         delay: path === "/" ? 2.5 : 0,
       }}
       style={{
-        background: path === "/" ? bg : "#000000",
+        background:
+          path === "/"
+            ? bg
+            : path === "/case-studies" || path.startsWith("/case-studies/")
+              ? "#ffffff00"
+              : "#000000",
         color: path === "/" ? text : "#ffffff",
         borderColor: path === "/" ? border : "#ffffff50",
       }}
