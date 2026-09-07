@@ -48,7 +48,7 @@ function SnappyPanel({
 }) {
   const local = useLocalProgress(pageScroll, range);
   const x = useSnappyX(local, 90);
-  const rawScale = useTransform(local, [0, 0.22, 0.78, 1], [0.92, 1, 1, 0.92]);
+  const rawScale = useTransform(local, [0, 0.22, 0.78, 1], [1, 1, 1, 1]);
   const scale = useSpring(rawScale, SNAPPY);
 
   return (
@@ -395,7 +395,7 @@ export function CaseStudyTemplate({ study }: { study: CaseStudyDetail }) {
 
   return (
     <div ref={pageRef} className="bg-black text-white">
-      <Navbar pageScroll={pageScroll} />
+      {/* <Navbar pageScroll={pageScroll} /> */}
       <div className="relative" style={{ height: `${sectionCount * 280}vh` }}>
         <div className="sticky top-0 h-screen overflow-hidden">
           <div

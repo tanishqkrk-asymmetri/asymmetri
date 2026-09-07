@@ -388,8 +388,8 @@ const records: CaseStudyRecord[] = [
     testimonial: prescribeLifeProduct.testimonial,
     sections: buildSections({
       visuals: [
-        `${PL}/01-hero.png`,
-        `${PL}/02-featured.png`,
+        `/projects/prescribe-life/1.png`,
+        `/projects/prescribe-life/2.png`,
         `${PL}/03-narrative.png`,
         `${PL}/04-experience.png`,
       ],
@@ -657,7 +657,8 @@ const records: CaseStudyRecord[] = [
         "We redesigned the app around a single primary action, with everything else — guests, logs, devices — one layer underneath.",
       ],
       narrative: {
-        headline: "Security products fail when they feel like security products.",
+        headline:
+          "Security products fail when they feel like security products.",
         body: "People hesitate when a lock looks complicated. We used large, physical motion, plain language, and a home screen that has almost nothing on it besides the door in front of you.",
       },
       experience: {
