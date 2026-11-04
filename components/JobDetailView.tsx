@@ -57,7 +57,7 @@ function JobDetailNav() {
             className="w-9 p-1 transition-opacity hover:opacity-60"
             aria-label="Asymmetri"
           >
-            <img className="w-6 invert" src="/logo_mini.png" alt="" />
+            <img className="w-6" src="/brand/asymmetri-icon-dark.svg" alt="" />
           </Link>
         </div>
 

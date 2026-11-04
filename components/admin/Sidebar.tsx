@@ -10,7 +10,7 @@ export default function Sidebar() {
         <div className="flex items-center space-x-3">
           <img
             className="w-40 max-w-full object-contain opacity-90 sm:w-44"
-            src="/logo.png"
+            src="/brand/asymmetri-wordmark-light.svg"
             alt=""
           />
         </div>

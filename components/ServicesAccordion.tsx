@@ -1,89 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { memo, useState } from "react";
 
-type ServiceItem = {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  highlights: string[];
-  image: string;
-};
-
-const services: ServiceItem[] = [
-  {
-    id: "webapp",
-    title: "WebApp & SaaS Development",
-    description:
-      "We specialise in creating branding that resonates and connects. Our user experience design is focused on delivering seamless interactions, while our interface design marries functionality with visual appeal.",
-    tags: [
-      "Web-Design",
-      "Web-Design",
-      "Web-Design",
-      "Web-Design",
-      "Web-Design",
-    ],
-    highlights: ["web design", "Stack", "Web Animation", "Product Strategy"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "custom-website",
-    title: "Custom Website Development",
-    description:
-      "From marketing sites to complex web platforms, we craft digital experiences that load fast, rank well, and convert visitors into customers with precision and polish.",
-    tags: ["Frontend", "CMS", "SEO", "Performance", "Responsive"],
-    highlights: ["Landing Pages", "Stack", "Headless CMS", "Core Web Vitals"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "mobile",
-    title: "Mobile App Development",
-    description:
-      "Native and cross-platform apps built for real users — intuitive flows, reliable performance, and the kind of polish people expect from products they use every day.",
-    tags: ["iOS", "Android", "React Native", "Flutter", "App Store"],
-    highlights: ["Native UX", "Stack", "Push & Offline", "Product Strategy"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "ai",
-    title: "AI & Agentic Systems",
-    description:
-      "Intelligent systems that automate workflows, augment teams, and deliver measurable outcomes — from LLM integrations to autonomous agents that actually ship.",
-    tags: ["LLMs", "Agents", "RAG", "Automation", "MLOps"],
-    highlights: ["AI Integration", "Stack", "Workflow Design", "Evaluation"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "emerging",
-    title: "Emerging Tech (AR/VR, Simulation, Blockchain)",
-    description:
-      "Immersive experiences and decentralized systems for teams pushing into new territory — prototypes, pilots, and production-ready builds across emerging platforms.",
-    tags: ["AR/VR", "Web3", "Simulation", "Unity", "Spatial"],
-    highlights: ["Immersive UX", "Stack", "3D Interaction", "Prototyping"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "design",
-    title: "UI/UX & Product Design",
-    description:
-      "Research-led design that clarifies complexity and makes products feel inevitable — wireframes to high-fidelity systems, design tokens to shipped interfaces.",
-    tags: ["UX Research", "UI Systems", "Prototyping", "Design Ops", "Figma"],
-    highlights: ["User Flows", "Stack", "Design Systems", "Usability Testing"],
-    image: "/services-accordion-visual.png",
-  },
-  {
-    id: "marketing",
-    title: "Digital Marketing & SEO",
-    description:
-      "Growth strategies grounded in data — search visibility, content that ranks, campaigns that convert, and analytics that tell you what's actually working.",
-    tags: ["SEO", "Content", "Analytics", "Paid Media", "CRO"],
-    highlights: ["Search Strategy", "Stack", "Content Ops", "Conversion"],
-    image: "/services-accordion-visual.png",
-  },
-];
+import { services } from "@/lib/site-content";
 
 type ServicesAccordionProps = {
   isCompact?: boolean;
@@ -128,40 +49,41 @@ function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
             key={service.id}
             className="border-b border-black/20 last:border-b-0 z-99999999 relative"
           >
-            <button
-              type="button"
-              aria-expanded={isExpanded}
-              onMouseEnter={() => setHoveredId(service.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              onClick={() => toggle(service.id)}
-              className={`flex w-full items-center justify-between px-8 text-left transition-colors duration-200 sound cursor-pointer  ${
-                isCompact ? "py-6 text-base" : "py-8 text-lg"
-              } ${
-                isExpanded
-                  ? "bg-white text-black"
-                  : isHovered
-                    ? "bg-black text-white"
-                    : "bg-transparent text-black"
+            <h3>
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={`service-${service.id}`}
+                onMouseEnter={() => setHoveredId(service.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                onClick={() => toggle(service.id)}
+                className={`flex w-full items-center justify-between px-8 text-left transition-colors duration-200 sound cursor-pointer  ${
+                  isCompact ? "py-6 text-base" : "py-8 text-lg"
+                } ${
+                  isExpanded
+                    ? "bg-white text-black"
+                    : isHovered
+                      ? "bg-black text-white"
+                      : "bg-transparent text-black"
+                }`}
+              >
+                <span className="font-medium">{service.title}</span>
+                <Plus
+                  className={`size-5 shrink-0 stroke-[1.5] transition-transform duration-200 ${
+                    isExpanded ? "rotate-45" : ""
+                  }`}
+                />
+              </button>
+            </h3>
+
+            {/* Always in the HTML so crawlers read it; collapsed with CSS. */}
+            <div
+              id={`service-${service.id}`}
+              className={`grid bg-black transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
               }`}
             >
-              <span className="font-medium">{service.title}</span>
-              <Plus
-                className={`size-5 shrink-0 stroke-[1.5] transition-transform duration-200 ${
-                  isExpanded ? "rotate-45" : ""
-                }`}
-              />
-            </button>
-
-            <AnimatePresence initial={false}>
-              {isExpanded && (
-                <motion.div
-                  key="content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                  className="overflow-hidden bg-black"
-                >
+              <div className="overflow-hidden">
                   <div
                     className={`grid text-white ${
                       isCompact
@@ -208,12 +130,12 @@ function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
                         ))}
                       </ul>
                       <a
-                        href="#"
+                        href={service.link.href}
                         className={`group inline-flex w-fit items-center gap-3 transition-opacity hover:opacity-80 ${
                           isCompact ? "text-sm" : "text-base"
                         }`}
                       >
-                        View Case Studies
+                        {service.link.label}
                         <span className="flex size-8 items-center justify-center rounded-full border border-asymmetri-red">
                           <ArrowUpRight className="size-4 text-asymmetri-red" />
                         </span>
@@ -232,9 +154,8 @@ function ServicesAccordionComponent({ isCompact }: ServicesAccordionProps) {
                       />
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              </div>
+            </div>
           </motion.div>
         );
       })}

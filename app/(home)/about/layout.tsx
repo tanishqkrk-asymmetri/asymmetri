@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Meet Asymmetri: a collaborative team of designers and developers building thoughtful digital products that solve meaningful business problems.",
+    "Meet Asymmetri, a hard problems technology company: a lean core of engineers, designers and applied AI specialists building AI systems and products for global brands.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About Asymmetri",
     description:
-      "Meet the collaborative team behind thoughtful digital products built to solve meaningful business problems.",
+      "A lean operating core of engineers, designers and applied AI specialists, extended by specialists, solving hard problems for global brands.",
     url: "/about",
     images: [
       {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About Asymmetri",
     description:
-      "Meet the collaborative team behind thoughtful digital products built to solve meaningful business problems.",
+      "A lean operating core of engineers, designers and applied AI specialists, extended by specialists, solving hard problems for global brands.",
     images: ["/twitter-image.png"],
   },
 };

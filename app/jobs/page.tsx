@@ -10,7 +10,7 @@ export default async function CareersPage() {
           <a href="/">
             <img
               className="w-48 sm:w-64 md:w-80 lg:w-96 "
-              src="/logo.png"
+              src="/brand/asymmetri-wordmark-light.svg"
               alt=""
             />
           </a>

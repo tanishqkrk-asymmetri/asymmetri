@@ -2,7 +2,8 @@
 
 import ScrambledText from "@/components/ScrambledText";
 import Link from "next/link";
-import { motion, useTransform, Variant, Variants } from "motion/react";
+import { motion, useMotionValue, useTransform, Variants, type MotionValue } from "motion/react";
+import { navLinks } from "@/lib/site-content";
 import { usePathname } from "next/navigation";
 
 const container = {
@@ -26,21 +27,20 @@ const item: Variants = {
   },
 };
 
-export function Navbar({ pageScroll }: { pageScroll: any }) {
-  const links = [
-    { label: "About", href: "/about" },
-    { label: "Work", href: "/case-studies" },
-    { label: "Services", href: "/#services" },
-    { label: "Careers", href: "/careers" },
-    // { label: "Get in Touch", href: "/#contact" },
-  ] as const;
+// Pass pageScroll to colour-shift the bar with a scroll-driven page.
+// Without it the bar stays solid black (used by the home page).
+export function Navbar({ pageScroll }: { pageScroll?: MotionValue<number> }) {
+  const links = navLinks;
+  const fallbackScroll = useMotionValue(0);
+  const scroll = pageScroll ?? fallbackScroll;
+  const scrollDriven = Boolean(pageScroll);
 
   const sectionsIndi = [
     0, 0.18, 0.185, 0.33, 0.335, 0.37, 0.38, 0.55, 0.555, 0.77, 0.775, 0.88,
     0.885,
   ];
 
-  const bg = useTransform(pageScroll, sectionsIndi, [
+  const bg = useTransform(scroll, sectionsIndi, [
     "#000000",
     "#000000",
     "#ffffff",
@@ -55,7 +55,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#ffffff",
     "#000000",
   ]);
-  const text = useTransform(pageScroll, sectionsIndi, [
+  const text = useTransform(scroll, sectionsIndi, [
     "#ffffff",
     "#ffffff",
     "#000000",
@@ -70,7 +70,7 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
     "#000000",
     "#ffffff",
   ]);
-  const border = useTransform(pageScroll, sectionsIndi, [
+  const border = useTransform(scroll, sectionsIndi, [
     "#ffffff30",
     "#ffffff30",
     "#00000030",
@@ -88,7 +88,6 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
 
   const path = usePathname();
 
-  console.log(path);
   return (
     <motion.header
       initial={{
@@ -98,17 +97,17 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         opacity: 1,
       }}
       transition={{
-        delay: path === "/" ? 2.5 : 0,
+        delay: scrollDriven && path === "/" ? 2.5 : 0,
       }}
       style={{
         background:
-          path === "/"
+          scrollDriven && path === "/"
             ? bg
             : path === "/case-studies" || path.startsWith("/case-studies/")
               ? "#ffffff00"
               : "#000000",
-        color: path === "/" ? text : "#ffffff",
-        borderColor: path === "/" ? border : "#ffffff50",
+        color: scrollDriven && path === "/" ? text : "#ffffff",
+        borderColor: scrollDriven && path === "/" ? border : "#ffffff30",
       }}
       className="fixed top-0 w-full  z-9999999999999  border-b "
     >
@@ -124,11 +123,11 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
             className=" items-center gap-2  transition-colors  w-9 p-1 "
             aria-label="Asymmetri"
           >
-            <img className="w-6  " src="/logo_mini.png" alt="" />
+            <img className="w-6" src="/brand/asymmetri-icon-light.svg" alt="Asymmetri home" width={24} height={24} />
           </Link>
         </motion.div>
 
-        <nav className="hidden flex-none items-center  md:flex justify-center   text gap-36">
+        <nav aria-label="Primary" className="hidden flex-none items-center md:flex justify-center gap-10 lg:gap-16">
           {links.map((l) => (
             <motion.div key={l.href} className="sound">
               <a
@@ -160,8 +159,8 @@ export function Navbar({ pageScroll }: { pageScroll: any }) {
         >
           <motion.a
             style={{
-              background: path === "/" ? text : "#ff0000",
-              color: path === "/" ? bg : "#ffffff",
+              background: scrollDriven && path === "/" ? text : "#cd1717",
+              color: scrollDriven && path === "/" ? bg : "#ffffff",
             }}
             href="/contact-us"
             className="font-chakra-petch  tracking-wide  p-3 py-2 "

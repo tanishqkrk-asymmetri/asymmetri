@@ -11,6 +11,7 @@ import chalk from "chalk";
 import { art } from "@/lib/art";
 import playSoundOnHover from "@/lib/sound";
 import { Init } from "@/components/init";
+import { SITE_URL, company } from "@/lib/site-content";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,26 +30,31 @@ const chakraPetch = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://asymmetri.in",
-  ),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Asymmetri",
+    default: "Asymmetri | AI Engineering & Hard Problems Technology Company",
     template: "%s | Asymmetri",
   },
-  description:
-    "A full-stack collaborative agency for ambitious digital products.",
+  description: company.shortDescription,
   applicationName: "Asymmetri",
   keywords: [
     "Asymmetri",
-    "digital product agency",
-    "product design",
-    "web development",
-    "branding",
+    "hard problems technology company",
+    "AI engineering company",
+    "applied AI",
+    "AI agents development",
+    "multi-agent systems",
+    "RAG and knowledge systems",
+    "LLM evaluation and observability",
+    "AI governance",
+    "AI product design",
+    "technology consulting",
+    "frontier R&D",
   ],
-  authors: [{ name: "Asymmetri" }],
+  authors: [{ name: "Asymmetri", url: SITE_URL }],
   creator: "Asymmetri",
   publisher: "Asymmetri",
+  category: "technology",
   robots: {
     index: true,
     follow: true,
@@ -60,10 +66,12 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  alternates: {
+    types: { "text/markdown": "/llms.txt" },
+  },
   openGraph: {
-    title: "Asymmetri",
-    description:
-      "A full-stack collaborative agency for ambitious digital products.",
+    title: `Asymmetri: ${company.tagline}`,
+    description: company.shortDescription,
     type: "website",
     locale: "en_US",
     siteName: "Asymmetri",
@@ -78,9 +86,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Asymmetri",
-    description:
-      "A full-stack collaborative agency for ambitious digital products.",
+    title: `Asymmetri: ${company.tagline}`,
+    description: company.shortDescription,
     images: ["/twitter-image.png"],
   },
 };

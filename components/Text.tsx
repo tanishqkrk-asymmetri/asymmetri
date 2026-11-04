@@ -6,15 +6,19 @@ function Text({
   delay,
   duration,
   className,
+  as,
 }: {
   children: Readonly<React.ReactElement> | string | any;
   delay?: number;
   duration?: number;
   className?: string;
   el?: string;
+  /** Render as an inline element so it can live inside headings. */
+  as?: "div" | "span";
 }) {
+  const M = as === "span" ? motion.span : motion.div;
   return (
-    <motion.div
+    <M
       initial={{
         filter: "blur(6px)",
         y: 20,
@@ -37,7 +41,7 @@ function Text({
       className={className}
     >
       {children}
-    </motion.div>
+    </M>
   );
 }
 

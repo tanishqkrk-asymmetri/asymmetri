@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Build work that matters at Asymmetri. Explore opportunities for designers, developers, and collaborators who want to shape meaningful digital products.",
+    "Work on hard problems at Asymmetri. Open roles in engineering, design, applied AI and data, and operations at a technology company building AI systems and products for global brands.",
   alternates: {
     canonical: "/careers",
   },
   openGraph: {
     title: "Careers at Asymmetri",
     description:
-      "Join a close-knit team of designers and developers building meaningful digital products.",
+      "Join a lean team of engineers, designers and applied AI specialists solving hard problems for global brands.",
     url: "/careers",
     images: [
       {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Careers at Asymmetri",
     description:
-      "Join a close-knit team of designers and developers building meaningful digital products.",
+      "Join a lean team of engineers, designers and applied AI specialists solving hard problems for global brands.",
     images: ["/twitter-image.png"],
   },
 };
