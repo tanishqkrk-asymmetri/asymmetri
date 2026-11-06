@@ -1,0 +1,37 @@
+/* Keyframes for the Innovation and R&D page. */
+
+@keyframes rnd-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float {
+  animation: rnd-float 5s ease-in-out infinite;
+}
+
+@keyframes rnd-spin {
+  to { transform: rotateY(360deg); }
+}
+.spin {
+  animation: rnd-spin 14s linear infinite;
+}
+
+@keyframes rnd-eq {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+.eq {
+  transform-origin: bottom;
+  animation: rnd-eq 0.9s ease-in-out infinite;
+}
+
+@keyframes rnd-cord {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -24; }
+}
+.cord {
+  animation: rnd-cord 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .spin, .eq, .cord { animation: none; }
+}

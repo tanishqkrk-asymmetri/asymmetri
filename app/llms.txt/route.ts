@@ -9,9 +9,8 @@ import {
   processSteps,
   research,
   selectedWork,
-  services,
-  verticals,
 } from "@/lib/site-content";
+import { practices } from "@/lib/practices";
 
 // llms.txt (https://llmstxt.org): a plain-markdown brief for AI assistants and
 // answer engines. Generated from the same content as the home page.
@@ -32,13 +31,12 @@ export function GET() {
     `${company.name} is a ${company.category.toLowerCase()}. We solve consequential problems across four areas:`,
     ...pillars.map((p) => `- **${p.name}**: ${p.body}`),
     "",
-    "## What we do: three verticals",
+    "## What we do: four practices",
     "",
-    ...verticals.map((v, i) => `${i + 1}. **${v.name}**: ${v.body}`),
-    "",
-    "## Services",
-    "",
-    ...services.map((v) => `- **${v.title}**: ${v.description}`),
+    ...practices.map(
+      (p) =>
+        `${p.index}. **[${p.name}](${SITE_URL}${p.href})**: ${p.tagline} ${p.summary} Capabilities: ${p.capabilities.join(", ")}.`,
+    ),
     "",
     "## Point of view",
     "",

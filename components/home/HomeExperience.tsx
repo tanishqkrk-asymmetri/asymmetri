@@ -13,13 +13,13 @@ import {
 } from "motion/react";
 
 import React, { memo, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { FatCursors } from "@/components/FatCursors";
 import ScrambledText from "@/components/ScrambledText";
 import { Navbar } from "@/components/shared/navbar";
 import { MobileTestimonialsCarousel } from "@/components/MobileTestimonialsCarousel";
 import { CircularTestimonials } from "@/components/CircularTestimonials";
-import { ServicesAccordion } from "@/components/ServicesAccordion";
+import { PracticesIndex } from "@/components/home/PracticesIndex";
+import { SiteFooter } from "@/components/shared/SiteFooter";
 import playSoundOnHover from "@/lib/sound";
 import {
   art,
@@ -48,13 +48,11 @@ import {
 } from "@/components/ui/scroll-based-velocity";
 import { useLegacyScroll } from "@/hooks/useLegacyScroll";
 import { PointOfViewScene } from "@/components/home/PointOfViewScene";
-import { AiLayersTrack } from "@/components/home/AiLayersTrack";
 import { DomainsMorph } from "@/components/home/DomainsMorph";
 import { ProcessPipeline } from "@/components/home/ProcessPipeline";
-import { SdlcTerminal } from "@/components/home/SdlcTerminal";
 import { TileTransition } from "@/components/home/TileTransition";
 import { FaqBlock } from "@/components/home/FaqBlock";
-import { aiLayers, company } from "@/lib/site-content";
+import { company } from "@/lib/site-content";
 import { HeroSplit } from "@/components/home/HeroSplit";
 import { ManifestoBoard } from "@/components/home/ManifestoBoard";
 import { Wordmark } from "@/components/brand/Wordmark";
@@ -383,7 +381,7 @@ export function HomeExperience() {
                   }}
                   className=" mt-16   mx-auto w-full "
                 >
-                  <ServicesAccordion isCompact={isCompact} />
+                  <PracticesIndex />
                 </motion.div>
                 <div className=" mt-16  flex flex-col justify-center items-center mx-auto w-full space-y-16">
                   <motion.div
@@ -471,10 +469,10 @@ export function HomeExperience() {
           </motion.div>
           <MemoizedTransitionGrid mode={"ltd"} pageScroll={pageScroll} />
 
-          {/* NEW: point of view + the ten-layer AI system */}
+          {/* Point of view. The ten-layer AI system now lives on the
+              AI Agentic Systems and Data practice page. */}
           <div ref={povRef} className="relative z-[99999999999]">
             <PointOfViewScene />
-            <AiLayersTrack layers={aiLayers} />
           </div>
 
           <div className="relative z-9999999999">
@@ -749,10 +747,10 @@ export function HomeExperience() {
             </div>
           </div>
         </div>
-        {/* NEW: how we work, AI-driven delivery, FAQ */}
+        {/* How we work, then FAQ. The AI-driven SDLC scene now lives on the
+            Application Development practice page. */}
         <div ref={processRef} className="relative z-[999999999]">
           <ProcessPipeline />
-          <SdlcTerminal />
           <TileTransition from="#000000" to="#ffffff" />
         </div>
         <div ref={faqRef} className="relative z-[999999999]">
@@ -882,20 +880,7 @@ export function HomeExperience() {
             </Button>
           </div>
 
-          <footer className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-between gap-3 border-t border-white/25 px-6 py-5 font-chakra-petch text-xs text-white/80 md:flex-row md:px-10">
-            <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-1">
-              <Link href="/about" className="hover:text-white">About</Link>
-              <Link href="/case-studies" className="hover:text-white">Work</Link>
-              <Link href="/careers" className="hover:text-white">Careers</Link>
-              <Link href="/contact-us" className="hover:text-white">Contact</Link>
-              <a href={`mailto:${company.email}`} className="hover:text-white">
-                {company.email}
-              </a>
-            </nav>
-            <p>
-              © {new Date().getFullYear()} Asymmetri. {company.tagline}
-            </p>
-          </footer>
+          <SiteFooter className="absolute inset-x-0 bottom-0" />
         </section>
       </motion.div>
     </div>

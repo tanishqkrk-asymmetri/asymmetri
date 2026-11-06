@@ -5,8 +5,8 @@ import {
   domains,
   faqs,
   pillars,
-  verticals,
 } from "@/lib/site-content";
+import { practices } from "@/lib/practices";
 
 const orgId = `${SITE_URL}/#organization`;
 const siteId = `${SITE_URL}/#website`;
@@ -55,12 +55,14 @@ export function homeJsonLd() {
           "@type": "OfferCatalog",
           name: "Asymmetri services",
           itemListElement: [
-            ...verticals.map((v) => ({
+            ...practices.map((p) => ({
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: v.name,
-                description: v.body,
+                "@id": `${SITE_URL}${p.href}#service`,
+                name: p.name,
+                description: p.summary,
+                url: `${SITE_URL}${p.href}`,
                 provider: { "@id": orgId },
               },
             })),

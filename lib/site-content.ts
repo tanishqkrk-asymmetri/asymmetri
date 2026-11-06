@@ -41,21 +41,6 @@ export const pillars = [
   },
 ];
 
-export const verticals = [
-  {
-    name: "Technology consulting and services",
-    body: "Strategy, design and engineering in one team. We frame the hard problem, architect the system and ship it into production, AI-native from the first workshop.",
-  },
-  {
-    name: "Innovative products and solutions",
-    body: "Products we design, build and operate, from AI copilots and agentic platforms to the tools we run our own company on, like FinishLine.",
-  },
-  {
-    name: "Frontier R&D",
-    body: "Applied research in AI and machine learning systems and in mixed reality, so what is next becomes what ships.",
-  },
-];
-
 export const pointOfView = {
   headline:
     "AI becomes valuable when it leaves the chat window and enters the operation.",
@@ -511,7 +496,7 @@ export const selectedWork = [
 export const faqs = [
   {
     q: "What is Asymmetri?",
-    a: "Asymmetri is a hard problems technology company. It engineers AI systems, agents and digital products for global brands, across four areas: intelligence, process, experience and scale. Asymmetri works in three verticals: technology consulting and services, innovative products and solutions, and frontier R&D.",
+    a: "Asymmetri is a hard problems technology company. It engineers AI systems, agents and digital products for global brands, across four areas: intelligence, process, experience and scale. Asymmetri works through four practices: AI agentic systems and data, application development, technology consulting, and innovation and R&D.",
   },
   {
     q: "What does a hard problems technology company do?",
@@ -543,77 +528,10 @@ export const faqs = [
   },
 ];
 
+/** Primary nav. "What we do" opens the practices dropdown (lib/practices.ts). */
 export const navLinks = [
-  { label: "What we do", href: "/#what-we-do" },
-  { label: "AI system", href: "/#ai-system" },
+  { label: "What we do", href: "/#what-we-do", dropdown: true },
   { label: "Work", href: "/case-studies" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
-];
-
-/** The services accordion on the home page ("Bring us the hard problem"). */
-export const services = [
-  {
-    id: "consulting",
-    title: "Technology consulting and services",
-    description:
-      "Strategy, design and engineering in one team. We frame the hard problem, architect the system and ship it into production, AI-native from the first workshop.",
-    tags: ["Strategy", "Architecture", "Product", "Engineering", "Delivery"],
-    highlights: ["Problem framing", "System architecture", "Build and ship", "Operate and improve"],
-    link: { label: "View case studies", href: "/case-studies" },
-  },
-  {
-    id: "ai",
-    title: "AI and agentic systems",
-    description:
-      "Ten connected layers, from interaction design and knowledge architecture to agents, orchestration, evaluation, governance and inference economics. We engineer the whole intelligence loop, not isolated demos.",
-    tags: ["LLMs", "RAG", "Agents", "MCP", "Evals", "Guardrails"],
-    highlights: ["Agent runtimes", "Multi-agent orchestration", "Knowledge and memory", "Evaluation and governance"],
-    link: { label: "Explore the AI system", href: "/#ai-system" },
-  },
-  {
-    id: "products",
-    title: "Innovative products and solutions",
-    description:
-      "Products we design, build and operate, from AI copilots and agentic platforms to the tools we run our own company on, like FinishLine.",
-    tags: ["Copilots", "Platforms", "SaaS", "Mobile", "FinishLine"],
-    highlights: ["Product strategy", "Design systems", "Full-stack build", "Growth loops"],
-    link: { label: "View case studies", href: "/case-studies" },
-  },
-  {
-    id: "design",
-    title: "Product, experience and interaction design",
-    description:
-      "Interfaces people transact with, depend on and trust: AI-native UX, copilots, approval flows and brand systems that make complex intelligence feel effortless.",
-    tags: ["UX research", "UI systems", "Generative UI", "Brand", "Prototyping"],
-    highlights: ["Conversational UX", "Human-in-the-loop flows", "Design systems", "Usability testing"],
-    link: { label: "View case studies", href: "/case-studies" },
-  },
-  {
-    id: "platform",
-    title: "Platform engineering and scale",
-    description:
-      "Cloud, data and infrastructure that hold up from pilot to production: deployment, model serving, latency, caching and the unit economics that let ambition scale.",
-    tags: ["Cloud", "Kubernetes", "Data", "Observability", "Security"],
-    highlights: ["Infrastructure", "Model serving", "Cost engineering", "Reliability"],
-    link: { label: "How we work", href: "/#how-we-work" },
-  },
-  {
-    id: "rd-ai",
-    title: "Frontier R&D: AI and ML systems",
-    description:
-      "Agent runtimes, memory, evaluation and inference economics: the open questions that decide whether AI holds up in production.",
-    tags: ["Agents", "Memory", "Evaluation", "Inference", "Research"],
-    highlights: ["Applied research", "Prototypes", "Benchmarks", "Production transfer"],
-    link: { label: "Explore the AI system", href: "/#ai-system" },
-  },
-  {
-    id: "rd-mr",
-    title: "Frontier R&D: Mixed reality",
-    description:
-      "Spatial interfaces that carry intelligence into the physical world, where people work, train and move.",
-    tags: ["Mixed reality", "Spatial UI", "3D", "Simulation", "Wearables"],
-    highlights: ["Immersive UX", "3D interaction", "Spatial prototyping", "Connected devices"],
-    link: { label: "Five domains", href: "/#domains" },
-  },
 ];

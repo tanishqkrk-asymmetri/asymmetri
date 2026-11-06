@@ -38,8 +38,8 @@ const PERKS = [
 function JobDetailNav() {
   const links = [
     { label: "About", href: "/about" },
-    { label: "Work", href: "/" },
-    { label: "Services", href: "/#services" },
+    { label: "Work", href: "/case-studies" },
+    { label: "What we do", href: "/#what-we-do" },
     { label: "Careers", href: "/careers" },
   ] as const;
 
