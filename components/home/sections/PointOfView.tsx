@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
 import { PointOfViewScene } from "@/components/home/PointOfViewScene";
 

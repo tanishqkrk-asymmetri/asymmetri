@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { MaskLines } from "@/components/practice/MaskLines";
 import { ScrambleText } from "@/components/practice/ScrambleText";
 import { clients } from "@/components/home/whatwedo/clients";
@@ -33,7 +34,7 @@ function Wheel({ digits, play, delay = 0 }: { digits: number[]; play: boolean; d
 }
 
 /**
- * "More than 50 clients": an odometer rolls to 50 while a matrix of fifty
+ * "Trusted with the problems others walk away from" (50+ clients): an odometer rolls to 50 while a matrix of fifty
  * squares fills, one per client. The seven named clients are the red squares,
  * and each logo below lights its square and opens its case study.
  */
@@ -87,10 +88,10 @@ export function Clients() {
             <ScrambleText text="02 · Clients" />
           </p>
           <h2 id="clients-title" className="font-chakra-petch text-4xl leading-[0.92] font-bold uppercase md:text-6xl xl:text-[4.6vw]">
-            <MaskLines lines={["More than 50", "clients have", <span key="r" className="text-asymmetri-red">partnered with us.</span>]} />
+            <MaskLines lines={["Trusted with", "the problems", <span key="r" className="text-asymmetri-red">others walk away from.</span>]} />
           </h2>
           <p className="mt-6 max-w-md font-geist text-base leading-relaxed text-black/65 md:text-lg">
-            Founders, fast-growing teams and global brands. A few of them, with the work to show for it.
+            More than 50 founders, fast-growing teams and global brands have brought us their hard problem. A few of them, with the work to show for it.
           </p>
         </div>
 

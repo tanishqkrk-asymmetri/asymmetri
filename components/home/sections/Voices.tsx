@@ -2,14 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
-import {
-  motion,
-  useInView,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useTransform,
-} from "motion/react";
+import { motion, useInView, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { voices, type Voice } from "@/lib/voices";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
 import { MaskLines } from "@/components/practice/MaskLines";

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useMotionValueEvent, useReducedMotion, type MotionValue } from "motion/react";
+import { useMotionValueEvent, type MotionValue } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
 import { dataStages } from "./content";
 

@@ -1,14 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { motion, useMotionValue, useMotionValueEvent, useTransform, type MotionValue } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
 import { assumptions, brief, questions, reframe, reframeSpec } from "./content";
 

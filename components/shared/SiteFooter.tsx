@@ -16,9 +16,10 @@ export function SiteFooter({ className }: { className?: string }) {
       </nav>
       <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
         <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-1">
+          <a href="/#vision" className="hover:text-white">The vision</a>
+          <a href="/case-studies" className="hover:text-white">Our work</a>
+          <a href="/careers" className="hover:text-white">Careers &amp; Culture</a>
           <a href="/about" className="hover:text-white">About</a>
-          <a href="/case-studies" className="hover:text-white">Work</a>
-          <a href="/careers" className="hover:text-white">Careers</a>
           <a href="/contact-us" className="hover:text-white">Contact</a>
           <a href={`mailto:${company.email}`} className="hover:text-white">
             {company.email}

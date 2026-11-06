@@ -531,7 +531,7 @@ export const faqs = [
 /** Primary nav. "What we do" opens the practices dropdown (lib/practices.ts). */
 export const navLinks = [
   { label: "What we do", href: "/#what-we-do", dropdown: true },
-  { label: "Work", href: "/case-studies" },
-  { label: "About", href: "/about" },
-  { label: "Careers", href: "/careers" },
+  { label: "The vision", href: "/#vision" },
+  { label: "Our work", href: "/case-studies" },
+  { label: "Careers & Culture", href: "/careers" },
 ];

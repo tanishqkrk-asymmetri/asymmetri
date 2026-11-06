@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { SectionHead } from "@/components/practice/SectionHead";
 import { ScrambleText } from "@/components/practice/ScrambleText";
 import { autonomy } from "./content";

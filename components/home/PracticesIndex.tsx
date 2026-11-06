@@ -1,7 +1,8 @@
 "use client";
 
 import { memo, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useTransform } from "motion/react";
+import { motion, useMotionValueEvent, useTransform } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { ArrowUpRight } from "lucide-react";
 import { practices } from "@/lib/practices";
 import { useSectionProgress } from "@/hooks/useSectionProgress";

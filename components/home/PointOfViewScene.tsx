@@ -1,14 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { motion, useMotionValue, useMotionValueEvent, useTransform, type MotionValue } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { pointOfView } from "@/lib/site-content";
 import { MaskLines } from "@/components/practice/MaskLines";
 import { ScrambleText } from "@/components/practice/ScrambleText";

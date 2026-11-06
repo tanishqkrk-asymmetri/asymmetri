@@ -1,14 +1,8 @@
 "use client";
 
 import { useRef, type CSSProperties, type ReactNode } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import styles from "./rnd.module.css";
 
 const W = 440; // room width and depth

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { SectionHead } from "@/components/practice/SectionHead";
 import { capabilityDetail } from "./content";
 import styles from "./ai.module.css";

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { SectionHead } from "@/components/practice/SectionHead";
 import type { Practice } from "@/lib/practices";
 import { capabilitySpecs, type CapabilityKind } from "./content";

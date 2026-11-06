@@ -40,6 +40,22 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 
 // Seed position relative to centre, as a fraction of R: right of centre, on purpose.
 const SEED = { x: 0.2, y: -0.06 };
+
+/** Field timeline, in stage progress. Founder.tsx choreographs its type to the same values. */
+export const FIELD = {
+  seed: [0.13, 0.17], // the extra particle appears
+  flood: [0.17, 0.34], // its wave turns black to white
+  break: [0.26, 0.58], // symmetry unwinds into a galaxy
+  handoff: [0.6, 0.62], // the DOM particle takes over from the canvas one
+} as const;
+
+/** Where the extra particle sits, for a stage of w × h. */
+export function seedPoint(w: number, h: number) {
+  const R = Math.min(w, h) * (w < 640 ? 0.52 : 0.47);
+  const cx = w * 0.5;
+  const cy = h * 0.52;
+  return { R, cx, cy, sx: cx + SEED.x * R, sy: cy + SEED.y * R };
+}
 // Galaxy tilt echoes the logo slash.
 const TILT = (-26 * Math.PI) / 180;
 
@@ -107,6 +123,7 @@ export function YantraField({ progress }: { progress: MotionValue<number> }) {
     const pts = build();
     const X = new Float32Array(pts.length);
     const Y = new Float32Array(pts.length);
+    const W = new Uint8Array(pts.length);
     let w = 0;
     let h = 0;
     let dpr = 1;
@@ -125,20 +142,33 @@ export function YantraField({ progress }: { progress: MotionValue<number> }) {
     const draw = (now: number) => {
       const t = reduce ? 0 : now / 1000;
       const p = progress.get();
-      const R = Math.min(w, h) * (w < 640 ? 0.52 : 0.47);
-      const cx = w * 0.5;
-      const cy = h * 0.52;
-      const sx = cx + SEED.x * R;
-      const sy = cy + SEED.y * R;
-      const seedOn = smooth(0.36, 0.42, p);
-      const broken = smooth(0.4, 0.86, p);
+      const { R, sx, sy, cx, cy } = seedPoint(w, h);
+      const seedOn = smooth(FIELD.seed[0], FIELD.seed[1], p) * (1 - smooth(FIELD.handoff[0], FIELD.handoff[1], p));
+      const broken = smooth(FIELD.break[0], FIELD.break[1], p);
+      // The white wave the extra particle sends out, from black to white.
+      const far = Math.max(
+        Math.hypot(sx, sy),
+        Math.hypot(w - sx, sy),
+        Math.hypot(sx, h - sy),
+        Math.hypot(w - sx, h - sy),
+      );
+      const flood = ease(smooth(FIELD.flood[0], FIELD.flood[1], p)) * (far + 4);
+      const flood2 = flood * flood;
+      const inWhite = (x: number, y: number) => (x - sx) ** 2 + (y - sy) ** 2 < flood2;
       const breath = 1 + 0.018 * Math.sin(t * 0.7);
       const spin = t * 0.03;
       const cosT = Math.cos(TILT);
       const sinT = Math.sin(TILT);
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, w, h);
+      if (flood > 0) {
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(sx, sy, flood, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
       for (let i = 0; i < pts.length; i++) {
         const q = pts[i];
@@ -166,37 +196,42 @@ export function YantraField({ progress }: { progress: MotionValue<number> }) {
         }
         X[i] = x;
         Y[i] = y;
+        W[i] = inWhite(x, y) ? 1 : 0;
       }
 
-      // Symmetric rings fade out as the galaxy's filaments fade in.
+      // Ink flips colour where the wave has passed: white on black, black on white.
+      const ink = (white: number, a: number) => (white ? `rgba(0,0,0,${a})` : `rgba(255,255,255,${a})`);
       ctx.lineWidth = 0.6;
-      if (broken < 1) {
-        ctx.strokeStyle = `rgba(0,0,0,${0.13 * (1 - broken)})`;
-        ctx.beginPath();
-        for (let i = 0; i < pts.length; i++) {
-          const j = pts[i].next;
-          ctx.moveTo(X[i], Y[i]);
-          ctx.lineTo(X[j], Y[j]);
+      for (const side of [0, 1]) {
+        if (broken < 1) {
+          ctx.strokeStyle = ink(side, (side ? 0.13 : 0.16) * (1 - broken));
+          ctx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            if (W[i] !== side) continue;
+            const j = pts[i].next;
+            ctx.moveTo(X[i], Y[i]);
+            ctx.lineTo(X[j], Y[j]);
+          }
+          ctx.stroke();
         }
-        ctx.stroke();
-      }
-      if (broken > 0) {
-        ctx.strokeStyle = `rgba(0,0,0,${0.16 * broken})`;
-        ctx.beginPath();
-        for (let i = 0; i < pts.length; i++) {
-          const q = pts[i];
-          ctx.moveTo(X[i], Y[i]);
-          ctx.lineTo(X[q.n1], Y[q.n1]);
-          ctx.moveTo(X[i], Y[i]);
-          ctx.lineTo(X[q.n2], Y[q.n2]);
+        if (broken > 0) {
+          ctx.strokeStyle = ink(side, 0.16 * broken);
+          ctx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            if (W[i] !== side) continue;
+            const q = pts[i];
+            ctx.moveTo(X[i], Y[i]);
+            ctx.lineTo(X[q.n1], Y[q.n1]);
+            ctx.moveTo(X[i], Y[i]);
+            ctx.lineTo(X[q.n2], Y[q.n2]);
+          }
+          ctx.stroke();
         }
-        ctx.stroke();
-      }
-
-      ctx.fillStyle = "rgba(0,0,0,0.6)";
-      for (let i = 0; i < pts.length; i++) {
-        if (pts[i].red && broken > 0.2) continue;
-        ctx.fillRect(X[i] - 1, Y[i] - 1, 2, 2);
+        ctx.fillStyle = ink(side, side ? 0.6 : 0.7);
+        for (let i = 0; i < pts.length; i++) {
+          if (W[i] !== side || (pts[i].red && broken > 0.2)) continue;
+          ctx.fillRect(X[i] - 1, Y[i] - 1, 2, 2);
+        }
       }
       if (broken > 0.2) {
         ctx.fillStyle = `rgba(${RED},${smooth(0.2, 0.6, broken)})`;
@@ -205,23 +240,16 @@ export function YantraField({ progress }: { progress: MotionValue<number> }) {
         }
       }
 
-      // The seed: one red point, and the ripple it sends out.
+      // The extra particle, and the pulse it sends out.
       if (seedOn > 0) {
         const pulse = reduce ? 0 : (t * 0.6) % 1;
         ctx.fillStyle = `rgba(${RED},${seedOn})`;
-        ctx.fillRect(sx - 4, sy - 4, 8, 8);
-        ctx.strokeStyle = `rgba(${RED},${seedOn * (1 - pulse) * 0.6})`;
+        ctx.fillRect(sx - 5, sy - 5, 10, 10);
+        ctx.strokeStyle = `rgba(${RED},${seedOn * (1 - pulse) * 0.7})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(sx, sy, 6 + pulse * 40, 0, Math.PI * 2);
+        ctx.arc(sx, sy, 7 + pulse * 44, 0, Math.PI * 2);
         ctx.stroke();
-        const wave = smooth(0.4, 0.7, p);
-        if (wave > 0 && wave < 1) {
-          ctx.strokeStyle = `rgba(${RED},${(1 - wave) * 0.5})`;
-          ctx.beginPath();
-          ctx.arc(sx, sy, wave * R * 1.6, 0, Math.PI * 2);
-          ctx.stroke();
-        }
       }
     };
 

@@ -223,3 +223,4 @@
 @media (prefers-reduced-motion: reduce) {
   .kit-marquee, .kit-blink { animation: none; }
 }
+

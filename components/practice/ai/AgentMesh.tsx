@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 
 /** Event the trace log uses to light a node or force a re-route. */
 export const MESH_EVENT = "ai-mesh";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { trace, type TraceLine } from "./content";
 import { MESH_EVENT, type MeshEventDetail } from "./AgentMesh";
 import styles from "./ai.module.css";

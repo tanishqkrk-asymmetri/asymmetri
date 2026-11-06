@@ -159,7 +159,9 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
             className=" items-center gap-2  transition-colors  w-9 p-1 "
             aria-label="Asymmetri"
           >
+            {/* On the home page the hero's wordmark flies here; --hero-icon fades this in as it lands. */}
             <img
+              style={{ opacity: "var(--hero-icon, 1)" }}
               className="w-6"
               src={tone.bg === "#ffffff" ? "/brand/asymmetri-icon-dark.svg" : "/brand/asymmetri-icon-light.svg"}
               alt="Asymmetri home"
@@ -169,7 +171,7 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
           </a>
         </motion.div>
 
-        <nav aria-label="Primary" className="hidden flex-none items-center md:flex justify-center gap-10 lg:gap-16">
+        <nav aria-label="Primary" className="hidden flex-none items-center lg:flex justify-center gap-10 xl:gap-14">
           {links.map((l) =>
             "dropdown" in l && l.dropdown ? (
               <div
@@ -219,9 +221,9 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
               color: tone.bg === "#cd1717" ? "#cd1717" : "#ffffff",
             }}
             href="/contact-us"
-            className="font-chakra-petch whitespace-nowrap tracking-wide px-2.5 py-1.5 text-sm sm:p-3 sm:py-2 sm:text-base"
+            className="transition-opacity duration-500 [html[data-hero=closed]_&]:pointer-events-none [html[data-hero=closed]_&]:opacity-0 font-chakra-petch whitespace-nowrap tracking-wide px-2.5 py-1.5 text-sm sm:p-3 sm:py-2 sm:text-base"
           >
-            Get in touch
+            Get in Touch
           </motion.a>
           <button
             type="button"
@@ -229,7 +231,7 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
             aria-expanded={mobileOpen}
             aria-controls="nav-mobile"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="relative flex size-9 cursor-pointer items-center justify-center md:hidden"
+            className="relative flex size-9 cursor-pointer items-center justify-center lg:hidden"
           >
             <span
               className={`absolute h-px w-5 bg-current transition-transform duration-300 ${mobileOpen ? "rotate-45" : "-translate-y-1"}`}
@@ -251,7 +253,7 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-x-0 top-14 bottom-0 hidden bg-black/60 backdrop-blur-[2px] md:block"
+              className="fixed inset-x-0 top-14 bottom-0 hidden bg-black/60 backdrop-blur-[2px] lg:block"
               aria-hidden
             />
             <motion.div
@@ -263,7 +265,7 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
               animate={{ clipPath: "inset(0 0 0% 0)" }}
               exit={{ clipPath: "inset(0 0 100% 0)" }}
               transition={{ duration: 0.55, ease: EASE }}
-              className="heroDark absolute inset-x-0 top-14 hidden border-b border-white/15 bg-black text-white md:block"
+              className="heroDark absolute inset-x-0 top-14 hidden border-b border-white/15 bg-black text-white lg:block"
             >
               <MegaPanel path={path} onNavigate={() => setOpen(false)} />
             </motion.div>
@@ -280,7 +282,7 @@ export function Navbar(_props: { pageScroll?: unknown } = {}) {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.6, ease: EASE }}
-            className="heroDark fixed inset-x-0 top-14 bottom-0 overflow-y-auto bg-black text-white md:hidden"
+            className="heroDark fixed inset-x-0 top-14 bottom-0 overflow-y-auto bg-black text-white lg:hidden"
           >
             <MobileMenu path={path} />
           </motion.div>

@@ -12,7 +12,6 @@ import { PointOfView } from "@/components/home/sections/PointOfView";
 import { Work } from "@/components/home/sections/Work";
 import { Domains } from "@/components/home/sections/Domains";
 import { OperatingSystem } from "@/components/home/sections/OperatingSystem";
-import { Process } from "@/components/home/sections/Process";
 import { Founder } from "@/components/home/sections/Founder";
 import { Voices } from "@/components/home/sections/Voices";
 import { Faq } from "@/components/home/sections/Faq";
@@ -50,7 +49,6 @@ export function HomeExperience() {
       <Work />
       <Domains />
       <OperatingSystem />
-      <Process />
       <Founder />
       <Voices />
       <Faq />

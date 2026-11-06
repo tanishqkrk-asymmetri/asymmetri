@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { company, faqs } from "@/lib/site-content";
 import { MaskLines } from "@/components/practice/MaskLines";
 import { ScrambleText } from "@/components/practice/ScrambleText";

@@ -44,7 +44,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
       />
       <div className="kit-noise pointer-events-none fixed inset-0 z-[999999999999]" aria-hidden />
       <div
-        className="pointer-events-none fixed bottom-5 left-5 z-[99999999999] hidden items-center gap-3 border border-white/15 bg-black/80 py-1.5 pr-3 pl-2 backdrop-blur-sm md:flex"
+        className="transition-opacity duration-500 [html[data-hero=closed]_&]:pointer-events-none [html[data-hero=closed]_&]:opacity-0 pointer-events-none fixed bottom-5 left-5 z-[99999999999] hidden items-center gap-3 border border-white/15 bg-black/80 py-1.5 pr-3 pl-2 backdrop-blur-sm md:flex"
         aria-hidden
       >
         <span className="relative flex size-5 items-center justify-center">

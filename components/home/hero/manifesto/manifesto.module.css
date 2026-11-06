@@ -1,0 +1,171 @@
+/* Manifesto: scroll-written words and the pillar glyphs.
+ *
+ * The board root carries --mp, the chapter progress (0 to 1), written once
+ * per scroll frame. Each word maps it to its own reveal --t with --a (start)
+ * and --k (1 / duration), so a hundred styles follow one variable instead of
+ * a hundred motion values.
+ */
+
+.word {
+  --t: clamp(0, (var(--mp, 0) - var(--a)) * var(--k), 1);
+  display: inline-block;
+  opacity: calc(0.1 + 0.9 * var(--t));
+  filter: blur(calc((1 - var(--t)) * 9px));
+  transform: translateY(calc((1 - var(--t)) * 0.2em));
+}
+
+/* Red underline under a pillar word, drawn once the word has landed. */
+.underline {
+  --u: clamp(0, (var(--mp, 0) - var(--a)) * var(--k), 1);
+  transform: scaleX(var(--u));
+  transform-origin: left;
+}
+
+.static .word {
+  --t: 1;
+}
+.static .underline {
+  --u: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Glyphs (40×40). Idle: drawn still. Active: running, in red.          */
+/* ------------------------------------------------------------------ */
+
+.glyph [data-red] {
+  transition: stroke 0.3s, fill 0.3s, opacity 0.3s;
+}
+.glyph[data-active="true"] [data-red] {
+  stroke: #cd1717;
+}
+.glyph[data-active="true"] [data-red-fill] {
+  fill: #cd1717;
+}
+
+/* Intelligence: the tree grows, one path is chosen, the rest is pruned. */
+.glyph[data-active="true"] .branch {
+  stroke-dasharray: 26;
+  animation: grow 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.glyph[data-active="true"] .pruned {
+  animation: prune 2.4s ease infinite;
+}
+@keyframes grow {
+  0% {
+    stroke-dashoffset: 26;
+  }
+  45%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes prune {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0.18;
+  }
+}
+
+/* Process: tokens queue at the gate and leave it in step. */
+.glyph[data-active="true"] .token {
+  animation: flow 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes flow {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40%,
+  55% {
+    transform: translateX(13px);
+  }
+  90% {
+    transform: translateX(27px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(29px);
+    opacity: 0;
+  }
+}
+
+/* Experience: a touch ripples from wrist to room. */
+.glyph[data-active="true"] .frame {
+  animation: ripple 2.4s ease-out infinite;
+}
+@keyframes ripple {
+  0% {
+    stroke: currentColor;
+  }
+  12% {
+    stroke: #cd1717;
+  }
+  40%,
+  100% {
+    stroke: currentColor;
+  }
+}
+
+/* Scale: one slash, then four, then sixteen; the grid holds. */
+.glyph .cell {
+  opacity: 0.2;
+}
+.glyph .seed {
+  opacity: 1;
+}
+.glyph[data-active="true"] .seed {
+  stroke: #cd1717;
+}
+.glyph[data-active="true"] .gen1 {
+  animation: gen1 2.8s linear infinite;
+}
+.glyph[data-active="true"] .gen2 {
+  animation: gen2 2.8s linear infinite;
+}
+@keyframes gen1 {
+  0%,
+  25% {
+    opacity: 0.2;
+  }
+  26%,
+  92% {
+    opacity: 1;
+    stroke: #cd1717;
+  }
+  93%,
+  100% {
+    opacity: 0.2;
+  }
+}
+@keyframes gen2 {
+  0%,
+  55% {
+    opacity: 0.2;
+  }
+  56%,
+  92% {
+    opacity: 1;
+    stroke: #cd1717;
+  }
+  93%,
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph * {
+    animation: none !important;
+  }
+  .word {
+    filter: none;
+    transform: none;
+  }
+}

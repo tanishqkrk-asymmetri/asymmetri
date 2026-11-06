@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { company } from "@/lib/site-content";
 import { SiteFooter } from "@/components/shared/SiteFooter";
 import { MaskLines } from "@/components/practice/MaskLines";

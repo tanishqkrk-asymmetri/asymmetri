@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { buildPoses, mulberry32, type Pointer, type Pose } from "./fieldStates";
 
 const RED = "#cd1717";

@@ -1,13 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
-import {
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { motion, useMotionValueEvent, useTransform, type MotionValue } from "motion/react";
+import { useReduceMotion as useReducedMotion } from "@/hooks/useReduceMotion";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
 import { MaskLines } from "@/components/practice/MaskLines";
 import { ScrambleText } from "@/components/practice/ScrambleText";
