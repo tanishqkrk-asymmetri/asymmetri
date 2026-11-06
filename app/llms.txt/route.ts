@@ -31,6 +31,10 @@ export function GET() {
     `${company.name} is a ${company.category.toLowerCase()}. We solve consequential problems across four areas:`,
     ...pillars.map((p) => `- **${p.name}**: ${p.body}`),
     "",
+    "## Founder",
+    "",
+    "Asymmetri was founded by Nandagopal P (founder and CEO; https://www.nandagopalp.com), an engineer, venture builder and TEDx speaker. The name comes from an idea he returns to: existence itself began as a small asymmetry, and what endures usually comes from one small, true insight others stepped past. He pairs that operating view with a reflective one (attention, intention and conscious ambition), summed up in the line he quotes from the Chandogya Upanishad: Tat Tvam Asi, \"You are That\".",
+    "",
     "## What we do: four practices",
     "",
     ...practices.map(

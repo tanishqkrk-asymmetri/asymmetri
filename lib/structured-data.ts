@@ -29,6 +29,12 @@ export function homeJsonLd() {
         image: `${SITE_URL}/opengraph-image.png`,
         slogan: company.tagline,
         description: company.definition,
+        founder: {
+          "@type": "Person",
+          name: "Nandagopal P",
+          jobTitle: "Founder and CEO",
+          url: "https://www.nandagopalp.com",
+        },
         email: company.email,
         contactPoint: {
           "@type": "ContactPoint",

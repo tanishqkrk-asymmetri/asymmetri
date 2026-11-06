@@ -1,227 +1,346 @@
 "use client";
 
-import { forwardRef, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useReducedMotion } from "motion/react";
 import { useSectionProgress } from "@/hooks/useSectionProgress";
-import {
-  motion,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
-import { domains } from "@/lib/site-content";
+import { ScrambleText } from "@/components/practice/ScrambleText";
+import { domains, selectedWork } from "@/lib/site-content";
+import { FormLayers, forms, shapes } from "@/components/home/work/forms";
+import { clamp01, easeInOut, lerp, staircase } from "@/components/home/work/rng";
+import css from "@/components/home/work/work.module.css";
+import { usePauseOffscreen } from "@/components/home/work/usePauseOffscreen";
 
-const pad = (n: number) => String(n).padStart(2, "0");
+const pad = (n: number, l = 2) => String(n).padStart(l, "0");
+const N = domains.length;
+const TITLE = "Systems people transact with, depend on and use in the physical world.";
 
-// Each domain owns a fifth of the scroll; the frame holds, then morphs.
-const HOLD_IN = [0, 0.16, 0.24, 0.36, 0.44, 0.56, 0.64, 0.76, 0.84, 1];
-const hold = <T,>(stops: T[]) => stops.flatMap((s) => [s, s]);
+/* Scroll map: five held forms, then the last one swallows the screen. */
+const MORPH = [0.02, 0.74] as const;
+const EXIT = [0.86, 0.98] as const;
 
-const shapes = [
-  { label: "Card", w: "54vmin", h: "34vmin", r: "3vmin" },
-  { label: "Screen", w: "66vmin", h: "38vmin", r: "1vmin" },
-  { label: "Wearable", w: "30vmin", h: "37vmin", r: "8vmin" },
-  { label: "Console", w: "62vmin", h: "44vmin", r: "0.4vmin" },
-  { label: "Sensor", w: "46vmin", h: "46vmin", r: "23vmin" },
-];
+const seenIn = domains.map((d) => selectedWork.filter((w) => w.domain === d.name));
 
-// Fade a domain in for its fifth of the scroll and out at the end of it.
-function useSegment(p: MotionValue<number>, i: number, n: number) {
-  const a = i / n;
-  const b = (i + 1) / n;
-  const input =
-    i === 0 ? [0, b - 0.04, b] : i === n - 1 ? [a, a + 0.04, 1] : [a, a + 0.04, b - 0.04, b];
-  const output =
-    i === 0 ? [1, 1, 0] : i === n - 1 ? [0, 1, 1] : [0, 1, 1, 0];
-  return useTransform(p, input, output);
-}
-
-function DomainText({
-  p,
-  i,
-  name,
-  body,
-}: {
-  p: MotionValue<number>;
-  i: number;
-  name: string;
-  body: string;
-}) {
-  const opacity = useSegment(p, i, domains.length);
-  const y = useTransform(opacity, [0, 1], [30, 0]);
-  const filter = useTransform(opacity, [0, 1], ["blur(8px)", "blur(0px)"]);
+function DomainCopy({ i, live }: { i: number; live: boolean }) {
+  const d = domains[i];
   return (
-    <motion.li
-      style={{ opacity, y, filter }}
-      className="absolute inset-x-0 top-0 space-y-4"
+    <li
+      inert={!live}
+      className={`[grid-area:1/1] transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${live ? "opacity-100" : "pointer-events-none translate-y-4 opacity-0 blur-[6px]"}`}
     >
-      <span className="block text-7xl leading-none font-bold md:text-9xl">
-        {pad(i + 1)}
-      </span>
-      <h3 className="text-3xl font-bold uppercase leading-none md:text-5xl">
-        {name}
-      </h3>
-      <p className="max-w-md font-geist text-base text-white/85 md:text-lg">
-        {body}
+      <p className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-black/70">
+        <span className="size-2 bg-black" aria-hidden />
+        D.{pad(i + 1)} · Form: {shapes[i].label}
       </p>
-    </motion.li>
+      <h3 className="mt-3 font-chakra-petch text-[8.5vw] leading-[0.92] font-bold uppercase md:text-5xl xl:text-6xl">
+        <ScrambleText text={d.name} trigger="none" replayKey={live ? i : -1} duration={0.6} />
+      </h3>
+      <p className="mt-3 max-w-md font-geist text-sm leading-snug text-white/85 md:mt-4 md:text-lg">{d.body}</p>
+      {seenIn[i].length > 0 && (
+        <p className="mt-4 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em]">
+          <span className="text-black/70">Seen in</span>
+          {seenIn[i].map((w) => (
+            <a
+              key={w.slug}
+              href={`/case-studies/${w.slug}`}
+              className="border border-white/60 px-2 py-1 transition-colors hover:bg-white hover:text-black focus-visible:bg-white focus-visible:text-black focus-visible:outline-none"
+            >
+              {w.name} <span aria-hidden>↗</span>
+            </a>
+          ))}
+        </p>
+      )}
+    </li>
   );
 }
 
-function Wire({
-  p,
-  i,
-  children,
-}: {
-  p: MotionValue<number>;
-  i: number;
-  children: React.ReactNode;
-}) {
-  const opacity = useSegment(p, i, shapes.length);
+/* ── Reduced motion: each domain beside its own form, no pinning ────── */
+function DomainsStatic() {
   return (
-    <motion.div style={{ opacity }} className="absolute inset-0">
-      {children}
-    </motion.div>
+    <section
+      id="domains"
+      data-chapter="Domains"
+      data-nav="red"
+      aria-labelledby="domains-title"
+      className="relative bg-asymmetri-red px-6 pt-24 pb-24 font-chakra-petch text-white md:px-16"
+    >
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/70">Five domains · One interface</p>
+      <h2 id="domains-title" className="mt-3 max-w-3xl text-3xl leading-none font-bold uppercase md:text-5xl">
+        {TITLE}
+      </h2>
+      <ol className="mt-12 grid gap-10 md:grid-cols-2">
+        {domains.map((d, i) => {
+          const F = forms[i];
+          const s = shapes[i];
+          return (
+            <li key={d.name} className="grid gap-4">
+              <div
+                className={`${css.live} relative overflow-hidden border-2 border-white bg-[#0a0a0a]`}
+                style={{ aspectRatio: `${s.w} / ${s.h}`, width: `${Math.min(100, s.w * 1.4)}%`, borderRadius: s.r * 6 }}
+                aria-hidden
+              >
+                <F />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/70">D.{pad(i + 1)} · {s.label}</p>
+                <h3 className="mt-2 text-2xl font-bold uppercase md:text-3xl">{d.name}</h3>
+                <p className="mt-2 max-w-md font-geist text-base text-white/85">{d.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
   );
 }
 
-export const DomainsMorph = forwardRef<HTMLElement>(
-  function DomainsMorph(_, outerRef) {
-    const ref = useRef<HTMLElement | null>(null);
-    const p = useSectionProgress(ref);
+/* ── One interface, five forms ──────────────────────────────────────── */
+function DomainsPinned() {
+  const ref = useRef<HTMLElement>(null);
+  const p = useSectionProgress(ref);
+  usePauseOffscreen(ref);
 
-    const width = useTransform(p, HOLD_IN, hold(shapes.map((s) => s.w)));
-    const height = useTransform(p, HOLD_IN, hold(shapes.map((s) => s.h)));
-    const borderRadius = useTransform(p, HOLD_IN, hold(shapes.map((s) => s.r)));
-    const rotate = useTransform(p, HOLD_IN, hold([-4, 3, -2, 2, 0]));
-    const caption = useTransform(p, (v) => {
-      const i = Math.min(Math.floor(v * shapes.length), shapes.length - 1);
-      return `Interface ${pad(i + 1)} · ${shapes[i].label}`;
+  const stage = useRef<HTMLDivElement>(null);
+  const pin = useRef<HTMLDivElement>(null);
+  const wrap = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  const wTxt = useRef<HTMLSpanElement>(null);
+  const hTxt = useRef<HTMLSpanElement>(null);
+  const chrome = useRef<(HTMLElement | null)[]>([]);
+  const geo = useRef({ W: 0, H: 0, u: 0, cx: 0, cy: 0 });
+  const exiting = useRef(false);
+
+  const [active, setActive] = useState(0);
+  const [black, setBlack] = useState(false);
+
+  const render = useCallback((v: number) => {
+    const g = geo.current;
+    if (!g.u || !wrap.current || !frame.current) return;
+    const D = staircase(clamp01((v - MORPH[0]) / (MORPH[1] - MORPH[0])) * (N - 1), N - 1, 0.5);
+    const k = Math.min(Math.floor(D), N - 2);
+    const f = D - k;
+    const a = shapes[k];
+    const b = shapes[k + 1];
+    const X = easeInOut(clamp01((v - EXIT[0]) / (EXIT[1] - EXIT[0])));
+
+    const w0 = lerp(a.w, b.w, f) * g.u;
+    const h0 = lerp(a.h, b.h, f) * g.u;
+    const r0 = lerp(a.r, b.r, f) * g.u;
+    // A small kick mid-morph, so the change of form feels physical.
+    const kick = Math.sin(f * Math.PI) * 4;
+    const rot = lerp(lerp(a.rot, b.rot, f) + kick, 0, X);
+    const w = lerp(w0, g.W * 1.08, X);
+    const h = lerp(h0, g.H * 1.08, X);
+    const r = lerp(r0, 0, Math.min(1, X * 1.4));
+    const dx = (g.W / 2 - g.cx) * X;
+    const dy = (g.H / 2 - g.cy) * X;
+
+    const ws = wrap.current.style;
+    ws.width = `${w}px`;
+    ws.height = `${h}px`;
+    ws.transform = `translate(-50%, -50%) translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+    frame.current.style.borderRadius = `${r}px`;
+    if (X > 0 && !exiting.current) frame.current.style.transform = "";
+    exiting.current = X > 0;
+    frame.current.style.borderColor = `rgba(255,255,255,${1 - X})`;
+    const bg = Math.round(10 * (1 - X));
+    frame.current.style.backgroundColor = `rgb(${bg},${bg},${bg})`;
+    if (inner.current) inner.current.style.opacity = String(1 - clamp01(X * 3));
+    if (wTxt.current) wTxt.current.textContent = `W ${pad(Math.round(w / g.u), 3)}`;
+    if (hTxt.current) hTxt.current.textContent = `H ${pad(Math.round(h / g.u), 3)}`;
+    const fade = String(1 - clamp01(X * 2.5));
+    chrome.current.forEach((el) => {
+      if (el) el.style.opacity = fade;
     });
 
-    return (
-      <section
-        ref={(el) => {
-          ref.current = el;
-          if (typeof outerRef === "function") outerRef(el);
-          else if (outerRef) outerRef.current = el;
-        }}
-        id="domains"
-        aria-labelledby="domains-title"
-        className="relative h-[460vh] bg-asymmetri-red font-chakra-petch text-white"
-      >
-        <div className="sticky top-0 grid h-screen grid-rows-[auto_1fr] overflow-hidden bg-asymmetri-red px-6 pt-20 pb-10 md:grid-cols-2 md:grid-rows-1 md:gap-10 md:px-16">
-          {/* vertical guide lines, echoing the project cards above */}
-          <div className="pointer-events-none absolute inset-0 grid grid-cols-4" aria-hidden>
-            {[0, 1, 2, 3].map((c) => (
-              <span key={c} className="border-l border-white/15" />
-            ))}
-          </div>
+    setActive(Math.min(Math.max(Math.round(D), 0), N - 1));
+    setBlack(X > 0.6);
+  }, []);
 
-          <div className="relative flex flex-col">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/75 md:text-xs">
-              What we build · 02 · Five domains
+  useMotionValueEvent(p, "change", render);
+
+  useEffect(() => {
+    const measure = () => {
+      const s = stage.current;
+      if (!s) return;
+      chrome.current = Array.from(pin.current?.querySelectorAll<HTMLElement>("[data-chrome]") ?? []);
+      const rect = s.getBoundingClientRect();
+      const base = pin.current?.getBoundingClientRect() ?? { left: 0, top: 0 };
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+      const maxW = Math.max(...shapes.map((x) => x.w));
+      const maxH = Math.max(...shapes.map((x) => x.h));
+      const u = Math.max(2, Math.min((rect.width * 0.86) / maxW, (rect.height * 0.8) / maxH));
+      geo.current = { W, H, u, cx: rect.left - base.left + rect.width / 2, cy: rect.top - base.top + rect.height / 2 };
+      // Blueprint: every form the interface can take, drawn faintly on the stage.
+      s.querySelectorAll<HTMLElement>("[data-ghost]").forEach((el, i) => {
+        const g = shapes[i];
+        el.style.width = `${g.w * u}px`;
+        el.style.height = `${g.h * u}px`;
+        el.style.borderRadius = `${g.r * u}px`;
+        el.style.transform = `translate(-50%, -50%) rotate(${g.rot}deg)`;
+      });
+      render(p.get());
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (stage.current) ro.observe(stage.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [p, render]);
+
+  /* Cursor tilt: the device leans towards the pointer (fine pointers only). */
+  useEffect(() => {
+    const st = stage.current;
+    const fr = frame.current;
+    if (!st || !fr || !window.matchMedia("(pointer: fine)").matches) return;
+    let raf = 0;
+    const move = (e: PointerEvent) => {
+      if (exiting.current) return;
+      const r = st.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        fr.style.transform = `perspective(1100px) rotateY(${x * 14}deg) rotateX(${-y * 12}deg)`;
+      });
+    };
+    const leave = () => {
+      cancelAnimationFrame(raf);
+      fr.style.transform = "";
+    };
+    st.addEventListener("pointermove", move);
+    st.addEventListener("pointerleave", leave);
+    return () => {
+      cancelAnimationFrame(raf);
+      st.removeEventListener("pointermove", move);
+      st.removeEventListener("pointerleave", leave);
+    };
+  }, []);
+
+  const goTo = useCallback((i: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const t = i === N - 1 ? N - 1 + 0.05 : i + 0.15;
+    const v = MORPH[0] + (t / (N - 1)) * (MORPH[1] - MORPH[0]);
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + v * (el.offsetHeight - window.innerHeight), behavior: "smooth" });
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      id="domains"
+      data-chapter="Domains"
+      data-nav="red"
+      aria-labelledby="domains-title"
+      className={`${css.host} relative h-[400vh] bg-asymmetri-red font-chakra-petch text-white`}
+    >
+      <div ref={pin} data-nav={black ? "dark" : "red"} className="sticky top-0 h-[100svh] overflow-hidden bg-asymmetri-red">
+        {/* hairline columns, continuous with Work above */}
+        <div data-chrome="" className="pointer-events-none absolute inset-0 grid grid-cols-4" aria-hidden>
+          {[0, 1, 2, 3].map((c) => (
+            <span key={c} className="border-l border-white/15" />
+          ))}
+        </div>
+
+        <div className="relative grid h-full grid-cols-1 grid-rows-[auto_minmax(0,1fr)_auto] gap-4 px-6 pt-20 pb-6 md:pb-20 [grid-template-areas:'head'_'stage'_'copy'] md:px-16 lg:grid-cols-[1fr_1.15fr] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-0 lg:pt-24 lg:pb-12 lg:[grid-template-areas:'head_stage'_'copy_stage']">
+          <header data-chrome="" className="[grid-area:head]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/70 md:text-xs">
+              <ScrambleText text="Five domains · One interface, five forms" />
             </p>
-            <h2
-              id="domains-title"
-              className="mt-3 max-w-xl text-2xl font-bold uppercase leading-none md:text-4xl"
-            >
-              Systems people transact with, depend on and use in the physical
-              world.
+            <h2 id="domains-title" className="mt-3 max-w-xl text-xl leading-[0.95] font-bold uppercase md:text-4xl">
+              {TITLE}
             </h2>
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-black/70">
-              Different domains. Different interfaces.
-            </p>
-            <ol className="relative mt-8 min-h-[18rem] flex-1 md:mt-12">
-              {domains.map((d, i) => (
-                <DomainText key={d.name} p={p} i={i} name={d.name} body={d.body} />
-              ))}
-            </ol>
-          </div>
+          </header>
 
-          <div className="relative hidden items-center justify-center md:flex" aria-hidden>
-            <div className="flex scale-[0.72] flex-col items-center gap-6 xl:scale-100">
-              <motion.div
-                style={{ width, height, borderRadius, rotate }}
-                className="relative overflow-hidden border-2 border-white bg-black/15 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm"
+          <ol data-chrome="" className="grid self-end [grid-area:copy] lg:pb-4">
+            {domains.map((d, i) => (
+              <DomainCopy key={d.name} i={i} live={active === i} />
+            ))}
+          </ol>
+
+          {/* ── the stage ── */}
+          <div className="relative z-10 flex min-h-0 flex-col [grid-area:stage]">
+            <div ref={stage} className="relative min-h-0 flex-1">
+              {/* drafting dots */}
+              <span
+                data-chrome=""
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.35)_1px,transparent_1.2px)] bg-[size:22px_22px] [mask-image:radial-gradient(closest-side,black,transparent)]"
+              />
+              <div data-chrome="" aria-hidden className="pointer-events-none absolute inset-0">
+                {shapes.map((g) => (
+                  <span
+                    key={g.label}
+                    data-ghost=""
+                    className="absolute top-1/2 left-1/2 border border-dashed border-white/30"
+                  />
+                ))}
+              </div>
+              <div
+                ref={wrap}
+                aria-hidden
+                className="absolute top-1/2 left-1/2 will-change-transform"
+                style={{ width: 0, height: 0 }}
               >
-                {/* 01 Card: commerce and finance */}
-                <Wire p={p} i={0}>
-                  <span className="absolute top-[18%] left-[8%] h-[20%] w-[14%] rounded-md border-2 border-white" />
-                  <span className="absolute top-[18%] right-[8%] font-mono text-[1.6vmin]">
-                    ))) VERIFIED ✓
-                  </span>
-                  <span className="absolute bottom-[26%] left-[8%] font-mono text-[3vmin] tracking-[0.3em]">
-                    •••• •••• •••• 2026
-                  </span>
-                  <span className="absolute bottom-[10%] left-[8%] h-[3%] w-[30%] bg-white/70" />
-                </Wire>
-                {/* 02 Screen: media and growth */}
-                <Wire p={p} i={1}>
-                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-y-[3vmin] border-l-[5vmin] border-y-transparent border-l-white" />
-                  <span className="absolute right-[6%] bottom-[10%] left-[6%] h-[2%] bg-white/30">
-                    <span className="block h-full w-[62%] bg-white" />
-                  </span>
-                  <span className="absolute top-[8%] left-[6%] font-mono text-[1.6vmin]">● LIVE</span>
-                </Wire>
-                {/* 03 Wearable: health and care */}
-                <Wire p={p} i={2}>
-                  <svg viewBox="0 0 100 40" className="absolute top-[30%] left-[10%] w-[80%]">
-                    <polyline
-                      points="0,20 22,20 30,6 38,34 46,20 60,20 66,12 72,20 100,20"
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="2"
-                      className="pulse-line"
-                    />
-                  </svg>
-                  <span className="absolute bottom-[18%] w-full text-center text-[5vmin] font-bold">
-                    72<span className="text-[2vmin]"> BPM</span>
-                  </span>
-                </Wire>
-                {/* 04 Console: operations and logistics */}
-                <Wire p={p} i={3}>
-                  <div className="absolute inset-[10%] flex items-end gap-[3%] border-b border-l border-white/60">
-                    {[40, 65, 30, 80, 55, 90, 45, 70].map((h, k) => (
-                      <span
-                        key={k}
-                        style={{ height: `${h}%` }}
-                        className={`flex-1 ${k === 5 ? "bg-white" : "bg-white/40"}`}
-                      />
-                    ))}
+                <div
+                  ref={frame}
+                  className="absolute inset-0 overflow-hidden border-2 border-white bg-[#0a0a0a] shadow-[0_50px_90px_-40px_rgba(0,0,0,0.8)] transition-transform duration-300 ease-out"
+                >
+                  <div ref={inner} className="absolute inset-0">
+                    <FormLayers active={active} />
                   </div>
-                  <span className="absolute top-[3%] left-[10%] font-mono text-[1.6vmin]">
-                    THROUGHPUT ▲
-                  </span>
-                </Wire>
-                {/* 05 Sensor: physical and connected environments */}
-                <Wire p={p} i={4}>
-                  {[80, 56, 32].map((s) => (
-                    <span
-                      key={s}
-                      style={{ width: `${s}%`, height: `${s}%` }}
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/50"
-                    />
-                  ))}
-                  <span className="radar-sweep absolute top-0 left-1/2 h-1/2 w-[2px] origin-bottom bg-white" />
-                  {[
-                    [28, 30],
-                    [70, 40],
-                    [40, 72],
-                  ].map(([l, t]) => (
-                    <span
-                      key={`${l}-${t}`}
-                      style={{ left: `${l}%`, top: `${t}%` }}
-                      className="absolute size-[1.6vmin] rounded-full bg-white"
-                    />
-                  ))}
-                </Wire>
-              </motion.div>
-              <motion.span className="font-mono text-xs uppercase tracking-[0.25em] text-white/80">
-                {caption}
-              </motion.span>
+                </div>
+                {/* live dimension lines */}
+                <span data-chrome="" className="absolute inset-x-0 -top-6 flex items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-white/80">
+                  <span className="h-2 border-l border-white/70" />
+                  <span className="h-px flex-1 bg-white/50" />
+                  <span ref={wTxt}>W 054</span>
+                  <span className="h-px flex-1 bg-white/50" />
+                  <span className="h-2 border-l border-white/70" />
+                </span>
+                <span data-chrome="" className="absolute inset-y-0 -right-6 flex flex-col items-center gap-2 font-mono text-[9px] tracking-[0.2em] text-white/80">
+                  <span className="w-2 border-t border-white/70" />
+                  <span className="w-px flex-1 bg-white/50" />
+                  <span ref={hTxt} className="[writing-mode:vertical-rl]">H 034</span>
+                  <span className="w-px flex-1 bg-white/50" />
+                  <span className="w-2 border-t border-white/70" />
+                </span>
+              </div>
+            </div>
+
+            {/* form selector */}
+            <div data-chrome="" className="mt-8 flex items-center justify-between gap-3 md:mt-10">
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.25em] text-black/70 md:inline">
+                Interface {pad(active + 1)}/{pad(N)}
+              </span>
+              <div className="flex flex-1 gap-1 md:max-w-md" role="group" aria-label="Jump to a domain">
+                {shapes.map((s, i) => (
+                  <button
+                    key={s.label}
+                    type="button"
+                    onClick={() => goTo(i)}
+                    aria-label={`${domains[i].name}: ${s.label}`}
+                    aria-pressed={active === i}
+                    className={`relative flex-1 border px-1 py-2 font-mono text-[8px] uppercase tracking-[0.15em] transition-colors md:text-[9px] md:tracking-[0.2em] ${active === i ? "border-black bg-black text-white" : "border-white/40 text-white/80 hover:border-white hover:text-white"}`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </section>
-    );
-  },
-);
+      </div>
+    </section>
+  );
+}
+
+export function DomainsMorph() {
+  const reduce = useReducedMotion();
+  return reduce ? <DomainsStatic /> : <DomainsPinned />;
+}

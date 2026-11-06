@@ -480,7 +480,7 @@ function CutOverlay({ geo }: { geo: MotionValue<SplitGeo> }) {
   return (
     <svg
       ref={svgRef}
-      className="pointer-events-none fixed inset-0 z-[1000] h-screen w-screen"
+      className="pointer-events-none absolute inset-0 z-[1000] h-full w-full"
       style={{ display: "none" }}
       preserveAspectRatio="none"
       aria-hidden
@@ -506,7 +506,7 @@ export function HeroSplit({ loaded, split }: { loaded: boolean; split: Split }) 
         animate={{ scale: loaded ? 1 : 0 }}
         transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1] }}
         style={{ visibility }}
-        className="fixed top-0 left-0 z-9 h-screen w-screen overflow-hidden"
+        className="absolute inset-0 z-9 overflow-hidden"
       >
         <SymmetryField geo={geo} loaded={loaded} />
         <motion.div style={{ clipPath: clipA, x: ax, y: ay }} className="absolute inset-0">

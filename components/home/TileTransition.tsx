@@ -29,8 +29,11 @@ function Tile({
   from: string;
   to: string;
 }) {
-  const background = useTransform(p, range(i), [from, to]);
-  return <motion.div style={{ background }} className="h-full w-full" />;
+  const r = range(i);
+  const background = useTransform(p, r, [from, to]);
+  // A 1px halo in the tile's own colour hides seams between fractional-size tiles.
+  const boxShadow = useTransform(p, r, [`0 0 0 1px ${from}`, `0 0 0 1px ${to}`]);
+  return <motion.div style={{ background, boxShadow }} className="relative h-full w-full" />;
 }
 
 function TileTransitionComponent({
@@ -48,7 +51,7 @@ function TileTransitionComponent({
     <div
       ref={ref}
       style={{ minHeight: height, background: from }}
-      className="grid w-full grid-cols-10"
+      className="grid w-full grid-cols-10 overflow-hidden"
       aria-hidden
     >
       {Array.from({ length: 100 }, (_, i) => (

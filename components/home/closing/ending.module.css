@@ -1,0 +1,88 @@
+/* Keyframes and transitions for the home page ending: Voices, FAQ, Closing. */
+
+/* ── Voices: words of the active quote resolve from blur, left to right ── */
+.word {
+  display: inline-block;
+  opacity: 0.08;
+  filter: blur(8px);
+  transform: translateY(0.18em);
+}
+/* Hard cut out, resolve in: only the incoming track transitions. */
+.on .word {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 22ms + 120ms);
+}
+
+/* The quote mark (the logo's double slash) strikes in bar by bar. */
+.strike {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: strike 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.strike + .strike {
+  animation-delay: 0.09s;
+}
+@keyframes strike {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ── FAQ: the open answer streams in like a generated response ── */
+.token {
+  opacity: 0;
+  filter: blur(6px);
+  transition:
+    opacity 0.35s ease-out,
+    filter 0.45s ease-out;
+  transition-delay: 0s;
+}
+.stream .token {
+  opacity: 1;
+  filter: blur(0);
+  transition-delay: calc(var(--i, 0) * 12ms + 140ms);
+}
+
+/* Fat caret in the console prompt. */
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: #cd1717;
+  animation: caret 1s steps(1, end) infinite;
+}
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .token {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+  .strike,
+  .caret {
+    animation: none;
+  }
+}

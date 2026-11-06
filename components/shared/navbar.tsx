@@ -3,10 +3,7 @@
 import {
   AnimatePresence,
   motion,
-  useMotionValue,
-  useTransform,
   Variants,
-  type MotionValue,
 } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -38,67 +35,58 @@ const item: Variants = {
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Pass pageScroll to colour-shift the bar with a scroll-driven page.
-// Without it the bar stays solid black (used by the home page).
-export function Navbar({ pageScroll }: { pageScroll?: MotionValue<number> }) {
+type Tone = "dark" | "light" | "red";
+const TONES: Record<Tone, { bg: string; text: string; border: string }> = {
+  dark: { bg: "#000000", text: "#ffffff", border: "#ffffff30" },
+  light: { bg: "#ffffff", text: "#000000", border: "#00000022" },
+  red: { bg: "#cd1717", text: "#ffffff", border: "#ffffff60" },
+};
+
+/**
+ * The bar takes its colour from whichever section sits under it. Sections opt
+ * in with data-nav="dark" | "light" | "red"; the innermost match wins. Pages
+ * without any data-nav keep the solid black bar.
+ */
+function useNavTone(): Tone {
+  const [tone, setTone] = useState<Tone>("dark");
+  useEffect(() => {
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      let next: Tone = "dark";
+      document.querySelectorAll<HTMLElement>("[data-nav]").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= 28 && r.bottom > 28) next = (el.dataset.nav as Tone) ?? next;
+      });
+      setTone(next);
+    };
+    const queue = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    // Sections may flip their own data-nav mid-scroll (React state); re-check then too.
+    const mo = new MutationObserver(queue);
+    mo.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["data-nav"] });
+    return () => {
+      mo.disconnect();
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", queue);
+      window.removeEventListener("resize", queue);
+    };
+  }, []);
+  return tone;
+}
+
+// pageScroll is accepted for older pages that still pass it; colour now comes
+// from data-nav on the sections under the bar.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function Navbar(_props: { pageScroll?: unknown } = {}) {
   const links = navLinks;
-  const fallbackScroll = useMotionValue(0);
-  const scroll = pageScroll ?? fallbackScroll;
-  const scrollDriven = Boolean(pageScroll);
-
-  const sectionsIndi = [
-    0, 0.18, 0.185, 0.33, 0.335, 0.37, 0.38, 0.55, 0.555, 0.77, 0.775, 0.88,
-    0.885,
-  ];
-
-  const bg = useTransform(scroll, sectionsIndi, [
-    "#000000",
-    "#000000",
-    "#ffffff",
-    "#ffffff",
-    "#0a0a0a",
-    "#0a0a0a",
-    "#ff0000",
-    "#ff0000",
-    "#000000",
-    "#000000",
-    "#ffffff",
-    "#ffffff",
-    "#000000",
-  ]);
-  const text = useTransform(scroll, sectionsIndi, [
-    "#ffffff",
-    "#ffffff",
-    "#000000",
-    "#000000",
-    "#ffffff",
-    "#ffffff",
-    "#ffffff",
-    "#ffffff",
-    "#ffffff",
-    "#ffffff",
-    "#000000",
-    "#000000",
-    "#ffffff",
-  ]);
-  const border = useTransform(scroll, sectionsIndi, [
-    "#ffffff30",
-    "#ffffff30",
-    "#00000030",
-    "#00000030",
-    "#ffffff30",
-    "#ffffff30",
-    "#ffffff90",
-    "#ffffff90",
-    "#ffffff90",
-    "#ffffff90",
-    "#00000030",
-    "#00000030",
-    "#ffffff30",
-  ]);
-
   const path = usePathname();
-  const homeScroll = scrollDriven && path === "/";
+  const tone = TONES[useNavTone()];
+  const isHome = path === "/";
 
   // ── "What we do" dropdown ───────────────────────────────────────────
   const [open, setOpen] = useState(false);
@@ -147,18 +135,17 @@ export function Navbar({ pageScroll }: { pageScroll?: MotionValue<number> }) {
         opacity: 1,
       }}
       transition={{
-        delay: homeScroll ? 2.5 : 0,
+        delay: isHome ? 2.5 : 0,
       }}
       style={{
-        background: homeScroll
-          ? bg
-          : path === "/case-studies" || path.startsWith("/case-studies/")
+        background:
+          path === "/case-studies" || path.startsWith("/case-studies/")
             ? "#ffffff00"
-            : "#000000",
-        color: homeScroll ? text : "#ffffff",
-        borderColor: homeScroll ? border : "#ffffff30",
+            : tone.bg,
+        color: tone.text,
+        borderColor: tone.border,
       }}
-      className="fixed top-0 w-full  z-9999999999999  border-b "
+      className="fixed top-0 w-full z-9999999999999 border-b transition-[background-color,color,border-color] duration-300"
     >
       <motion.div
         variants={container}
@@ -172,7 +159,13 @@ export function Navbar({ pageScroll }: { pageScroll?: MotionValue<number> }) {
             className=" items-center gap-2  transition-colors  w-9 p-1 "
             aria-label="Asymmetri"
           >
-            <img className="w-6" src="/brand/asymmetri-icon-light.svg" alt="Asymmetri home" width={24} height={24} />
+            <img
+              className="w-6"
+              src={tone.bg === "#ffffff" ? "/brand/asymmetri-icon-dark.svg" : "/brand/asymmetri-icon-light.svg"}
+              alt="Asymmetri home"
+              width={24}
+              height={24}
+            />
           </a>
         </motion.div>
 
@@ -222,8 +215,8 @@ export function Navbar({ pageScroll }: { pageScroll?: MotionValue<number> }) {
         >
           <motion.a
             style={{
-              background: homeScroll ? text : "#cd1717",
-              color: homeScroll ? bg : "#ffffff",
+              background: tone.bg === "#cd1717" ? "#ffffff" : "#cd1717",
+              color: tone.bg === "#cd1717" ? "#cd1717" : "#ffffff",
             }}
             href="/contact-us"
             className="font-chakra-petch whitespace-nowrap tracking-wide px-2.5 py-1.5 text-sm sm:p-3 sm:py-2 sm:text-base"
