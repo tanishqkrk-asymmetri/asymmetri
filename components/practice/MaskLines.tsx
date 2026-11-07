@@ -56,6 +56,8 @@ export function MaskLines({
             }}
           >
             {line}
+            {/* Keeps words apart in the plain text crawlers and AI engines read. */}
+            {" "}
           </motion.span>
         </span>
       ))}

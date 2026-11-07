@@ -128,3 +128,145 @@ export function homeJsonLd() {
 export function toJsonLdScript(data: unknown) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
+
+/* ── Careers & Contact ─────────────────────────────────────────────── */
+
+type Faq = { q: string; a: string };
+
+const faqPage = (url: string, faqs: Faq[]) => ({
+  "@type": "FAQPage",
+  "@id": `${url}#faq`,
+  isPartOf: { "@id": `${url}#webpage` },
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+});
+
+const breadcrumb = (url: string, name: string) => ({
+  "@type": "BreadcrumbList",
+  "@id": `${url}#breadcrumb`,
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name, item: url },
+  ],
+});
+
+/** Compact organisation node; the full entity lives on the home page under the same @id. */
+const orgNode = (extra: Record<string, unknown> = {}) => ({
+  "@type": "Organization",
+  "@id": orgId,
+  name: company.name,
+  url: SITE_URL,
+  logo: `${SITE_URL}${company.logo}`,
+  email: company.email,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "Kerala",
+    addressCountry: "IN",
+  },
+  ...extra,
+});
+
+export function careersJsonLd({
+  name,
+  description,
+  faqs,
+  roles,
+}: {
+  name: string;
+  description: string;
+  faqs: Faq[];
+  roles: { id: string; title: string }[];
+}) {
+  const url = `${SITE_URL}/careers`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      orgNode({
+        description: company.definition,
+        knowsAbout: ["Remote work", "Asynchronous collaboration", "Applied AI engineering", "Product design"],
+      }),
+      {
+        "@type": ["WebPage", "AboutPage"],
+        "@id": `${url}#webpage`,
+        url,
+        name,
+        description,
+        isPartOf: { "@id": siteId },
+        about: { "@id": orgId },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        primaryImageOfPage: `${SITE_URL}/opengraph-image.png`,
+        inLanguage: "en",
+        ...(roles.length
+          ? {
+              mainEntity: {
+                "@type": "ItemList",
+                name: "Open roles at Asymmetri",
+                numberOfItems: roles.length,
+                itemListElement: roles.map((r, i) => ({
+                  "@type": "ListItem",
+                  position: i + 1,
+                  name: r.title,
+                  url: `${SITE_URL}/careers/positions/${r.id}`,
+                })),
+              },
+            }
+          : {}),
+      },
+      breadcrumb(url, "Careers & Culture"),
+      faqPage(url, faqs),
+    ],
+  };
+}
+
+export function contactJsonLd({
+  name,
+  description,
+  faqs,
+}: {
+  name: string;
+  description: string;
+  faqs: Faq[];
+}) {
+  const url = `${SITE_URL}/contact-us`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      orgNode({
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            email: company.email,
+            url,
+            areaServed: "Worldwide",
+            availableLanguage: ["English"],
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "recruiting",
+            email: company.email,
+            url: `${SITE_URL}/careers`,
+            availableLanguage: ["English"],
+          },
+        ],
+      }),
+      {
+        "@type": "ContactPage",
+        "@id": `${url}#webpage`,
+        url,
+        name,
+        description,
+        isPartOf: { "@id": siteId },
+        about: { "@id": orgId },
+        mainEntity: { "@id": orgId },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        inLanguage: "en",
+      },
+      breadcrumb(url, "Contact"),
+      faqPage(url, faqs),
+    ],
+  };
+}

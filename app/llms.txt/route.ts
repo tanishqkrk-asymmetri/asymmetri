@@ -11,6 +11,13 @@ import {
   selectedWork,
 } from "@/lib/site-content";
 import { practices } from "@/lib/practices";
+import {
+  careersDefinition,
+  careersFaqs,
+  cultureCode,
+  rhythm,
+} from "@/components/careers/content";
+import { contactDefinition, contactFaqs, nextSteps } from "@/components/contact/content";
 
 // llms.txt (https://llmstxt.org): a plain-markdown brief for AI assistants and
 // answer engines. Generated from the same content as the home page.
@@ -78,16 +85,38 @@ export function GET() {
       (w) => `- [${w.name}](${SITE_URL}/case-studies/${w.slug}) (${w.domain}): ${w.summary}`,
     ),
     "",
+    "## Careers & Culture",
+    "",
+    careersDefinition,
+    "",
+    "Culture code:",
+    ...cultureCode.rules.map((r) => `- **${r.title}** ${r.body}`),
+    "",
+    "How a week works:",
+    ...rhythm.items.map((r) => `- **${r.k}**: ${r.title} ${r.body}`),
+    "",
+    `Open roles: ${SITE_URL}/careers/positions`,
+    "",
+    "## Contact",
+    "",
+    contactDefinition,
+    "",
+    ...nextSteps.steps.map((s, i) => `${i + 1}. **${s.title}**: ${s.body}`),
+    "",
     "## FAQ",
     "",
     ...faqs.flatMap((f) => [`### ${f.q}`, "", f.a, ""]),
+    ...careersFaqs.flatMap((f) => [`### ${f.q}`, "", f.a, ""]),
+    ...contactFaqs.flatMap((f) => [`### ${f.q}`, "", f.a, ""]),
     "## Pages",
     "",
     `- [Home](${SITE_URL}/): positioning, AI system, domains, process and FAQ`,
     `- [About](${SITE_URL}/about): company story and team`,
     `- [Case studies](${SITE_URL}/case-studies): selected work`,
-    `- [Careers](${SITE_URL}/careers): open roles`,
-    `- [Contact](${SITE_URL}/contact-us): start a project`,
+    `- [Careers & Culture](${SITE_URL}/careers): culture code, how we work, open roles`,
+    `- [Open roles](${SITE_URL}/careers/positions): remote jobs at Asymmetri`,
+    `- [Contact](${SITE_URL}/contact-us): send a brief or email ${company.email}`,
+    ...practices.map((p) => `- [${p.name}](${SITE_URL}${p.href}): ${p.tagline}`),
     "",
   ];
 
